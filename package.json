@@ -1,0 +1,40 @@
+{
+  "name": "everlong",
+  "version": "1.0.0",
+  "description": "Everlong es el proyecto final del curso de backend de CoderHouse, Everlong es un ecommerce.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mativiaggio/everlong.git"
+  },
+  "keywords": [
+    "ecommercer",
+    "everlong",
+    "coderhouse",
+    "backend",
+    "admin",
+    "panel"
+  ],
+  "author": "Matias Viaggio (@harto_dev)",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/mativiaggio/everlong/issues"
+  },
+  "homepage": "https://github.com/mativiaggio/everlong#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "dependencies": {
+    "connect-mongo": "^5.1.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-handlebars": "^7.1.2",
+    "mongoose": "^8.4.0",
+    "winston": "^3.13.0"
+  }
+}
