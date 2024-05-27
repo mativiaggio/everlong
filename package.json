@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/server/server.js"
+    "basic:dev": "nodemon --watch src --watch views --ext js,json,handlebars,css --exec \"node src/server/server.js\"",
+    "dev": "nodemon --watch src --watch views --ext js,json,handlebars,css --exec \"npm run build:css && node src/server/server.js\"",
+    "build:css": "postcss src/public/css/tailwind.css -o src/public/css/styles.css"
   },
   "repository": {
     "type": "git",
@@ -27,7 +29,10 @@
   },
   "homepage": "https://github.com/mativiaggio/everlong#readme",
   "devDependencies": {
-    "nodemon": "^3.1.0"
+    "autoprefixer": "^10.4.19",
+    "nodemon": "^3.1.0",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -43,6 +48,7 @@
     "passport": "^0.7.0",
     "passport-github2": "^0.1.12",
     "passport-local": "^1.0.0",
+    "postcss-cli": "^11.0.0",
     "winston": "^3.13.0"
   }
 }

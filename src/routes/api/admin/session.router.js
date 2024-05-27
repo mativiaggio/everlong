@@ -26,42 +26,22 @@ adminSessionRouter.get("/registerFail", (req, res) => {
 });
 
 // User login
-// adminSessionRouter.post(
-//   "/login",
-//   passport.authenticate("login", {
-//     failureRedirect: "/admin/login-fail",
-//     // failureMessage: true,
-//   }),
-//   async (req, res) => {
-//     const { _id, email, name, roles, createdAt, updatedAt } = req.user;
-//     req.session.user = {
-//       _id,
-//       email,
-//       name,
-//       roles,
-//       createdAt,
-//       updatedAt,
-//     };
-//     res.redirect("/admin");
-//   }
-// );
-
-adminSessionRouter.post("/login", (req, res, next) => {
-  passport.authenticate("login", (err, user, info) => {
-    if (err) {
-      return next(err);
-    }
-    if (!user) {
-      return res.status(401).json({ message: info.message });
-    }
-    req.logIn(user, (err) => {
-      if (err) {
-        return next(err);
-      }
-      return res.json({ message: "Logged in successfully" });
-    });
-  })(req, res, next);
-});
+adminSessionRouter.post(
+  "/login",
+  passport.authenticate("login"),
+  async (req, res) => {
+    const { _id, email, name, roles, createdAt, updatedAt } = req.user;
+    req.session.user = {
+      _id,
+      email,
+      name,
+      roles,
+      createdAt,
+      updatedAt,
+    };
+    res.redirect("/admin");
+  }
+);
 
 // Login failure route
 adminSessionRouter.get("/login-fail", (req, res) => {
@@ -72,7 +52,7 @@ adminSessionRouter.get("/login-fail", (req, res) => {
 adminSessionRouter.get("/logout", (req, res) => {
   req.session.destroy((err) => {
     if (err) return res.status(500).send("Error destroying session");
-    res.redirect("/login");
+    res.status(200).send("Loged out");
   });
 });
 

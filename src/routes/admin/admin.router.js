@@ -44,7 +44,7 @@ router.get("/login", publicAccess, (req, res) => {
 });
 
 router.get("/login-fail", publicAccess, (req, res) => {
-  res.render("admin/not-found");
+  res.render("admin/unauthorized");
 });
 
 export default router;
