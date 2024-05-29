@@ -1,35 +1,37 @@
-$(document).ready(function () {
-  const loginForm = document.getElementById("loginForm");
+const loginForm = $("#loginForm");
 
-  loginForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const formData = new FormData(loginForm);
+loginForm.on("submit", function (event) {
+  event.preventDefault();
+  event.stopPropagation();
 
-    debugger;
-    $("#submit").prop("disabled", true);
+  const formElement = loginForm[0];
+  const formData = new FormData(formElement);
 
-    const obj = {};
-    formData.forEach((value, key) => {
-      obj[key] = value;
-    });
+  $("#submit").prop("disabled", true);
 
-    fetch("/api/admin/login", {
-      method: "POST",
-      body: JSON.stringify(obj),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => {
-        switch (res.status) {
-          case 401:
-            window.location.replace("/admin/login-fail");
-            break;
-          case 200:
-            window.location.replace("/admin");
-            break;
-        }
-      })
-      .catch((error) => console.error("Error:", error));
+  const obj = {};
+  formData.forEach((value, key) => {
+    obj[key] = value;
   });
+
+  debugger;
+
+  fetch("/api/admin/login", {
+    method: "POST",
+    body: JSON.stringify(obj),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => {
+      switch (res.status) {
+        case 401:
+          window.location.replace("/admin/login-fail");
+          break;
+        case 200:
+          window.location.replace("/admin");
+          break;
+      }
+    })
+    .catch((error) => console.error("Error:", error));
 });
