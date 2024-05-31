@@ -31,12 +31,14 @@ router.get("/", privateAccess, (req, res) => {
 });
 
 router.get("/register", publicAccess, async (req, res) => {
-  const admins = await userController.getAllAdmins();
-  if (admins.status === "error") {
-    res.render("admin/register");
-  } else {
-    res.render("admin/not-found");
-  }
+  // const admins = await userController.getAllAdmins();
+  // if (admins.status === "error") {
+  //   res.render("admin/register");
+  // } else {
+  //   res.render("admin/not-found");
+  // }
+
+  res.render("admin/register");
 });
 
 router.get("/login", publicAccess, (req, res) => {

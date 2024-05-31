@@ -1,11 +1,46 @@
-const registerForm = document.getElementById("registerForm");
+import { isValidEmail } from "../functions.js";
+const registerForm = $("#registerForm");
 
-registerForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const data = new FormData(registerForm);
+$("#submit-register").prop("disabled", true).css({
+  opacity: 0.5,
+  cursor: "not-allowed",
+});
+
+$("#full_name, #email, #password, #password-repeated").on(
+  "input propertychanges",
+  function () {
+    const fullName = $("#full_name").val();
+    const email = $("#email").val();
+    const password = $("#password").val();
+    const passwordRepeated = $("#password-repeated").val();
+
+    const valid_email = isValidEmail(email);
+
+    if (password === passwordRepeated && fullName !== "" && valid_email) {
+      $("#submit-register").prop("disabled", false).css({
+        opacity: 1,
+        cursor: "pointer",
+      });
+    } else {
+      $("#submit-register").prop("disabled", true).css({
+        opacity: 0.5,
+        cursor: "not-allowed",
+      });
+    }
+  }
+);
+
+registerForm.on("submit", function (event) {
+  event.preventDefault();
+  event.stopPropagation();
+
+  const formElement = registerForm[0];
+  const formData = new FormData(formElement);
+
+  $("#submit").prop("disabled", true);
 
   let obj = {};
-  data.forEach((value, key) => (obj[key] = value));
+  formData.forEach((value, key) => (obj[key] = value));
 
   obj = { ...obj, roles: ["admin"] };
 
