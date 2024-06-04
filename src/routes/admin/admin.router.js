@@ -27,19 +27,23 @@ const privateAccess = async (req, res, next) => {
 };
 
 router.get("/", privateAccess, (req, res) => {
-  res.render("admin/home");
+  res.render("admin/home", { isLoggedIn: true });
 });
 
 router.get("/register", publicAccess, async (req, res) => {
-  res.render("admin/register");
+  res.render("admin/register", { isLoggedIn: false });
 });
 
 router.get("/login", publicAccess, (req, res) => {
-  res.render("admin/login");
+  res.render("admin/login", { isLoggedIn: false });
 });
 
 router.get("/login-fail", publicAccess, (req, res) => {
   res.render("admin/unauthorized");
+});
+
+router.get("/products", privateAccess, (req, res) => {
+  res.render("admin/products");
 });
 
 export default router;
