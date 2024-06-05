@@ -9,3 +9,54 @@
 #client-logo {
   color: #343a40 !important;
 }
+
+:root {
+  --main-bg-light: #ffffff;
+  --main-text-light: #121212;
+  --main-light-1: #f0f0f0;
+  --main-light-2: #e0e0e0;
+  --main-light-3: #d0d0d0;
+  --main-light-4: #c0c0c0;
+  --main-light-5: #b0b0b0;
+  --main-light-6: #a0a0a0;
+  --main-light-7: #909090;
+  --main-light-8: #808080;
+  --main-light-10: #707070;
+
+  --main-bg-dark: #121212;
+  --main-text-dark: #ffffff;
+  --main-dark-1: #121212;
+  --main-dark-2: #1d1d1d;
+  --main-dark-3: #212121;
+  --main-dark-4: #242424;
+  --main-dark-5: #2c2c2c;
+  --main-dark-6: #2d2d2d;
+  --main-dark-7: #323232;
+  --main-dark-8: #353535;
+  --main-dark-10: #373737;
+
+  --error-bg-color: #fef2f2;
+  --error-border-color: #fca5a5;
+  --error-text-color: #991b1b;
+  --error-placeholder-color: #cc5c5c;
+}
+
+.input-tiene-error:not([type="number"]) {
+  border-color: var(--error-border-color) !important;
+  outline-color: var(--error-border-color) !important;
+  background-color: var(--error-bg-color) !important;
+  color: black !important;
+}
+
+.input-tiene-error:focus:not([type="number"]) {
+  border-color: var(--error-border-color) !important;
+  outline-color: var(--error-border-color) !important;
+  background-color: var(--error-bg-color) !important;
+  color: black !important;
+}
+
+.input-tiene-error::placeholder,
+.input-tiene-error > span,
+.input-tiene-error > input::placeholder {
+  color: var(--error-placeholder-color) !important;
+}

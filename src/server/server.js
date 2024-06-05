@@ -17,6 +17,7 @@ import { setLayout } from "../middlewares/setLayout.middleware.js";
 import adminRouter from "../routes/admin/admin.router.js";
 import clientRouter from "../routes/client/client.router.js";
 import adminSessionRouter from "../routes/api/admin/session.router.js";
+import adminProductsRouter from "../routes/api/admin/products.router.js";
 
 // Iniciar express
 const app = express();
@@ -61,7 +62,8 @@ app.set("views", `${getPath("views")}`);
 app.use(setLayout);
 
 // Routes
-app.use("/api/admin", adminSessionRouter);
+app.use("/api/admin/sessions", adminSessionRouter);
+app.use("/api/admin/products", adminProductsRouter);
 app.use("/admin", adminRouter);
 app.use("/", clientRouter);
 

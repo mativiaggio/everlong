@@ -1,87 +1,78 @@
 <h1>Products Admin</h1>
+<a
+  href="/admin/products/add-product"
+  class="flex w-fit mb-2 bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-dark)] dark:text-[var(--main-text-light)] p-2 rounded-2xl cursor-pointer hover:underline"
+  id="add-new-product"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    class="lucide lucide-plus"
+  >
+    <path d="M5 12h14" />
+    <path d="M12 5v14" />
+  </svg>
+  Agregar un producto
+</a>
 
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-  <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+  <table
+    class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+  >
+    <thead
+      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-[var(--main-dark2)] dark:text-gray-400"
+    >
       <tr>
-        <th scope="col" class="px-6 py-3">
-          Product name
-        </th>
-        <th scope="col" class="px-6 py-3">
-          Color
-        </th>
-        <th scope="col" class="px-6 py-3">
-          Category
-        </th>
-        <th scope="col" class="px-6 py-3">
-          Price
-        </th>
-        <th scope="col" class="px-6 py-3">
-          <span class="sr-only">Edit</span>
-        </th>
+        <th scope="col" class="px-6 py-3">Nombre</th>
+        <th scope="col" class="px-6 py-3">Categorias</th>
+        <th scope="col" class="px-6 py-3">Precio</th>
+        <th scope="col" class="px-6 py-3">Action</th>
       </tr>
     </thead>
     <tbody>
-      <tr class="bg-white border-b hover:bg-gray-50">
-        <th
-          scope="row"
-          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+      {{#each products}}
+        <tr
+          class="even:bg-[var(--main-light-1)] even:dark:bg-[var(--main-dark-7)] odd:bg-[var(--main-light-2)] odd:dark:bg-[var(--main-dark-3)] border-b dark:border-[var(--main-dark-10)]"
         >
-          Apple MacBook Pro 17"
-        </th>
-        <td class="px-6 py-4">
-          Silver
-        </td>
-        <td class="px-6 py-4">
-          Laptop
-        </td>
-        <td class="px-6 py-4">
-          $2999
-        </td>
-        <td class="px-6 py-4 text-right">
-          <a href="#" class="font-medium text-blue-600 hover:underline">Edit</a>
-        </td>
-      </tr>
-      <tr class="bg-white border-b hover:bg-gray-50">
-        <th
-          scope="row"
-          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-        >
-          Microsoft Surface Pro
-        </th>
-        <td class="px-6 py-4">
-          White
-        </td>
-        <td class="px-6 py-4">
-          Laptop PC
-        </td>
-        <td class="px-6 py-4">
-          $1999
-        </td>
-        <td class="px-6 py-4 text-right">
-          <a href="#" class="font-medium text-blue-600 hover:underline">Edit</a>
-        </td>
-      </tr>
-      <tr class="bg-white hover:bg-gray-50">
-        <th
-          scope="row"
-          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-        >
-          Magic Mouse 2
-        </th>
-        <td class="px-6 py-4">
-          Black
-        </td>
-        <td class="px-6 py-4">
-          Accessories
-        </td>
-        <td class="px-6 py-4">
-          $99
-        </td>
-        <td class="px-6 py-4 text-right">
-          <a href="#" class="font-medium text-blue-600 hover:underline">Edit</a>
-        </td>
-      </tr>
+          <th
+            scope="row"
+            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          >{{title}}</th>
+          <td class="px-6 py-4">{{category}}</td>
+          <td class="px-6 py-4">${{price}}</td>
+          <td class="px-6 py-4">
+            <a
+              href="#"
+              class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+            >Edit</a>
+            <a
+              href="#"
+              class="font-medium text-red-600 dark:text-red-500 hover:underline"
+            >Delete</a>
+          </td>
+        </tr>
+      {{/each}}
     </tbody>
   </table>
 </div>
+
+<div class="flex justify-center mt-4">
+  <ul class="flex space-x-2">
+    {{#each pages}}
+      <li>
+        <a
+          href="/admin/products?page={{this}}"
+          class="px-3 py-1 bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-300 dark:hover:bg-gray-700"
+        >{{this}}</a>
+      </li>
+    {{/each}}
+  </ul>
+</div>
+<script type="module" src="/js/admin/products.js"></script>
