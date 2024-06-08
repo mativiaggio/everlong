@@ -39,7 +39,7 @@ loginForm.on("submit", function (event) {
     obj[key] = value;
   });
 
-  fetch("/api/admin/login", {
+  fetch("/api/admin/sessions/login", {
     method: "POST",
     body: JSON.stringify(obj),
     headers: {

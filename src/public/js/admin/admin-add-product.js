@@ -63,7 +63,7 @@ $("#add-product-button").on("click", function (e) {
       })
       .then((data) => {
         alert("Producto agregado correctamente!");
-        window.location.href = "/admin/products";
+        // window.location.href = "/admin/products";
       })
       .catch((error) => {
         console.error("Error al agregar el producto:", error);

@@ -1,5 +1,5 @@
 $("#logout").click(function () {
-  fetch("/api/admin/logout", {
+  fetch("/api/admin/sessions/logout", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

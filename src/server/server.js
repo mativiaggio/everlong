@@ -12,6 +12,7 @@ import { addLogger } from "../middlewares/addLogger.middleware.js";
 import { PORT, MONGO_URI } from "../config/env.js";
 import { logger } from "../utils/logger.js";
 import { setLayout } from "../middlewares/setLayout.middleware.js";
+import cors from "express";
 
 // Importing routes
 import adminRouter from "../routes/admin/admin.router.js";
@@ -26,6 +27,7 @@ const app = express();
 connect();
 
 // App
+
 // Session middleware
 app.use(cookieParser());
 app.use(

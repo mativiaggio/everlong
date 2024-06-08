@@ -21,6 +21,7 @@ export default class ProductsDAO {
       if (!productData.owner) {
         productData.owner = "admin";
       }
+      // FALTA LOGICA PARA Q SOLO AGREGUE ADMINS
       const product = new Product(productData);
       await product.save();
       return { status: "Producto agregado correctamente" };
