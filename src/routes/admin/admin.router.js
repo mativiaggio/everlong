@@ -90,4 +90,18 @@ router.get("/products/add-product", privateAccess, (req, res) => {
   });
 });
 
+router.get("/products/edit/:pid", privateAccess, async (req, res) => {
+  const title = "Editar Producto";
+  const description = "Edita un producto de la base de datos";
+
+  const productData = await productsController.findById(req.params.pid);
+  console.log("Product data", productData);
+  res.render("admin/edit-product", {
+    isLoggedIn: true,
+    title,
+    description,
+    productData,
+  });
+});
+
 export default router;

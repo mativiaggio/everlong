@@ -16,6 +16,23 @@ export default class ProductsDAO {
     }
   }
 
+  async getProductById(productId) {
+    logger.info("id " + productId);
+    try {
+      const product = await Product.findById(productId).lean();
+
+      if (product) {
+        return product;
+      } else {
+        logger.error("Producto no encontrado");
+        return null;
+      }
+    } catch (error) {
+      logger.error("Error al obtener el producto:", error);
+      return null;
+    }
+  }
+
   async addProduct(productData) {
     try {
       if (!productData.owner) {
@@ -38,6 +55,27 @@ export default class ProductsDAO {
     } catch (error) {
       logger.error("Error contando productos:", error);
       throw error;
+    }
+  }
+
+  async deleteProduct(productId, user) {
+    try {
+      const product = await Product.findById(productId);
+      if (!product) {
+        logger.error("Producto no encontrado");
+        return { error: "Producto no encontrado" };
+      }
+
+      if (!user.roles.includes("admin")) {
+        return { error: "No tiene permiso para eliminar este producto" };
+      }
+
+      await Product.deleteOne({ _id: productId });
+      logger.info("Producto eliminado correctamente");
+      return { status: "Producto eliminado correctamente" };
+    } catch (error) {
+      logger.error("Error al eliminar el producto:", error);
+      return { error: "Error al eliminar el producto" };
     }
   }
 }

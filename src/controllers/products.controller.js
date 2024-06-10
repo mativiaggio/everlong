@@ -59,6 +59,17 @@ export default class ProductsController {
     }
   }
 
+  async findById(paramproductId) {
+    try {
+      const productId = paramproductId;
+      const product = await productsDAO.getProductById(productId);
+      return product;
+    } catch (error) {
+      console.error("Error getting product by ID:", error);
+      throw error;
+    }
+  }
+
   async countProducts() {
     try {
       const totalProducts = await Product.countDocuments();
@@ -83,6 +94,21 @@ export default class ProductsController {
     } catch (error) {
       console.error("Error adding product:", error);
       return res.status(500).json({ error: "Error adding product" });
+    }
+  }
+
+  async deleteProduct(req, res) {
+    try {
+      const productId = req.params.pid; // Corrected to access params.pid
+      const user = req.session.user; // Assuming user information is stored in the session
+      const result = await productsDAO.deleteProduct(productId, user);
+      if (result.error) {
+        return res.status(403).json({ error: result.error });
+      }
+      return res.json(result);
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      return res.status(500).json({ error: "Error deleting product" });
     }
   }
 }

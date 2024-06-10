@@ -41,10 +41,12 @@
       >
 
         <div
-          class="flex flex-col h-full px-3 py-4 overflow-y-auto bg-[var(--main-light-1)] dark:bg-[#1e1e1e]"
+          class="flex flex-col h-full px-3 py-4 overflow-y-auto bg-[var(--main-light-2)] dark:bg-[var(--main-bg-dark)]"
         >
           <div class="w-full p-1">
-            <span class="space-y-2 font-bold px-2">Everlong Admin Panel</span>
+            <span
+              class="flex w-full space-y-2 font-bold px-2 text-[var(--main-text-light)] dark:text-[var(--main-text-dark)] text-xl"
+            >Everlong Admin Panel</span>
             <button
               id="close-aside-button"
               class="text-red-500 float-right sm:hidden"
@@ -261,7 +263,7 @@
         </div>
       </aside>
       <div
-        class="p-4 sm:ml-64 bg-[var(--main-bg-light)] dark:bg-[var(--main-bg-dark)] min-h-screen"
+        class="p-4 sm:ml-64 bg-[var(--main-bg-light)] dark:bg-[var(--main-dark-2)] min-h-screen"
       >
         {{{body}}}
       </div>
@@ -275,6 +277,7 @@
     integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
     crossorigin="anonymous"
   ></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script type="module" src="/js/admin/main.js"></script>
   <script type="module" src="/js/admin/admin.js"></script>
   <script type="module" src="/js/admin/admin-login.js"></script>
