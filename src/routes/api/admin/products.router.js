@@ -35,4 +35,12 @@ adminProductsRouter.post("/", privateAccess, async (req, res) => {
   }
 });
 
+adminProductsRouter.delete("/:pid", async (req, res) => {
+  try {
+    await productController.deleteProduct(req, res);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 export default adminProductsRouter;

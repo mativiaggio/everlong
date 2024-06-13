@@ -2,6 +2,12 @@ const date = new Date();
 const formattedDate = date.toISOString().split("T")[0];
 $("#published_date").val(formattedDate);
 
+$("#slug").on("input", function () {
+  $(this).val(function (index, value) {
+    return value.replace(/\s+/g, "-");
+  });
+});
+
 $("#add-product-button").on("click", function (e) {
   e.preventDefault();
   let required_flad = false;

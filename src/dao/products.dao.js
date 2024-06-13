@@ -25,6 +25,30 @@ export default class ProductsDAO {
   }
 
   /**
+   * Retrieves a product by its ID from the database.
+   *
+   * @param {string} productId - The ID of the product to retrieve.
+   * @returns {Promise<Object|null>} A promise that resolves to the product object if found, or null if not found.
+   * @throws {Error} If an error occurs while retrieving the product.
+   */
+  async getProductById(productId) {
+    logger.info("id " + productId);
+    try {
+      const product = await Product.findById(productId).lean();
+
+      if (product) {
+        return product;
+      } else {
+        logger.error("Producto no encontrado");
+        return null;
+      }
+    } catch (error) {
+      logger.error("Error al obtener el producto:", error);
+      return null;
+    }
+  }
+
+  /**
    * Adds a new product to the database.
    *
    * @param {Object} productData - The data of the product to be added.
@@ -64,6 +88,27 @@ export default class ProductsDAO {
     } catch (error) {
       logger.error("Error contando productos:", error);
       throw error;
+    }
+  }
+
+  async deleteProduct(productId, user) {
+    try {
+      const product = await Product.findById(productId);
+      if (!product) {
+        logger.error("Producto no encontrado");
+        return { error: "Producto no encontrado" };
+      }
+
+      if (!user.roles.includes("admin")) {
+        return { error: "No tiene permiso para eliminar este producto" };
+      }
+
+      await Product.deleteOne({ _id: productId });
+      logger.info("Producto eliminado correctamente");
+      return { status: "Producto eliminado correctamente" };
+    } catch (error) {
+      logger.error("Error al eliminar el producto:", error);
+      return { error: "Error al eliminar el producto" };
     }
   }
 }
