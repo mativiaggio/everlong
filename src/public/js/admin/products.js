@@ -1,5 +1,5 @@
 $(".edit_button").on("click", function () {
-  window.location.replace(`/admin/products/edit/${$(this).attr("id")}`);
+  window.location.replace(`/admin/products/edit/${$(this).attr("slug")}`);
 });
 $(".delete_button").on("click", function () {
   Swal.fire({

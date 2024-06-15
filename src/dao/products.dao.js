@@ -33,15 +33,43 @@ export default class ProductsDAO {
     }
   }
 
+  async getProductBySlug(productSlug) {
+    logger.info("id " + productSlug);
+    try {
+      const product = await Product.findOne({ slug: productSlug }).lean();
+      console.log("Product in DAO: " + product);
+      if (product) {
+        return product;
+      } else {
+        logger.error("Producto no encontrado");
+        return null;
+      }
+    } catch (error) {
+      logger.error("Error al obtener el producto:", error);
+      return null;
+    }
+  }
+
   async addProduct(productData) {
     try {
       if (!productData.owner) {
         productData.owner = "admin";
       }
-      // FALTA LOGICA PARA Q SOLO AGREGUE ADMINS
-      const product = new Product(productData);
-      await product.save();
-      return { status: "Producto agregado correctamente" };
+
+      const productBySlug = await Product.findOne({ slug: productData.slug });
+
+      if (productBySlug) {
+        return {
+          status: "error",
+          field: ["slug"],
+          message: "Ya existe un producto con ese slug",
+        };
+      } else {
+        // FALTA LOGICA PARA Q SOLO AGREGUE ADMINS
+        const product = new Product(productData);
+        await product.save();
+        return { status: "Producto agregado correctamente" };
+      }
     } catch (error) {
       logger.error("Error al agregar el producto:", error);
       return { error: "Error al agregar el producto: " + error };

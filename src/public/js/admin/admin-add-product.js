@@ -41,7 +41,6 @@ $("#add-product-button").on("click", function (e) {
     $("#required_message").removeClass("hidden").addClass("flex");
   } else {
     // AQUI VA EL CODIGO DE ADD PRODUCT
-    debugger;
     const productData = {
       title: $("#name").val(),
       slug: $("#slug").val(),
@@ -61,21 +60,20 @@ $("#add-product-button").on("click", function (e) {
       },
       body: JSON.stringify(productData),
     })
-      .then((response) => {
+      .then(async (response) => {
         if (!response.ok) {
-          throw new Error("Network response was not ok " + response.statusText);
+          const data = await response.json();
+          throw data;
         }
-        return response.json();
       })
+
       .then((data) => {
         alert("Producto agregado correctamente!");
         // window.location.href = "/admin/products";
       })
       .catch((error) => {
-        console.error("Error al agregar el producto:", error);
-        alert(
-          "Hubo un error al agregar el producto. Por favor, inténtalo de nuevo."
-        );
+        console.error("Error al agregar el producto:", error.message);
+        alert(error.message);
       });
   }
 });

@@ -70,6 +70,18 @@ export default class ProductsController {
     }
   }
 
+  async findBySlug(productSlug) {
+    try {
+      const product_slug = productSlug;
+      const product = await productsDAO.getProductBySlug(product_slug);
+      console.log("Product in Controller:", product);
+      return product;
+    } catch (error) {
+      console.error("Error getting product by Slug:", error);
+      throw error;
+    }
+  }
+
   async countProducts() {
     try {
       const totalProducts = await Product.countDocuments();
@@ -86,7 +98,7 @@ export default class ProductsController {
       productData.owner = req.session.user._id;
       const result = await productsDAO.addProduct(productData);
 
-      if (result.error) {
+      if (result.status === "error") {
         return res.status(500).json(result);
       }
 
