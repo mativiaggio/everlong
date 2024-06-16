@@ -13,7 +13,7 @@ const MetaSchema = new Schema(
 
 const ProductSchema = new Schema({
   title: { type: String, required: true },
-  publishedOn: { type: Date, required: true },
+  publishedOn: { type: String, required: true },
   categories: [
     { type: Schema.Types.ObjectId, ref: "Category", required: true },
   ],

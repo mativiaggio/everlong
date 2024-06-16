@@ -147,6 +147,37 @@ export default class ProductsController {
     }
   }
 
+  /**
+   * Updates an existing product in the database.
+   *
+   * @param {Object} req - The request object containing the product data.
+   * @param {Object} res - The response object to send the result.
+   * @param {string} req.body.id - The ID of the product to be updated.
+   * @param {Object} req.body - The product data to be updated.
+   *
+   * @returns {Object} - The response object containing the result of the operation.
+   * @returns {number} res.status - The HTTP status code of the response.
+   * @returns {Object} res.json - The JSON object containing the result.
+   * @returns {string} res.json.error - If there is an error, this property contains the error message.
+   *
+   * @throws Will throw an error if there is a problem with the database operation.
+   */
+  async updateProduct(req, res) {
+    try {
+      const productData = req.body;
+      const result = await productsDAO.updateProduct(productData);
+
+      if (result.status === "error") {
+        return res.status(500).json(result);
+      }
+
+      return res.json(result);
+    } catch (error) {
+      console.error("Error updating product:", error);
+      return res.status(500).json({ error: "Error updating product" });
+    }
+  }
+
   async deleteProduct(req, res) {
     try {
       const productId = req.params.pid; // Corrected to access params.pid
@@ -159,6 +190,40 @@ export default class ProductsController {
     } catch (error) {
       console.error("Error deleting product:", error);
       return res.status(500).json({ error: "Error deleting product" });
+    }
+  }
+
+  /**
+   * Retrieves product statistics.
+   *
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   *
+   * @returns {Object} - An object containing product statistics.
+   */
+  async getProductStats(req, res) {
+    try {
+      const totalProducts = await productsDAO.countProducts({});
+      const productsByCategory = await Product.aggregate([
+        { $unwind: "$categories" },
+        { $group: { _id: "$categories", count: { $sum: 1 } } },
+      ]);
+      const lowStockProducts = await Product.find({ stock: { $lt: 10 } });
+
+      console.log("low stock products " + lowStockProducts);
+      res.json({
+        status: "success",
+        data: {
+          totalProducts,
+          productsByCategory,
+          lowStockProducts,
+        },
+      });
+    } catch (error) {
+      console.error("Error fetching product stats:", error);
+      res
+        .status(500)
+        .json({ status: "error", message: "Internal server error" });
     }
   }
 }

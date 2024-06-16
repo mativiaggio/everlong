@@ -35,6 +35,34 @@ class UserDAO {
       throw error;
     }
   }
+
+  /**
+   * Retrieves the total number of users.
+   *
+   * @returns {Promise<Number>} A promise that resolves to the total number of users.
+   */
+  async getTotalUsers() {
+    try {
+      return await User.countDocuments();
+    } catch (error) {
+      logger.error("Error getting total users: ", error.message);
+      throw error;
+    }
+  }
+
+  /**
+   * Retrieves the total number of admin users.
+   *
+   * @returns {Promise<Number>} A promise that resolves to the total number of admin users.
+   */
+  async getAdminUsersCount() {
+    try {
+      return await User.countDocuments({ roles: { $in: ["admin"] } });
+    } catch (error) {
+      logger.error("Error getting admin users count: ", error.message);
+      throw error;
+    }
+  }
 }
 
 export default UserDAO;

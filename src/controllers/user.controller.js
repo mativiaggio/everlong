@@ -26,6 +26,24 @@ class UserController {
       throw error;
     }
   }
+
+  /**
+   * Retrieves statistics of the users.
+   *
+   * @returns {Promise<Object>} A promise that resolves to an object with user statistics.
+   */
+  async getUserStats() {
+    try {
+      const totalUsers = await userDao.getTotalUsers();
+      const adminUsers = await userDao.getAdminUsersCount();
+      const customerUsers = totalUsers - adminUsers;
+
+      return { totalUsers, adminUsers, customerUsers };
+    } catch (error) {
+      logger.error("Error getting user stats:", error.message);
+      throw error;
+    }
+  }
 }
 
 export default UserController;

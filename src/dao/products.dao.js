@@ -103,6 +103,47 @@ export default class ProductsDAO {
   }
 
   /**
+   * Updates an existing product in the database.
+   *
+   * @param {Object} productData - The data of the product to be updated.
+   * @param {string} productData.id - The ID of the product to be updated.
+   * @param {string} productData.name - The name of the product.
+   * @param {string} productData.description - The description of the product.
+   * @param {number} productData.price - The price of the product.
+   * @param {string} productData.category - The category of the product.
+   * @param {string} productData.status - The status of the product.
+   * @returns {Promise<Object>} A promise that resolves to an object with a status message or an error message.
+   * @throws {Error} If an error occurs while updating the product.
+   */
+  async updateProduct(productData) {
+    try {
+      const productId = productData.id;
+      delete productData.id; // Remove ID from data to avoid updating it
+
+      const updatedProduct = await Product.findByIdAndUpdate(
+        productId,
+        productData,
+        { new: true, runValidators: true }
+      );
+
+      if (!updatedProduct) {
+        return {
+          status: "error",
+          message: "Producto no encontrado",
+        };
+      }
+
+      return {
+        status: "Producto actualizado correctamente",
+        product: updatedProduct,
+      };
+    } catch (error) {
+      logger.error("Error al actualizar el producto:", error);
+      return { error: "Error al actualizar el producto: " + error };
+    }
+  }
+
+  /**
    * Counts the number of products in the database based on a given filter.
    *
    * @param {Object} filter - The filter object to apply when counting products.

@@ -29,7 +29,11 @@ const privateAccess = async (req, res, next) => {
 
 adminProductsRouter.post("/", privateAccess, async (req, res) => {
   try {
-    await productController.addProduct(req, res);
+    if (req.body.id) {
+      await productController.updateProduct(req, res);
+    } else {
+      await productController.addProduct(req, res);
+    }
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
@@ -38,6 +42,14 @@ adminProductsRouter.post("/", privateAccess, async (req, res) => {
 adminProductsRouter.delete("/:pid", async (req, res) => {
   try {
     await productController.deleteProduct(req, res);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+adminProductsRouter.get("/products_stats", privateAccess, async (req, res) => {
+  try {
+    await productController.getProductStats(req, res);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }

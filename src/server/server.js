@@ -19,6 +19,7 @@ import adminRouter from "../routes/admin/admin.router.js";
 import clientRouter from "../routes/client/client.router.js";
 import adminSessionRouter from "../routes/api/admin/session.router.js";
 import adminProductsRouter from "../routes/api/admin/products.router.js";
+import adminUserRouter from "../routes/api/admin/user.router.js";
 
 // Iniciar express
 const app = express();
@@ -66,6 +67,7 @@ app.use(setLayout);
 // Routes
 app.use("/api/admin/sessions", adminSessionRouter);
 app.use("/api/admin/products", adminProductsRouter);
+app.use("/api/admin/users", adminUserRouter);
 app.use("/admin", adminRouter);
 app.use("/", clientRouter);
 

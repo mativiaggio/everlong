@@ -53,6 +53,7 @@ $("#add-product-button").on("click", function (e) {
       _status: "active",
     };
 
+    debugger;
     fetch("/api/admin/products", {
       method: "POST",
       headers: {
