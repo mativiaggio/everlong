@@ -5,6 +5,17 @@ import { logger } from "../utils/logger.js";
 const productsDAO = new ProductsDAO();
 
 export default class ProductsController {
+  /**
+   * Retrieves a list of products based on the provided parameters.
+   *
+   * @param {Object} req - The request object containing query parameters.
+   * @param {Object} res - The response object to send the result.
+   * @param {number} limit - The maximum number of products to retrieve per page.
+   *
+   * @returns {Object} - An object containing the result of the operation.
+   *
+   * @throws Will throw an error if there is a problem with the database operation.
+   */
   async getProducts(req, res, limit) {
     try {
       const { page = 1, sort, query } = req.query;
@@ -59,6 +70,13 @@ export default class ProductsController {
     }
   }
 
+  /**
+   * Counts the total number of products in the database.
+   *
+   * @returns {Promise<number>} - A promise that resolves to the total number of products.
+   *
+   * @throws Will throw an error if there is a problem with the database operation.
+   */
   async findById(paramproductId) {
     try {
       const productId = paramproductId;
@@ -92,6 +110,26 @@ export default class ProductsController {
     }
   }
 
+  /**
+   * Adds a new product to the database.
+   *
+   * @param {Object} req - The request object containing the product data.
+   * @param {Object} res - The response object to send the result.
+   * @param {Object} req.body - The product data to be added.
+   * @param {string} req.body.name - The name of the product.
+   * @param {string} req.body.description - The description of the product.
+   * @param {number} req.body.price - The price of the product.
+   * @param {string} req.body.category - The category of the product.
+   * @param {string} req.body.status - The status of the product.
+   * @param {string} req.session.user._id - The ID of the user who is adding the product.
+   *
+   * @returns {Object} - The response object containing the result of the operation.
+   * @returns {number} res.status - The HTTP status code of the response.
+   * @returns {Object} res.json - The JSON object containing the result.
+   * @returns {string} res.json.error - If there is an error, this property contains the error message.
+   *
+   * @throws Will throw an error if there is a problem with the database operation.
+   */
   async addProduct(req, res) {
     try {
       const productData = req.body;
