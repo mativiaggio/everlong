@@ -25,6 +25,41 @@ $("#password, #email").on("input propertychanges", function () {
   }
 });
 
+// loginForm.on("submit", function (event) {
+//   event.preventDefault();
+//   event.stopPropagation();
+
+//   const formElement = loginForm[0];
+//   const formData = new FormData(formElement);
+
+//   $("#submit").prop("disabled", true);
+
+//   const obj = {};
+//   formData.forEach((value, key) => {
+//     obj[key] = value;
+//   });
+
+//   fetch("/api/admin/sessions/login", {
+//     method: "POST",
+//     body: JSON.stringify(obj),
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//   })
+//     .then((res) => {
+//       debugger;
+//       switch (res.status) {
+//         case 401:
+//           window.location.replace("/admin/login-fail");
+//           break;
+//         case 200:
+//           window.location.replace("/admin");
+//           break;
+//       }
+//     })
+//     .catch((error) => console.error("Error:", error));
+// });
+
 loginForm.on("submit", function (event) {
   event.preventDefault();
   event.stopPropagation();
@@ -46,15 +81,35 @@ loginForm.on("submit", function (event) {
       "Content-Type": "application/json",
     },
   })
-    .then((res) => {
-      switch (res.status) {
-        case 401:
-          window.location.replace("/admin/login-fail");
-          break;
-        case 200:
-          window.location.replace("/admin");
-          break;
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.status === "success") {
+        window.location.replace("/admin");
+      } else {
+        $("#submit").prop("disabled", false).css({
+          opacity: 1,
+          cursor: "pointer",
+        });
+
+        switch (data.action) {
+          case "redirect":
+            window.location.replace("/admin/login-fail");
+            break;
+          default:
+            $("#warning_message")
+              .removeClass("opacity-0")
+              .addClass("opacity-100");
+            $("#password").val("").addClass("input-tiene-error");
+            break;
+        }
       }
     })
-    .catch((error) => console.error("Error:", error));
+    .catch((error) => {
+      console.error("Error:", error);
+      alert("An unexpected error occurred. Please try again later.");
+      $("#submit").prop("disabled", false).css({
+        opacity: 1,
+        cursor: "pointer",
+      });
+    });
 });

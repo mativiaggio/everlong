@@ -42,6 +42,36 @@ const initializePassport = () => {
     )
   );
 
+  // passport.use(
+  //   "login",
+  //   new LocalStrategy(
+  //     {
+  //       usernameField: "email",
+  //     },
+  //     async (email, password, done) => {
+  //       try {
+  //         const user = await User.findOne({
+  //           email: email,
+  //           roles: { $in: ["admin"] },
+  //         });
+
+  //         if (!user) {
+  //           return done(null, false, {
+  //             message: "User not found or not an admin",
+  //           });
+  //         }
+
+  //         if (!isValidPassword(user, password)) {
+  //           return done(null, false, { message: "Incorrect password" });
+  //         }
+
+  //         return done(null, user);
+  //       } catch (error) {
+  //         return done(error);
+  //       }
+  //     }
+  //   )
+  // );
   passport.use(
     "login",
     new LocalStrategy(
@@ -52,9 +82,7 @@ const initializePassport = () => {
         try {
           const user = await User.findOne({
             email: email,
-            roles: { $in: ["admin"] },
           });
-
           if (!user) {
             return done(null, false, {
               message: "User not found or not an admin",
@@ -63,6 +91,12 @@ const initializePassport = () => {
 
           if (!isValidPassword(user, password)) {
             return done(null, false, { message: "Incorrect password" });
+          }
+
+          if (!user.roles.includes("admin")) {
+            return done(null, false, {
+              message: "User not an admin",
+            });
           }
 
           return done(null, user);

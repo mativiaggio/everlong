@@ -26,22 +26,66 @@ adminSessionRouter.get("/registerFail", (req, res) => {
 });
 
 // User login
-adminSessionRouter.post(
-  "/login",
-  passport.authenticate("login"),
-  async (req, res) => {
-    const { _id, email, name, roles, createdAt, updatedAt } = req.user;
-    req.session.user = {
-      _id,
-      email,
-      name,
-      roles,
-      createdAt,
-      updatedAt,
-    };
-    res.redirect("/admin");
-  }
-);
+// adminSessionRouter.post(
+//   "/login",
+//   passport.authenticate("login"),
+//   async (req, res) => {
+//     const { _id, email, name, roles, createdAt, updatedAt } = req.user;
+//     req.session.user = {
+//       _id,
+//       email,
+//       name,
+//       roles,
+//       createdAt,
+//       updatedAt,
+//     };
+//     res.redirect("/admin");
+//   }
+// );
+adminSessionRouter.post("/login", (req, res, next) => {
+  passport.authenticate("login", (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      console.log("info: " + JSON.stringify(info));
+      if (info && info.message === "User not found or not an admin") {
+        return res.status(401).json({
+          status: "fail",
+          message: "User not found or not an admin",
+          action: "redirect",
+        });
+      } else if (info && info.message === "User not an admin") {
+        return res.status(401).json({
+          status: "fail",
+          message: "User not an admin",
+          action: "redirect",
+        });
+      } else {
+        return res.status(401).json({
+          status: "fail",
+          message: "Incorrect email or password",
+          action: "warning",
+        });
+      }
+    }
+    req.logIn(user, (err) => {
+      if (err) {
+        return next(err);
+      }
+      const { _id, email, name, roles, createdAt, updatedAt } = req.user;
+      req.session.user = {
+        _id,
+        email,
+        name,
+        roles,
+        createdAt,
+        updatedAt,
+      };
+      return res.json({ status: "success", user: user });
+    });
+  })(req, res, next);
+});
 
 // Login failure route
 adminSessionRouter.get("/login-fail", (req, res) => {

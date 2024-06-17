@@ -2,10 +2,12 @@ import { Router } from "express";
 import { logger } from "../../utils/logger.js";
 import UserController from "../../controllers/user.controller.js";
 import ProductsController from "../../controllers/products.controller.js";
+import CategoriesController from "../../controllers/categories.controller.js";
 
 const router = Router();
 const userController = new UserController();
 const productsController = new ProductsController();
+const categoriesController = new CategoriesController();
 
 // Middleware for public access
 const publicAccess = (req, res, next) => {
@@ -35,9 +37,12 @@ router.get("/", privateAccess, (req, res) => {
 });
 
 router.get("/register", publicAccess, async (req, res) => {
-  const title = "Register";
-  const description = "Registra un nuevo usuario administrador en Everlong";
-  res.render("admin/register", { isLoggedIn: false, title, description });
+  const admins = await userController.getAllAdmins();
+  if (admins.status === "error") {
+    res.render("admin/register");
+  } else {
+    res.render("admin/not-found");
+  }
 });
 
 router.get("/login", publicAccess, (req, res) => {
@@ -58,12 +63,12 @@ router.get("/products", privateAccess, async (req, res) => {
     const title = "Productos";
     const description =
       "Visualiza, actualiza o elimina cualquiera de los productos cargados";
-    const limit = req.query.limit || 5;
+    const limit = req.query.limit || 10;
     const response = await productsController.getProducts(req, res, limit);
     const products = response.ResultSet;
 
     const totalProducts = await productsController.countProducts();
-    const productsPerPage = 5;
+    const productsPerPage = 10;
     const totalPages = Math.ceil(totalProducts / productsPerPage);
     const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
@@ -102,6 +107,34 @@ router.get("/products/edit/:pslug", privateAccess, async (req, res) => {
     description,
     productData,
   });
+});
+
+router.get("/categorias", privateAccess, async (req, res) => {
+  try {
+    const title = "Categorias";
+    const description =
+      "Visualiza, actualiza o elimina cualquiera de las categorias cargadas";
+    const limit = req.query.limit || 5;
+    const response = await categoriesController.getCategories(req, res, limit);
+    const categories = response.ResultSet;
+
+    const totalCategories = await categoriesController.countCategories();
+    const categoriesPerPage = 10;
+    const totalPages = Math.ceil(totalCategories / categoriesPerPage);
+    const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+    logger.info("Categorias: " + categories + JSON.stringify(categories));
+    res.render("admin/categories", {
+      isLoggedIn: true,
+      title,
+      description,
+      categories,
+      pages,
+    });
+  } catch (error) {
+    logger.error("Error al obtener productos:", error);
+    res.status(500).send("Error al obtener productos");
+  }
 });
 
 export default router;

@@ -98,7 +98,6 @@ $(document).ready(function () {
         $("#tbody-low-stock-products").find("td").remove();
         const lowStockProducts = response.data.lowStockProducts;
         $(lowStockProducts).each(function () {
-          debugger;
           $("#tbody-low-stock-products").append(`
             <tr class="even:bg-[var(--main-light-1)] even:dark:bg-[var(--main-dark-7)] odd:bg-[var(--main-light-2)] odd:dark:bg-[var(--main-dark-3)] border-b dark:border-[var(--main-dark-10)]">
               <td class="px-6 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">

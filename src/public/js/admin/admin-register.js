@@ -44,7 +44,7 @@ registerForm.on("submit", function (event) {
 
   obj = { ...obj, roles: ["admin"] };
 
-  fetch("/api/admin/register", {
+  fetch("/api/admin/sessions/register", {
     method: "POST",
     body: JSON.stringify(obj),
     headers: {
