@@ -23,6 +23,9 @@ import adminSessionRouter from "../routes/api/admin/session.router.js";
 import adminProductsRouter from "../routes/api/admin/products.router.js";
 import adminUserRouter from "../routes/api/admin/user.router.js";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // Iniciar express
 const app = express();
 
@@ -65,9 +68,6 @@ app.use(express.static(publicPath));
 // app.engine("handlebars", hbs.engine);
 // app.set("view engine", "handlebars");
 // app.set("views", `${getPath("views")}`);
-
-const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
-const __dirname = path.dirname(__filename); // get the name of the directory
 
 const viewsPath = path.resolve(__dirname, "../views");
 app.engine("handlebars", hbs.engine);
