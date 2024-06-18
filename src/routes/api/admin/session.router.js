@@ -48,7 +48,6 @@ adminSessionRouter.post("/login", (req, res, next) => {
       return next(err);
     }
     if (!user) {
-      console.log("info: " + JSON.stringify(info));
       if (info && info.message === "User not found or not an admin") {
         return res.status(401).json({
           status: "fail",

@@ -92,7 +92,6 @@ export default class ProductsController {
     try {
       const product_slug = productSlug;
       const product = await productsDAO.getProductBySlug(product_slug);
-      console.log("Product in Controller:", product);
       return product;
     } catch (error) {
       console.error("Error getting product by Slug:", error);
@@ -210,7 +209,6 @@ export default class ProductsController {
       ]);
       const lowStockProducts = await Product.find({ stock: { $lt: 10 } });
 
-      console.log("low stock products " + lowStockProducts);
       res.json({
         status: "success",
         data: {

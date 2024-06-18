@@ -12,7 +12,7 @@ import { addLogger } from "../middlewares/addLogger.middleware.js";
 import { PORT, MONGO_URI } from "../config/env.js";
 import { logger } from "../utils/logger.js";
 import { setLayout } from "../middlewares/setLayout.middleware.js";
-import cors from "express";
+import hbs from "../config/handlebars.config.js";
 
 // Importing routes
 import adminRouter from "../routes/admin/admin.router.js";
@@ -58,10 +58,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(getPath("public")));
 
-// Handlebars configuration
-app.engine("handlebars", handlebars.engine());
+app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 app.set("views", `${getPath("views")}`);
+
 app.use(setLayout);
 
 // Routes

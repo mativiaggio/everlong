@@ -1,10 +1,10 @@
 <h1
   class="text-[var(--main-text-light)] dark:text-[var(--main-text-dark)] text-2xl"
->Products Admin</h1>
+>Usuarios</h1>
 <a
-  href="/admin/productos/agregar-producto"
+  href="/admin/usuarios/agregar-usuario"
   class="flex w-fit mb-2 bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-dark)] dark:text-[var(--main-text-light)] p-2 rounded-2xl cursor-pointer hover:underline"
-  id="add-new-product"
+  id="add-new-category"
 >
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -21,7 +21,7 @@
     <path d="M5 12h14" />
     <path d="M12 5v14" />
   </svg>
-  Agregar un producto
+  Agregar un usuario
 </a>
 
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -32,14 +32,14 @@
       class="text-xs text-[var(--main-text-dark-2)] uppercase bg-[var(--main-bg-dark)]"
     >
       <tr>
-        <th scope="col" class="px-2 py-3 w-1/3">Nombre</th>
-        <th scope="col" class="px-2 py-3 w-1/3">Categorias</th>
-        <th scope="col" class="px-2 py-3 w-1/3">Precio</th>
-        <th scope="col" class="px-2 py-3">Acción</th>
+        <th scope="col" class="px-2 py-3 w-1/3">Nombre Completo</th>
+        <th scope="col" class="px-2 py-3 w-1/3">Email</th>
+        <th scope="col" class="px-2 py-3 w-1/3">Roles</th>
+        <th scope="col" class="px-2 py-3">Acciones</th>
       </tr>
     </thead>
     <tbody>
-      {{#each products}}
+      {{#each admins}}
         <tr
           class="even:bg-[var(--main-light-1)] even:dark:bg-[var(--main-dark-7)] odd:bg-[var(--main-light-2)] odd:dark:bg-[var(--main-dark-3)] border-b dark:border-[var(--main-dark-10)]"
           id="{{_id}}"
@@ -47,12 +47,20 @@
           <td
             scope="row"
             class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-          >{{title}}</td>
-          <td class="px-2 py-2">{{category}}</td>
-          <td class="px-2 py-2">${{price}}</td>
+          >{{full_name}}</td>
+          <td
+            scope="row"
+            class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          >{{email}}</td>
+          <td
+            scope="row"
+            class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          >
+            {{{renderRoles roles}}}
+          </td>
           <td class="px-2 py-2 flex">
             <button
-              class="flex cursor-pointer items-center justify-center font-medium text-blue-600 dark:text-blue-500 hover:underline edit_button mr-5"
+              class="flex cursor-pointer items-center justify-center font-medium text-blue-600 dark:text-blue-500 hover:underline edit_button"
               id="{{_id}}"
               slug="{{slug}}"
             >
@@ -71,30 +79,18 @@
                 <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
                 <path d="m15 5 4 4" />
               </svg>
-              Editar</button>
-            <button
-              class="flex cursor-pointer items-center justify-center font-medium text-red-600 dark:text-red-500 hover:underline delete_button"
-              id="{{_id}}"
-              slug="{{slug}}"
-            ><svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-trash-2"
-              >
+              Editar
+            </button>
+            {{!-- <button class="flex cursor-pointer items-center justify-center font-medium text-red-600 dark:text-red-500 hover:underline delete_button" id="{{_id}}" slug="{{slug}}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2">
                 <path d="M3 6h18" />
                 <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
                 <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
                 <line x1="10" x2="10" y1="11" y2="17" />
                 <line x1="14" x2="14" y1="11" y2="17" />
               </svg>
-              Eliminar</button>
+              Eliminar
+            </button> --}}
           </td>
         </tr>
       {{/each}}
@@ -107,11 +103,11 @@
     {{#each pages}}
       <li>
         <a
-          href="/admin/productos?page={{this}}"
+          href="/admin/usuarios?page={{this}}"
           class="px-3 py-1 bg-[var(--main-bg-dark)] text-[var(--main-text-dark-2)] rounded-md hover:bg-[var(--main-dark-5)]"
         >{{this}}</a>
       </li>
     {{/each}}
   </ul>
 </div>
-<script type="module" src="/js/admin/products.js"></script>
+<script type="module" src="/js/admin/users.js"></script>

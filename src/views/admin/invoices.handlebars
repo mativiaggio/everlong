@@ -1,10 +1,10 @@
 <h1
   class="text-[var(--main-text-light)] dark:text-[var(--main-text-dark)] text-2xl"
->Products Admin</h1>
+>Ingresos</h1>
 <a
-  href="/admin/productos/agregar-producto"
+  href="/admin/products/agregar-ingreso"
   class="flex w-fit mb-2 bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-dark)] dark:text-[var(--main-text-light)] p-2 rounded-2xl cursor-pointer hover:underline"
-  id="add-new-product"
+  id="add-new-invoice"
 >
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -21,25 +21,32 @@
     <path d="M5 12h14" />
     <path d="M12 5v14" />
   </svg>
-  Agregar un producto
+  Agregar un ingreso
 </a>
 
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
   <table
-    class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+    class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 min-w-max"
   >
     <thead
       class="text-xs text-[var(--main-text-dark-2)] uppercase bg-[var(--main-bg-dark)]"
     >
       <tr>
-        <th scope="col" class="px-2 py-3 w-1/3">Nombre</th>
-        <th scope="col" class="px-2 py-3 w-1/3">Categorias</th>
-        <th scope="col" class="px-2 py-3 w-1/3">Precio</th>
-        <th scope="col" class="px-2 py-3">Acción</th>
+        <th scope="col" class="px-2 py-3">Número</th>
+        <th scope="col" class="px-2 py-3">Fecha de Emisión</th>
+        <th scope="col" class="px-2 py-3">Nombre del Emisor</th>
+        <th scope="col" class="px-2 py-3">Dirección del Emisor</th>
+        <th scope="col" class="px-2 py-3">CUIT del Emisor</th>
+        <th scope="col" class="px-2 py-3">Responsabilidad IVA</th>
+        <th scope="col" class="px-2 py-3">Nombre del Receptor</th>
+        <th scope="col" class="px-2 py-3">Dirección del Receptor</th>
+        <th scope="col" class="px-2 py-3">CUIT del Receptor</th>
+        <th scope="col" class="px-2 py-3">Monto Total</th>
+        <th scope="col" class="px-2 py-3">Acciones</th>
       </tr>
     </thead>
     <tbody>
-      {{#each products}}
+      {{#each invoices}}
         <tr
           class="even:bg-[var(--main-light-1)] even:dark:bg-[var(--main-dark-7)] odd:bg-[var(--main-light-2)] odd:dark:bg-[var(--main-dark-3)] border-b dark:border-[var(--main-dark-10)]"
           id="{{_id}}"
@@ -47,9 +54,16 @@
           <td
             scope="row"
             class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-          >{{title}}</td>
-          <td class="px-2 py-2">{{category}}</td>
-          <td class="px-2 py-2">${{price}}</td>
+          >{{number}}</td>
+          <td class="px-2 py-2">{{issueDate}}</td>
+          <td class="px-2 py-2">{{emitter.name}}</td>
+          <td class="px-2 py-2">{{emitter.address}}</td>
+          <td class="px-2 py-2">{{emitter.cuit}}</td>
+          <td class="px-2 py-2">{{emitter.ivaResponsibility}}</td>
+          <td class="px-2 py-2">{{receiver.name}}</td>
+          <td class="px-2 py-2">{{receiver.address}}</td>
+          <td class="px-2 py-2">{{receiver.cuit}}</td>
+          <td class="px-2 py-2">${{totalAmount}}</td>
           <td class="px-2 py-2 flex">
             <button
               class="flex cursor-pointer items-center justify-center font-medium text-blue-600 dark:text-blue-500 hover:underline edit_button mr-5"
@@ -71,12 +85,14 @@
                 <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
                 <path d="m15 5 4 4" />
               </svg>
-              Editar</button>
+              Editar
+            </button>
             <button
               class="flex cursor-pointer items-center justify-center font-medium text-red-600 dark:text-red-500 hover:underline delete_button"
               id="{{_id}}"
               slug="{{slug}}"
-            ><svg
+            >
+              <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="14"
                 height="14"
@@ -94,7 +110,8 @@
                 <line x1="10" x2="10" y1="11" y2="17" />
                 <line x1="14" x2="14" y1="11" y2="17" />
               </svg>
-              Eliminar</button>
+              Eliminar
+            </button>
           </td>
         </tr>
       {{/each}}
@@ -107,11 +124,11 @@
     {{#each pages}}
       <li>
         <a
-          href="/admin/productos?page={{this}}"
+          href="/admin/ingresos?page={{this}}"
           class="px-3 py-1 bg-[var(--main-bg-dark)] text-[var(--main-text-dark-2)] rounded-md hover:bg-[var(--main-dark-5)]"
         >{{this}}</a>
       </li>
     {{/each}}
   </ul>
 </div>
-<script type="module" src="/js/admin/products.js"></script>
+<script type="module" src="/js/admin/invoices.js"></script>

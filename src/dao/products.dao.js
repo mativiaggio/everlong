@@ -52,7 +52,6 @@ export default class ProductsDAO {
     logger.info("id " + productSlug);
     try {
       const product = await Product.findOne({ slug: productSlug }).lean();
-      console.log("Product in DAO: " + product);
       if (product) {
         return product;
       } else {

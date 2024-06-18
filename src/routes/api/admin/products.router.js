@@ -15,7 +15,7 @@ const publicAccess = (req, res, next) => {
 // Middleware for private access
 const privateAccess = async (req, res, next) => {
   if (!req.session.user) {
-    const users = await userController.getAllAdmins();
+    const users = await userController.isThereAnAdmin();
 
     if (users.status == "error") {
       logger.error(users.message);

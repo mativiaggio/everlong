@@ -63,6 +63,61 @@ class UserDAO {
       throw error;
     }
   }
+
+  // async getAllAdmins(limit, page) {
+  //   try {
+  //     const admins = await User.find()
+  //       .limit(limit)
+  //       .skip((page - 1) * limit)
+  //       .lean();
+
+  //     return admins;
+  //   } catch (error) {
+  //     logger.error("Error al obtener categorias:", error);
+  //     throw error;
+  //   }
+  // }
+  async getAllUsers(limit, page, sortOptions = {}, filter = {}) {
+    try {
+      // Prioritize users with the "admin" role
+      const users = await User.aggregate([
+        // {
+        //   $addFields: {
+        //     isAdmin: { $in: ["admin", "$roles"] },
+        //   },
+        // },
+        {
+          $sort: {
+            isAdmin: -1,
+            ...sortOptions,
+          },
+        },
+        {
+          $match: filter,
+        },
+        {
+          $skip: (page - 1) * limit,
+        },
+        {
+          $limit: limit,
+        },
+      ]).exec();
+
+      return users;
+    } catch (error) {
+      logger.error("Error al obtener categorias:", error);
+      throw error;
+    }
+  }
+  async countUsers(filter) {
+    try {
+      const count = await User.countDocuments(filter);
+      return count;
+    } catch (error) {
+      logger.error("Error contando administradores:", error);
+      throw error;
+    }
+  }
 }
 
 export default UserDAO;

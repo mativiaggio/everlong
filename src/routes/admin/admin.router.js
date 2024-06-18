@@ -3,11 +3,13 @@ import { logger } from "../../utils/logger.js";
 import UserController from "../../controllers/user.controller.js";
 import ProductsController from "../../controllers/products.controller.js";
 import CategoriesController from "../../controllers/categories.controller.js";
+import InvoicesController from "../../controllers/invoices.controller.js";
 
 const router = Router();
 const userController = new UserController();
 const productsController = new ProductsController();
 const categoriesController = new CategoriesController();
+const invoicesController = new InvoicesController();
 
 // Middleware for public access
 const publicAccess = (req, res, next) => {
@@ -18,7 +20,7 @@ const publicAccess = (req, res, next) => {
 // Middleware for private access
 const privateAccess = async (req, res, next) => {
   if (!req.session.user) {
-    const users = await userController.getAllAdmins();
+    const users = await userController.isThereAnAdmin();
 
     if (users.status == "error") {
       logger.error(users.message);
@@ -37,7 +39,7 @@ router.get("/", privateAccess, (req, res) => {
 });
 
 router.get("/register", publicAccess, async (req, res) => {
-  const admins = await userController.getAllAdmins();
+  const admins = await userController.isThereAnAdmin();
   if (admins.status === "error") {
     res.render("admin/register");
   } else {
@@ -58,7 +60,7 @@ router.get("/login-fail", publicAccess, (req, res) => {
   res.render("admin/unauthorized", { title, description });
 });
 
-router.get("/products", privateAccess, async (req, res) => {
+router.get("/productos", privateAccess, async (req, res) => {
   try {
     const title = "Productos";
     const description =
@@ -85,7 +87,7 @@ router.get("/products", privateAccess, async (req, res) => {
   }
 });
 
-router.get("/products/add-product", privateAccess, (req, res) => {
+router.get("/productos/agregar-producto", privateAccess, (req, res) => {
   const title = "Agregar Producto";
   const description = "Agrega un producto nuevo a la base de datos";
   res.render("admin/add-product", {
@@ -100,7 +102,7 @@ router.get("/products/edit/:pslug", privateAccess, async (req, res) => {
   const description = "Edita un producto de la base de datos";
 
   const productData = await productsController.findBySlug(req.params.pslug);
-  console.log("Product in Router: ", productData);
+
   res.render("admin/edit-product", {
     isLoggedIn: true,
     title,
@@ -123,7 +125,6 @@ router.get("/categorias", privateAccess, async (req, res) => {
     const totalPages = Math.ceil(totalCategories / categoriesPerPage);
     const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
-    logger.info("Categorias: " + categories + JSON.stringify(categories));
     res.render("admin/categories", {
       isLoggedIn: true,
       title,
@@ -132,8 +133,64 @@ router.get("/categorias", privateAccess, async (req, res) => {
       pages,
     });
   } catch (error) {
-    logger.error("Error al obtener productos:", error);
-    res.status(500).send("Error al obtener productos");
+    logger.error("Error al obtener categorias:", error);
+    res.status(500).send("Error al obtener categorias");
+  }
+});
+
+router.get("/usuarios", privateAccess, async (req, res) => {
+  try {
+    const title = "Administradores";
+    const description =
+      "Visualiza, actualiza o elimina administradores cargados";
+    const limit = req.query.limit || 10;
+    const response = await userController.getAllUsers(req, res, limit);
+    const admins = response.ResultSet;
+
+    const totalAdmins = await userController.countUsers();
+    const adminsPerPage = 10;
+    const totalPages = Math.ceil(totalAdmins / adminsPerPage);
+    const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+    res.render("admin/users", {
+      isLoggedIn: true,
+      title,
+      description,
+      admins,
+      pages,
+    });
+  } catch (error) {
+    logger.error("Error al obtener usuarios:", error);
+    res.status(500).send("Error al obtener usuarios");
+  }
+});
+
+router.get("/ingresos", privateAccess, async (req, res) => {
+  try {
+    const title = "Administradores";
+    const description =
+      "Visualiza, actualiza o elimina administradores cargados";
+    const limit = req.query.limit || 10;
+    const response = await invoicesController.getAllInvoices(req, res, limit);
+    const invoices = response.ResultSet;
+
+    console.log(invoices);
+
+    const totalInvoices = await invoicesController.countInvoices();
+    const invoicesPerPage = 10;
+    const totalPages = Math.ceil(totalInvoices / invoicesPerPage);
+    const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+    res.render("admin/invoices", {
+      isLoggedIn: true,
+      title,
+      description,
+      invoices,
+      pages,
+    });
+  } catch (error) {
+    logger.error("Error al obtener ingresos:", error);
+    res.status(500).send("Error al obtener ingresos");
   }
 });
 
