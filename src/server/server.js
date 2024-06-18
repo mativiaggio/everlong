@@ -13,6 +13,8 @@ import { PORT, MONGO_URI } from "../config/env.js";
 import { logger } from "../utils/logger.js";
 import { setLayout } from "../middlewares/setLayout.middleware.js";
 import hbs from "../config/handlebars.config.js";
+import path from "path";
+import { fileURLToPath } from "url";
 
 // Importing routes
 import adminRouter from "../routes/admin/admin.router.js";
@@ -58,9 +60,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(getPath("public")));
 
+// app.engine("handlebars", hbs.engine);
+// app.set("view engine", "handlebars");
+// app.set("views", `${getPath("views")}`);
+
+const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
+const __dirname = path.dirname(__filename); // get the name of the directory
+
+const viewsPath = path.resolve(__dirname, "../views");
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
-app.set("views", `${getPath("views")}`);
+app.set("views", viewsPath);
 
 app.use(setLayout);
 
