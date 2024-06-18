@@ -58,7 +58,9 @@ app.use(passport.session());
 app.use(addLogger);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static(getPath("public")));
+
+const publicPath = path.resolve(__dirname, "../public");
+app.use(express.static(publicPath));
 
 // app.engine("handlebars", hbs.engine);
 // app.set("view engine", "handlebars");
