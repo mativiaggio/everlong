@@ -22,6 +22,7 @@ import clientRouter from "../routes/client/client.router.js";
 import adminSessionRouter from "../routes/api/admin/session.router.js";
 import adminProductsRouter from "../routes/api/admin/products.router.js";
 import adminUserRouter from "../routes/api/admin/user.router.js";
+import adminEnterpriseRouter from "../routes/api/admin/enterprise.router.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -80,6 +81,7 @@ app.use(setLayout);
 app.use("/api/admin/sessions", adminSessionRouter);
 app.use("/api/admin/products", adminProductsRouter);
 app.use("/api/admin/users", adminUserRouter);
+app.use("/api/admin/enterprise", adminEnterpriseRouter);
 app.use("/admin", adminRouter);
 app.use("/", clientRouter);
 

@@ -63,7 +63,7 @@ export default class ProductsController {
 
       return result;
     } catch (error) {
-      console.error("Error in /products route:", error);
+      logger.error("Error in /products route:", error);
       res
         .status(500)
         .json({ status: "error", message: "Internal server error" });
@@ -83,7 +83,7 @@ export default class ProductsController {
       const product = await productsDAO.getProductById(productId);
       return product;
     } catch (error) {
-      console.error("Error getting product by ID:", error);
+      logger.error("Error getting product by ID:", error);
       throw error;
     }
   }
@@ -94,7 +94,7 @@ export default class ProductsController {
       const product = await productsDAO.getProductBySlug(product_slug);
       return product;
     } catch (error) {
-      console.error("Error getting product by Slug:", error);
+      logger.error("Error getting product by Slug:", error);
       throw error;
     }
   }
@@ -141,7 +141,7 @@ export default class ProductsController {
 
       return res.json(result);
     } catch (error) {
-      console.error("Error adding product:", error);
+      logger.error("Error adding product:", error);
       return res.status(500).json({ error: "Error adding product" });
     }
   }
@@ -172,7 +172,7 @@ export default class ProductsController {
 
       return res.json(result);
     } catch (error) {
-      console.error("Error updating product:", error);
+      logger.error("Error updating product:", error);
       return res.status(500).json({ error: "Error updating product" });
     }
   }
@@ -187,7 +187,7 @@ export default class ProductsController {
       }
       return res.json(result);
     } catch (error) {
-      console.error("Error deleting product:", error);
+      logger.error("Error deleting product:", error);
       return res.status(500).json({ error: "Error deleting product" });
     }
   }
@@ -218,7 +218,7 @@ export default class ProductsController {
         },
       });
     } catch (error) {
-      console.error("Error fetching product stats:", error);
+      logger.error("Error fetching product stats:", error);
       res
         .status(500)
         .json({ status: "error", message: "Internal server error" });

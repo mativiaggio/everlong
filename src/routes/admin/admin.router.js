@@ -4,12 +4,16 @@ import UserController from "../../controllers/user.controller.js";
 import ProductsController from "../../controllers/products.controller.js";
 import CategoriesController from "../../controllers/categories.controller.js";
 import InvoicesController from "../../controllers/invoices.controller.js";
+import ReceiptsController from "../../controllers/receipts.controller.js";
+import EnterpriseController from "../../controllers/enterprise.controller.js";
 
 const router = Router();
 const userController = new UserController();
 const productsController = new ProductsController();
 const categoriesController = new CategoriesController();
 const invoicesController = new InvoicesController();
+const receiptsController = new ReceiptsController();
+const enterpriseController = new EnterpriseController();
 
 // Middleware for public access
 const publicAccess = (req, res, next) => {
@@ -102,7 +106,7 @@ router.get("/products/edit/:pslug", privateAccess, async (req, res) => {
   const description = "Edita un producto de la base de datos";
 
   const productData = await productsController.findBySlug(req.params.pslug);
-
+  console.log(productData);
   res.render("admin/edit-product", {
     isLoggedIn: true,
     title,
@@ -140,9 +144,8 @@ router.get("/categorias", privateAccess, async (req, res) => {
 
 router.get("/usuarios", privateAccess, async (req, res) => {
   try {
-    const title = "Administradores";
-    const description =
-      "Visualiza, actualiza o elimina administradores cargados";
+    const title = "Usuarios";
+    const description = "Visualiza, actualiza o elimina usuarios cargados";
     const limit = req.query.limit || 10;
     const response = await userController.getAllUsers(req, res, limit);
     const admins = response.ResultSet;
@@ -167,9 +170,9 @@ router.get("/usuarios", privateAccess, async (req, res) => {
 
 router.get("/ingresos", privateAccess, async (req, res) => {
   try {
-    const title = "Administradores";
+    const title = "Ingresos";
     const description =
-      "Visualiza, actualiza o elimina administradores cargados";
+      "Visualiza, actualiza o elimina las facturas de compra cargadas";
     const limit = req.query.limit || 10;
     const response = await invoicesController.getAllInvoices(req, res, limit);
     const invoices = response.ResultSet;
@@ -192,6 +195,50 @@ router.get("/ingresos", privateAccess, async (req, res) => {
     logger.error("Error al obtener ingresos:", error);
     res.status(500).send("Error al obtener ingresos");
   }
+});
+
+router.get("/egresos", privateAccess, async (req, res) => {
+  try {
+    const title = "Egresos";
+    const description =
+      "Visualiza, actualiza o elimina las facturas de venta cargadas";
+    const limit = req.query.limit || 10;
+    const response = await receiptsController.getAllReceipts(req, res, limit);
+    const receipts = response.ResultSet;
+
+    console.log(receipts);
+
+    const totalReceipts = await receiptsController.countReceipts();
+    const receiptsPerPage = 10;
+    const totalPages = Math.ceil(totalReceipts / receiptsPerPage);
+    const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+    res.render("admin/receipts", {
+      isLoggedIn: true,
+      title,
+      description,
+      receipts,
+      pages,
+    });
+  } catch (error) {
+    logger.error("Error al obtener egresos:", error);
+    res.status(500).send("Error al obtener egresos");
+  }
+});
+
+router.get("/empresa", privateAccess, async (req, res) => {
+  const title = "Empresa";
+  const description = "Editar Información de la empresa";
+
+  const data = await enterpriseController.getEnterpriseData();
+  const enterpriseData = data[0].toJSON();
+  console.log(enterpriseData);
+  res.render("admin/enterprise", {
+    isLoggedIn: true,
+    title,
+    description,
+    enterpriseData,
+  });
 });
 
 export default router;

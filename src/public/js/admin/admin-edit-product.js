@@ -49,7 +49,6 @@ $("#edit-product-button").on("click", function (e) {
       description: $("#description").val(),
       _status: "active",
     };
-    debugger;
     fetch("/api/admin/products", {
       method: "POST",
       headers: {
