@@ -3,11 +3,12 @@ import { Router } from "express";
 const router = Router();
 
 router.get("/", (req, res) => {
-  res.render("client/home");
+  const title = "Tienda Virtual";
+  res.render("client/home", { title });
 });
 
-router.get("/test", (req, res) => {
-  res.json({ test: "test" });
+router.get("/sobre-nosotros", (req, res) => {
+  res.render("client/about-us");
 });
 
 export default router;
