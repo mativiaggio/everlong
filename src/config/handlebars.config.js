@@ -29,6 +29,10 @@ const hbs = exphbs.create({
     eq: function (a, b) {
       return a === b;
     },
+    formatDate: function (date) {
+      const formattedDate = new Date(date).toLocaleDateString("es-ES");
+      return formattedDate;
+    },
   },
   defaultLayout: "main",
   layoutsDir: getPath("views/layouts"),

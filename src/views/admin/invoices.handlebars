@@ -10,71 +10,84 @@
   Agregar un ingreso
 </a>
 
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 min-w-max">
-    <thead class="text-xs text-[var(--main-text-dark-2)] uppercase bg-[var(--main-bg-dark)]">
-      <tr>
-        <th scope="col" class="px-2 py-3">Número</th>
-        <th scope="col" class="px-2 py-3">Fecha de Emisión</th>
-        <th scope="col" class="px-2 py-3">Nombre del Emisor</th>
-        <th scope="col" class="px-2 py-3">Dirección del Emisor</th>
-        <th scope="col" class="px-2 py-3">CUIT del Emisor</th>
-        <th scope="col" class="px-2 py-3">Responsabilidad IVA</th>
-        <th scope="col" class="px-2 py-3">Nombre del Receptor</th>
-        <th scope="col" class="px-2 py-3">Dirección del Receptor</th>
-        <th scope="col" class="px-2 py-3">CUIT del Receptor</th>
-        <th scope="col" class="px-2 py-3">Monto Total</th>
-        <th scope="col" class="px-2 py-3">Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each invoices}}
-      <tr
-        class="even:bg-[var(--main-light-1)] even:dark:bg-[var(--main-dark-7)] odd:bg-[var(--main-light-2)] odd:dark:bg-[var(--main-dark-3)] border-b dark:border-[var(--main-dark-10)]"
-        id="{{_id}}">
-        <td scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{number}}</td>
-        <td class="px-2 py-2">{{issueDate}}</td>
-        <td class="px-2 py-2">{{emitter.name}}</td>
-        <td class="px-2 py-2">{{emitter.address}}</td>
-        <td class="px-2 py-2">{{emitter.cuit}}</td>
-        <td class="px-2 py-2">{{emitter.ivaResponsibility}}</td>
-        <td class="px-2 py-2">{{receiver.name}}</td>
-        <td class="px-2 py-2">{{receiver.address}}</td>
-        <td class="px-2 py-2">{{receiver.cuit}}</td>
-        <td class="px-2 py-2">${{totalAmount}}</td>
-        <td class="px-2 py-2 flex">
-          <button
-            class="flex cursor-pointer items-center justify-center font-medium text-blue-600 dark:text-blue-500 hover:underline edit_button mr-5"
-            id="{{_id}}" slug="{{slug}}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-pencil">
-              <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
-              <path d="m15 5 4 4" />
-            </svg>
-            Editar
-          </button>
-          <button
-            class="flex cursor-pointer items-center justify-center font-medium text-red-600 dark:text-red-500 hover:underline delete_button"
-            id="{{_id}}" slug="{{slug}}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-trash-2">
-              <path d="M3 6h18" />
-              <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-              <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-              <line x1="10" x2="10" y1="11" y2="17" />
-              <line x1="14" x2="14" y1="11" y2="17" />
-            </svg>
-            Eliminar
-          </button>
-        </td>
-      </tr>
-      {{/each}}
-    </tbody>
-  </table>
+<div class="flex flex-col">
+  {{!-- <div class="flex w-full mb-2">
+    <button
+      class="px-2 py-2 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-blue-900 dark:text-blue-400 ml-auto mr-2"
+      id="print_record_button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        class="lucide lucide-printer">
+        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+        <path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6" />
+        <rect x="6" y="14" width="12" height="8" rx="1" />
+      </svg>
+      Imprimir
+    </button>
+    <button
+      class="px-2 py-2 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-yellow-100 text-yellow-800 hover:bg-yellow-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-yellow-900 dark:text-yellow-500 dark:hover:text-yellow-400 mr-2"
+      id="edit_record_button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        class="lucide lucide-pencil">
+        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+        <path d="m15 5 4 4" />
+      </svg>
+      Editar
+    </button>
+    <button
+      class="px-2 py-2 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-red-100 text-red-800 hover:bg-red-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-red-900 dark:text-red-500 dark:hover:text-red-400"
+      id="delete_record_button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        class="lucide lucide-trash-2">
+        <path d="M3 6h18" />
+        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+        <line x1="10" x2="10" y1="11" y2="17" />
+        <line x1="14" x2="14" y1="11" y2="17" />
+      </svg>
+      Eliminar
+    </button>
+  </div> --}}
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 min-w-max">
+      <thead class="text-xs text-[var(--main-text-dark-2)] uppercase bg-[var(--main-bg-dark)]">
+        <tr>
+          <th scope="col" class="px-2 py-3">Número</th>
+          <th scope="col" class="px-2 py-3">Fecha de Emisión</th>
+          <th scope="col" class="px-2 py-3">Nombre del Emisor</th>
+          <th scope="col" class="px-2 py-3">Dirección del Emisor</th>
+          <th scope="col" class="px-2 py-3">CUIT del Emisor</th>
+          <th scope="col" class="px-2 py-3">Responsabilidad IVA</th>
+          <th scope="col" class="px-2 py-3">Nombre del Receptor</th>
+          <th scope="col" class="px-2 py-3">Dirección del Receptor</th>
+          <th scope="col" class="px-2 py-3">CUIT del Receptor</th>
+          <th scope="col" class="px-2 py-3">Monto Total</th>
+          {{! <th scope="col" class="px-2 py-3">Acciones</th> }}
+        </tr>
+      </thead>
+      <tbody>
+        {{#each invoices}}
+        <tr
+          class="even:bg-[var(--main-light-1)] even:dark:bg-[var(--main-dark-7)] odd:bg-[var(--main-light-2)] odd:dark:bg-[var(--main-dark-3)] border-b dark:border-[var(--main-dark-10)] cursor-pointer"
+          id="{{_id}}" slug="{{slug}}">
+          <td scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{number}}</td>
+          <td class="px-2 py-2">{{formatDate issueDate}}</td>
+          <td class="px-2 py-2">{{emitter.name}}</td>
+          <td class="px-2 py-2">{{emitter.address}}</td>
+          <td class="px-2 py-2">{{emitter.cuit}}</td>
+          <td class="px-2 py-2">{{emitter.ivaResponsibility}}</td>
+          <td class="px-2 py-2">{{receiver.name}}</td>
+          <td class="px-2 py-2">{{receiver.address}}</td>
+          <td class="px-2 py-2">{{receiver.cuit}}</td>
+          <td class="px-2 py-2">${{totalAmount}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
 </div>
-
 <div class="flex justify-center mt-4">
   <ul class="flex space-x-2">
     {{#each pages}}

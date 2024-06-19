@@ -41,6 +41,9 @@
   --error-border-color: #fca5a5;
   --error-text-color: #991b1b;
   --error-placeholder-color: #cc5c5c;
+
+  --active-tr-color: #c7daff;
+  --active-text-color: #121212;
 }
 
 .input-tiene-error:not([type="number"]) {
@@ -61,4 +64,25 @@
 .input-tiene-error > span,
 .input-tiene-error > input::placeholder {
   color: var(--error-placeholder-color) !important;
+}
+
+.active {
+  background-color: var(--active-tr-color) !important;
+  color: var(--active-text-color) !important;
+}
+
+.active * {
+  color: var(--active-text-color) !important;
+}
+
+.context-menu-ul > .context-menu-item {
+  @apply cursor-pointer  transition-all ease-linear  p-2 w-full h-full text-[var(--main-text-light)] dark:text-[var(--main-text-dark)] relative inline-flex items-center;
+}
+
+.context-menu-ul > .context-menu-item:not(:last-child) {
+  @apply border-b border-solid border-[var(--main-light-2)] dark:border-[var(--main-dark-3)];
+}
+
+.context-menu-item > svg {
+  @apply mr-2;
 }
