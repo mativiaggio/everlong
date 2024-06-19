@@ -1,20 +1,20 @@
 import mongoose, { Schema } from "mongoose";
 
-const invoiceSchema = new Schema(
+const receiptSchema = new Schema(
   {
     number: { type: String, required: true, unique: true }, // Número de factura único
     issueDate: { type: Date, required: true }, // Fecha de emisión de la factura
     type: { type: String, required: true }, // Tipo de factura (A, B, C, etc.)
-    emitter: {
-      name: { type: String, required: true }, // Nombre o razón social del emisor
-      address: { type: String, required: true }, // Domicilio fiscal del emisor
-      cuit: { type: String, required: true }, // CUIT del emisor
-      ivaResponsibility: { type: String, required: true }, // Responsabilidad frente al IVA del emisor
+    supplier: {
+      name: { type: String, required: true }, // Nombre o razón social del proveedor
+      address: { type: String }, // Domicilio fiscal del proveedor
+      cuit: { type: String, required: true }, // CUIT del proveedor
+      ivaResponsibility: { type: String }, // Responsabilidad frente al IVA del proveedor
     },
-    receiver: {
-      name: { type: String, required: true }, // Nombre o razón social del receptor
-      cuit: { type: String, required: true }, // CUIT o CUIL del receptor
-      address: { type: String }, // Domicilio del receptor (opcional)
+    purchaser: {
+      name: { type: String, required: true }, // Nombre o razón social del comprador
+      cuit: { type: String, required: true }, // CUIT o CUIL del comprador
+      address: { type: String }, // Domicilio del comprador (opcional)
     },
     items: [
       {
@@ -35,6 +35,5 @@ const invoiceSchema = new Schema(
   }
 );
 
-const Invoice = mongoose.model("Invoice", invoiceSchema);
-
-export default Invoice;
+const Receipt = mongoose.model("Receipt", receiptSchema);
+export default Receipt;

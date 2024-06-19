@@ -26,6 +26,9 @@ const hbs = exphbs.create({
         })
         .join("");
     },
+    eq: function (a, b) {
+      return a === b;
+    },
   },
   defaultLayout: "main",
   layoutsDir: getPath("views/layouts"),
