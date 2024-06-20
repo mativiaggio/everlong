@@ -10,9 +10,10 @@ import EnterpriseController from "../../controllers/enterprise.controller.js";
 
 // Constantes
 import {
-  basic_print_edit_delete,
+  adminSidebarItems,
   user_context,
   categories_context,
+  basic_print_edit_delete,
 } from "../../utils/constants.js";
 
 const router = Router();
@@ -48,7 +49,12 @@ const privateAccess = async (req, res, next) => {
 router.get("/", privateAccess, (req, res) => {
   const title = "Inicio";
   const description = "Este es el admin panel de Everlong";
-  res.render("admin/home", { isLoggedIn: true, title, description });
+  res.render("admin/home", {
+    isLoggedIn: true,
+    adminSidebarItems,
+    title,
+    description,
+  });
 });
 
 router.get("/register", publicAccess, async (req, res) => {
@@ -90,6 +96,7 @@ router.get("/productos", privateAccess, async (req, res) => {
 
     res.render("admin/products", {
       isLoggedIn: true,
+      adminSidebarItems,
       contextMenu,
       title,
       description,
@@ -107,6 +114,7 @@ router.get("/productos/agregar-producto", privateAccess, (req, res) => {
   const description = "Agrega un producto nuevo a la base de datos";
   res.render("admin/add-product", {
     isLoggedIn: true,
+    adminSidebarItems,
     title,
     description,
   });
@@ -120,6 +128,7 @@ router.get("/products/edit/:pslug", privateAccess, async (req, res) => {
   console.log(productData);
   res.render("admin/edit-product", {
     isLoggedIn: true,
+    adminSidebarItems,
     title,
     description,
     productData,
@@ -142,6 +151,7 @@ router.get("/categorias", privateAccess, async (req, res) => {
     const contextMenu = categories_context;
     res.render("admin/categories", {
       isLoggedIn: true,
+      adminSidebarItems,
       contextMenu,
       title,
       description,
@@ -169,6 +179,7 @@ router.get("/usuarios", privateAccess, async (req, res) => {
     const contextMenu = user_context;
     res.render("admin/users", {
       isLoggedIn: true,
+      adminSidebarItems,
       contextMenu,
       title,
       description,
@@ -201,6 +212,7 @@ router.get("/ordenes-compra", privateAccess, async (req, res) => {
 
     res.render("admin/buyingOrders", {
       isLoggedIn: true,
+      adminSidebarItems,
       contextMenu,
       title,
       description,
@@ -232,6 +244,7 @@ router.get("/ingresos", privateAccess, async (req, res) => {
 
     res.render("admin/invoices", {
       isLoggedIn: true,
+      adminSidebarItems,
       contextMenu,
       title,
       description,
@@ -263,6 +276,7 @@ router.get("/egresos", privateAccess, async (req, res) => {
 
     res.render("admin/receipts", {
       isLoggedIn: true,
+      adminSidebarItems,
       contextMenu,
       title,
       description,
@@ -284,6 +298,7 @@ router.get("/empresa", privateAccess, async (req, res) => {
   console.log(enterpriseData);
   res.render("admin/enterprise", {
     isLoggedIn: true,
+    adminSidebarItems,
     title,
     description,
     enterpriseData,

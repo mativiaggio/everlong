@@ -1,3 +1,7 @@
+$("table").contextMenuPlugin({
+  menuSelector: "#contextMenu",
+});
+
 $(".edit_button").on("click", function () {
   window.location.replace(`/admin/categories/edit/${$(this).attr("slug")}`);
 });
