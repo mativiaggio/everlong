@@ -3,14 +3,24 @@ import { logger } from "../../utils/logger.js";
 import UserController from "../../controllers/user.controller.js";
 import ProductsController from "../../controllers/products.controller.js";
 import CategoriesController from "../../controllers/categories.controller.js";
+import BuyingOrdersController from "../../controllers/buyingOrders.controller.js";
 import InvoicesController from "../../controllers/invoices.controller.js";
 import ReceiptsController from "../../controllers/receipts.controller.js";
 import EnterpriseController from "../../controllers/enterprise.controller.js";
+
+// Constantes
+import {
+  adminSidebarItems,
+  user_context,
+  categories_context,
+  basic_print_edit_delete,
+} from "../../utils/constants.js";
 
 const router = Router();
 const userController = new UserController();
 const productsController = new ProductsController();
 const categoriesController = new CategoriesController();
+const buyingOrdersController = new BuyingOrdersController();
 const invoicesController = new InvoicesController();
 const receiptsController = new ReceiptsController();
 const enterpriseController = new EnterpriseController();
@@ -39,7 +49,12 @@ const privateAccess = async (req, res, next) => {
 router.get("/", privateAccess, (req, res) => {
   const title = "Inicio";
   const description = "Este es el admin panel de Everlong";
-  res.render("admin/home", { isLoggedIn: true, title, description });
+  res.render("admin/home", {
+    isLoggedIn: true,
+    adminSidebarItems,
+    title,
+    description,
+  });
 });
 
 router.get("/register", publicAccess, async (req, res) => {
@@ -77,9 +92,12 @@ router.get("/productos", privateAccess, async (req, res) => {
     const productsPerPage = 10;
     const totalPages = Math.ceil(totalProducts / productsPerPage);
     const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+    const contextMenu = basic_print_edit_delete;
 
     res.render("admin/products", {
       isLoggedIn: true,
+      adminSidebarItems,
+      contextMenu,
       title,
       description,
       products,
@@ -96,6 +114,7 @@ router.get("/productos/agregar-producto", privateAccess, (req, res) => {
   const description = "Agrega un producto nuevo a la base de datos";
   res.render("admin/add-product", {
     isLoggedIn: true,
+    adminSidebarItems,
     title,
     description,
   });
@@ -109,6 +128,7 @@ router.get("/products/edit/:pslug", privateAccess, async (req, res) => {
   console.log(productData);
   res.render("admin/edit-product", {
     isLoggedIn: true,
+    adminSidebarItems,
     title,
     description,
     productData,
@@ -128,9 +148,11 @@ router.get("/categorias", privateAccess, async (req, res) => {
     const categoriesPerPage = 10;
     const totalPages = Math.ceil(totalCategories / categoriesPerPage);
     const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-
+    const contextMenu = categories_context;
     res.render("admin/categories", {
       isLoggedIn: true,
+      adminSidebarItems,
+      contextMenu,
       title,
       description,
       categories,
@@ -154,9 +176,11 @@ router.get("/usuarios", privateAccess, async (req, res) => {
     const adminsPerPage = 10;
     const totalPages = Math.ceil(totalAdmins / adminsPerPage);
     const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-
+    const contextMenu = user_context;
     res.render("admin/users", {
       isLoggedIn: true,
+      adminSidebarItems,
+      contextMenu,
       title,
       description,
       admins,
@@ -165,6 +189,39 @@ router.get("/usuarios", privateAccess, async (req, res) => {
   } catch (error) {
     logger.error("Error al obtener usuarios:", error);
     res.status(500).send("Error al obtener usuarios");
+  }
+});
+
+router.get("/ordenes-compra", privateAccess, async (req, res) => {
+  try {
+    const title = "Ordenes de Compra";
+    const description =
+      "Visualiza, actualiza o elimina las ordenes de compra cargadas";
+    const limit = req.query.limit || 10;
+    const response = await buyingOrdersController.getAllBuyingOrders(
+      req,
+      res,
+      limit
+    );
+    const buyingOrders = response.ResultSet;
+    const totalBuyingOrders = await buyingOrdersController.countBuyingOrders();
+    const buyingOrdersPerPage = 10;
+    const totalPages = Math.ceil(totalBuyingOrders / buyingOrdersPerPage);
+    const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+    const contextMenu = basic_print_edit_delete;
+
+    res.render("admin/buyingOrders", {
+      isLoggedIn: true,
+      adminSidebarItems,
+      contextMenu,
+      title,
+      description,
+      buyingOrders,
+      pages,
+    });
+  } catch (error) {
+    logger.error("Error al obtener egresos:", error);
+    res.status(500).send("Error al obtener egresos");
   }
 });
 
@@ -183,9 +240,12 @@ router.get("/ingresos", privateAccess, async (req, res) => {
     const invoicesPerPage = 10;
     const totalPages = Math.ceil(totalInvoices / invoicesPerPage);
     const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+    const contextMenu = basic_print_edit_delete;
 
     res.render("admin/invoices", {
       isLoggedIn: true,
+      adminSidebarItems,
+      contextMenu,
       title,
       description,
       invoices,
@@ -212,9 +272,12 @@ router.get("/egresos", privateAccess, async (req, res) => {
     const receiptsPerPage = 10;
     const totalPages = Math.ceil(totalReceipts / receiptsPerPage);
     const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+    const contextMenu = basic_print_edit_delete;
 
     res.render("admin/receipts", {
       isLoggedIn: true,
+      adminSidebarItems,
+      contextMenu,
       title,
       description,
       receipts,
@@ -235,6 +298,7 @@ router.get("/empresa", privateAccess, async (req, res) => {
   console.log(enterpriseData);
   res.render("admin/enterprise", {
     isLoggedIn: true,
+    adminSidebarItems,
     title,
     description,
     enterpriseData,

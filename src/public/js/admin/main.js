@@ -1,3 +1,6 @@
+import { loadScripts } from "../functions.js";
+loadScripts();
+
 $("#logout").click(function () {
   fetch("/api/admin/sessions/logout", {
     method: "GET",

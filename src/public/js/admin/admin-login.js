@@ -25,54 +25,32 @@ $("#password, #email").on("input propertychanges", function () {
   }
 });
 
-// loginForm.on("submit", function (event) {
-//   event.preventDefault();
-//   event.stopPropagation();
-
-//   const formElement = loginForm[0];
-//   const formData = new FormData(formElement);
-
-//   $("#submit").prop("disabled", true);
-
-//   const obj = {};
-//   formData.forEach((value, key) => {
-//     obj[key] = value;
-//   });
-
-//   fetch("/api/admin/sessions/login", {
-//     method: "POST",
-//     body: JSON.stringify(obj),
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//   })
-//     .then((res) => {
-//       debugger;
-//       switch (res.status) {
-//         case 401:
-//           window.location.replace("/admin/login-fail");
-//           break;
-//         case 200:
-//           window.location.replace("/admin");
-//           break;
-//       }
-//     })
-//     .catch((error) => console.error("Error:", error));
-// });
+const email = localStorage.getItem("email");
+if (email) {
+  $("#email").val(email);
+  $("#remember").prop("checked", true);
+} else {
+  $("#remember").prop("checked", false);
+}
 
 loginForm.on("submit", function (event) {
   event.preventDefault();
   event.stopPropagation();
 
-  const formElement = loginForm[0];
-  const formData = new FormData(formElement);
-
   $("#submit").prop("disabled", true);
 
+  const formElement = loginForm[0];
+  const formData = new FormData(formElement);
   const obj = {};
   formData.forEach((value, key) => {
     obj[key] = value;
   });
+
+  if ($("#remember").prop("checked") === true) {
+    localStorage.setItem("email", obj.email);
+  } else {
+    localStorage.removeItem("email");
+  }
 
   fetch("/api/admin/sessions/login", {
     method: "POST",
