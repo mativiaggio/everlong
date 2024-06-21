@@ -2,6 +2,15 @@ import Category from "../models/category.js";
 import { logger } from "../utils/logger.js";
 
 export default class CategoriesDAO {
+  async getAll() {
+    try {
+      const categories = await Category.find().lean();
+      return categories;
+    } catch (error) {
+      logger.error("Error al obtener categorias:", error);
+      throw error;
+    }
+  }
   async getCategories(limit, page) {
     try {
       const categories = await Category.find()
@@ -14,6 +23,22 @@ export default class CategoriesDAO {
     } catch (error) {
       logger.error("Error al obtener categorias:", error);
       throw error;
+    }
+  }
+
+  async getCategoryBySlug(categorySlug) {
+    logger.info("id " + categorySlug);
+    try {
+      const category = await Category.findOne({ slug: categorySlug }).lean();
+      if (category) {
+        return category;
+      } else {
+        logger.error("Categoría no encontrada");
+        return null;
+      }
+    } catch (error) {
+      logger.error("Error al obtener la categoría:", error);
+      return null;
     }
   }
   async countCategories(filter) {

@@ -4,36 +4,13 @@ $("#slug").on("input", function () {
   });
 });
 
-$("#edit-product-button").on("click", function (e) {
+$("#product-form").on("submit", function (e) {
   e.preventDefault();
-  let required_flad = false;
-  $("#product-form")
-    .find("input")
-    .each(function () {
-      if (
-        ($(this).attr("type") === "text" && $(this).val() === "") ||
-        ($(this).attr("type") === "number" &&
-          ($(this).val() === "0" || $(this).val() === ""))
-      ) {
-        if ($(this).attr("id") === "price") {
-          $(this).closest("div").addClass("input-tiene-error");
-          required_flad = true;
-        } else {
-          $(this).addClass("input-tiene-error");
-          required_flad = true;
-        }
-      } else {
-        $(this).removeClass("input-tiene-error");
 
-        if ($(this).attr("id") === "price") {
-          $(this).closest("div").removeClass("input-tiene-error");
-        } else {
-          $(this).removeClass("input-tiene-error");
-        }
-      }
-    });
+  let required_flag = false;
+  required_flag = $("#product-form").validateForm();
 
-  if (required_flad) {
+  if (required_flag) {
     $("#required_message").removeClass("hidden").addClass("flex");
   } else {
     // AQUI VA EL CODIGO DE ADD PRODUCT
@@ -49,8 +26,16 @@ $("#edit-product-button").on("click", function (e) {
       description: $("#description").val(),
       _status: "active",
     };
+
+    const formElement = $(this)[0];
+    const formData = new FormData(formElement);
+    const obj = {};
+    formData.forEach((value, key) => {
+      obj[key] = value;
+    });
+
     fetch("/api/admin/products", {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -64,7 +49,7 @@ $("#edit-product-button").on("click", function (e) {
       })
 
       .then((data) => {
-        window.location.href = "/admin/products";
+        window.location.href = "/admin/productos";
       })
       .catch((error) => {
         console.error("Error al agregar el producto:", error.message);

@@ -93,10 +93,11 @@
   </div>
   {{! CONTEXT MENU }}
   <div id="contextMenu"
-    class="hidden absolute bg-[var(--main-bg-light)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-light)] dark:text-[var(--main-text-light)] rounded-md shadow-xl overflow-hidden min-w-[200px]">
+    class="hidden absolute bg-[var(--main-bg-light)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-light)] dark:text-[var(--main-text-light)] rounded-md shadow-xl overflow-hidden min-w-[200px]"
+    screen="{{screen}}">
 
     {{#if contextMenu}}
-    <ul class="context-menu-ul flex flex-col rounded-md shadow-xl overflow-hidden p-2">
+    <ul id="context-menu-ul" class="context-menu-ul flex flex-col rounded-md shadow-xl overflow-hidden p-2">
       {{#each contextMenu}}
       <li class="context-menu-item {{classes}}" action="{{action}}">
         {{{icon}}} {{title}}

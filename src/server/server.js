@@ -23,6 +23,7 @@ import adminSessionRouter from "../routes/api/admin/session.router.js";
 import adminProductsRouter from "../routes/api/admin/products.router.js";
 import adminUserRouter from "../routes/api/admin/user.router.js";
 import adminEnterpriseRouter from "../routes/api/admin/enterprise.router.js";
+import adminInvoicesRouter from "../routes/api/admin/invoices.router.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -82,6 +83,7 @@ app.use("/api/admin/sessions", adminSessionRouter);
 app.use("/api/admin/products", adminProductsRouter);
 app.use("/api/admin/users", adminUserRouter);
 app.use("/api/admin/enterprise", adminEnterpriseRouter);
+app.use("/api/admin/invoices", adminInvoicesRouter);
 app.use("/admin", adminRouter);
 app.use("/", clientRouter);
 

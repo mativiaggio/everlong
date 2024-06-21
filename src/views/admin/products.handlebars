@@ -11,7 +11,7 @@
 </a>
 <div class="flex flex-col">
   <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400" id="products_output_table">
       <thead class="text-xs text-[var(--main-text-dark-2)] uppercase bg-[var(--main-bg-dark)]">
         <tr>
           <th scope="col" class="px-2 py-3 w-1/3">Nombre</th>
@@ -24,7 +24,7 @@
         {{#each products}}
         <tr
           class="even:bg-[var(--main-light-1)] even:dark:bg-[var(--main-dark-7)] odd:bg-[var(--main-light-2)] odd:dark:bg-[var(--main-dark-3)] border-b dark:border-[var(--main-dark-10)] cursor-pointer"
-          id="{{_id}}">
+          id="{{slug}}">
           <td scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{title}}</td>
           <td class="px-2 py-2">{{category}}</td>
           <td class="px-2 py-2">${{price}}</td>

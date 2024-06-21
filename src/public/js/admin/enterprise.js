@@ -14,7 +14,6 @@ function isVATPayer_handler() {
 $("#update-enterprise-button").on("click", function (event) {
   event.preventDefault();
 
-  debugger;
   const formData = $("#enterprise-form").serializeArray();
   const enterpriseData = {};
 

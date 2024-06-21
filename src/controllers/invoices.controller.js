@@ -62,4 +62,43 @@ export default class InvoicesController {
       throw error;
     }
   }
+
+  async getTotalInvoicesByMonth(req, res) {
+    try {
+      const data = await invoicesDAO.getTotalInvoicesByMonth();
+      // res.json(stats);
+      return { data };
+    } catch (error) {
+      logger.error("Error en getTotalInvoicesByMonth:", error);
+      res
+        .status(500)
+        .json({ status: "error", message: "Internal server error" });
+    }
+  }
+
+  async getTotalAmountByMonth(req, res) {
+    try {
+      const data = await invoicesDAO.getTotalAmountByMonth();
+      // res.json(stats);
+      return { data };
+    } catch (error) {
+      logger.error("Error en getTotalAmountByMonth:", error);
+      res
+        .status(500)
+        .json({ status: "error", message: "Internal server error" });
+    }
+  }
+
+  async getInvoicesByType(req, res) {
+    try {
+      const data = await invoicesDAO.getInvoicesByType();
+      // res.json(stats);
+      return { data };
+    } catch (error) {
+      logger.error("Error en getInvoicesByType:", error);
+      res
+        .status(500)
+        .json({ status: "error", message: "Internal server error" });
+    }
+  }
 }

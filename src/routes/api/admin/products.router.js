@@ -39,6 +39,16 @@ adminProductsRouter.post("/", privateAccess, async (req, res) => {
   }
 });
 
+adminProductsRouter.put("/", privateAccess, async (req, res) => {
+  try {
+    if (req.body.id) {
+      await productController.updateProduct(req, res);
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 adminProductsRouter.delete("/:pid", async (req, res) => {
   try {
     await productController.deleteProduct(req, res);

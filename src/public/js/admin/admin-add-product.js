@@ -2,42 +2,13 @@ const date = new Date();
 const formattedDate = date.toISOString().split("T")[0];
 $("#published_date").val(formattedDate);
 
-$("#slug").on("input", function () {
-  $(this).val(function (index, value) {
-    return value.replace(/\s+/g, "-");
-  });
-});
+$("#slug").noSpace();
 
 $("#add-product-button").on("click", function (e) {
   e.preventDefault();
-  let required_flad = false;
-  $("#product-form")
-    .find("input")
-    .each(function () {
-      if (
-        ($(this).attr("type") === "text" && $(this).val() === "") ||
-        ($(this).attr("type") === "number" &&
-          ($(this).val() === "0" || $(this).val() === ""))
-      ) {
-        if ($(this).attr("id") === "price") {
-          $(this).closest("div").addClass("input-tiene-error");
-          required_flad = true;
-        } else {
-          $(this).addClass("input-tiene-error");
-          required_flad = true;
-        }
-      } else {
-        $(this).removeClass("input-tiene-error");
+  let required_flag = $("#product-form").validateForm();
 
-        if ($(this).attr("id") === "price") {
-          $(this).closest("div").removeClass("input-tiene-error");
-        } else {
-          $(this).removeClass("input-tiene-error");
-        }
-      }
-    });
-
-  if (required_flad) {
+  if (required_flag) {
     $("#required_message").removeClass("hidden").addClass("flex");
   } else {
     // AQUI VA EL CODIGO DE ADD PRODUCT
@@ -53,7 +24,6 @@ $("#add-product-button").on("click", function (e) {
       _status: "active",
     };
 
-    debugger;
     fetch("/api/admin/products", {
       method: "POST",
       headers: {
