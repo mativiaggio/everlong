@@ -33,6 +33,9 @@ const hbs = exphbs.create({
       const formattedDate = new Date(date).toLocaleDateString("es-ES");
       return formattedDate;
     },
+    ifEquals: function (arg1, arg2, options) {
+      return arg1 == arg2 ? options.fn(this) : options.inverse(this);
+    },
   },
   defaultLayout: "main",
   layoutsDir: getPath("views/layouts"),

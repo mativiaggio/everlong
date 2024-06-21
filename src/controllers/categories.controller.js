@@ -5,6 +5,15 @@ import { logger } from "../utils/logger.js";
 const categoriesDAO = new CategoriesDAO();
 
 export default class CategoriesController {
+  async getAll() {
+    try {
+      const categories = await categoriesDAO.getAll();
+      return categories;
+    } catch (error) {
+      logger.error("Error getting categories:", error);
+    }
+  }
+
   async getCategories(req, res, limit) {
     try {
       const { page = 1, sort, query } = req.query;
@@ -56,6 +65,17 @@ export default class CategoriesController {
       res
         .status(500)
         .json({ status: "error", message: "Internal server error" });
+    }
+  }
+
+  async findBySlug(categorySlug) {
+    try {
+      const category_slug = categorySlug;
+      const category = await categoriesDAO.getCategoryBySlug(category_slug);
+      return category;
+    } catch (error) {
+      logger.error("Error getting category by Slug:", error);
+      throw error;
     }
   }
 

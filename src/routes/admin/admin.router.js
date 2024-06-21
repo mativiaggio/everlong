@@ -84,6 +84,7 @@ router.get("/productos", privateAccess, async (req, res) => {
     const title = "Productos";
     const description =
       "Visualiza, actualiza o elimina cualquiera de los productos cargados";
+    const screen = "products";
     const limit = req.query.limit || 10;
     const response = await productsController.getProducts(req, res, limit);
     const products = response.ResultSet;
@@ -97,6 +98,7 @@ router.get("/productos", privateAccess, async (req, res) => {
     res.render("admin/products", {
       isLoggedIn: true,
       adminSidebarItems,
+      screen,
       contextMenu,
       title,
       description,
@@ -120,7 +122,7 @@ router.get("/productos/agregar-producto", privateAccess, (req, res) => {
   });
 });
 
-router.get("/products/edit/:pslug", privateAccess, async (req, res) => {
+router.get("/productos/editar/:pslug", privateAccess, async (req, res) => {
   const title = "Editar Producto";
   const description = "Edita un producto de la base de datos";
 
@@ -140,6 +142,7 @@ router.get("/categorias", privateAccess, async (req, res) => {
     const title = "Categorias";
     const description =
       "Visualiza, actualiza o elimina cualquiera de las categorias cargadas";
+    const screen = "categories";
     const limit = req.query.limit || 5;
     const response = await categoriesController.getCategories(req, res, limit);
     const categories = response.ResultSet;
@@ -152,6 +155,7 @@ router.get("/categorias", privateAccess, async (req, res) => {
     res.render("admin/categories", {
       isLoggedIn: true,
       adminSidebarItems,
+      screen,
       contextMenu,
       title,
       description,
@@ -160,6 +164,31 @@ router.get("/categorias", privateAccess, async (req, res) => {
     });
   } catch (error) {
     logger.error("Error al obtener categorias:", error);
+    res.status(500).send("Error al obtener categorias");
+  }
+});
+
+router.get("/categorias/editar/:pslug", privateAccess, async (req, res) => {
+  try {
+    const title = "Editar Producto";
+    const description = "Edita un producto de la base de datos";
+
+    const categoryData = await categoriesController.findBySlug(
+      req.params.pslug
+    );
+
+    const categories = await categoriesController.getAll();
+
+    res.render("admin/edit-categories", {
+      isLoggedIn: true,
+      adminSidebarItems,
+      title,
+      description,
+      categoryData,
+      categories,
+    });
+  } catch (error) {
+    logger.error("Error al obtener categoria:", error);
     res.status(500).send("Error al obtener categorias");
   }
 });
