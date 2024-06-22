@@ -9,6 +9,13 @@
   </svg>
   Agregar un producto
 </a>
+
+<!-- Agregar input de búsqueda -->
+<div class="mb-4">
+  <input type="text" id="searchInput" placeholder="Buscar productos por nombre"
+    class="w-full p-2 border rounded-lg dark:bg-[var(--main-bg-dark)] dark:text-[var(--main-text-light)]">
+</div>
+
 <div class="flex flex-col">
   <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400" id="products_output_table">
@@ -20,7 +27,7 @@
           {{! <th scope="col" class="px-2 py-3">Acción</th> }}
         </tr>
       </thead>
-      <tbody>
+      <tbody id="products_tbody">
         {{#each products}}
         <tr
           class="even:bg-[var(--main-light-1)] even:dark:bg-[var(--main-dark-7)] odd:bg-[var(--main-light-2)] odd:dark:bg-[var(--main-dark-3)] border-b dark:border-[var(--main-dark-10)] cursor-pointer"
@@ -34,7 +41,7 @@
     </table>
   </div>
 </div>
-<div class="flex justify-center mt-4">
+<div class="flex justify-center mt-4" id="pagination">
   <ul class="flex space-x-2">
     {{#each pages}}
     <li>
@@ -44,5 +51,3 @@
     {{/each}}
   </ul>
 </div>
-{{!--
-<script type="module" src="/js/admin/products.js"></script> --}}

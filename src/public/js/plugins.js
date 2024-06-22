@@ -169,7 +169,6 @@ import { contextAction } from "./functions.js";
 
 (function ($) {
   $.fn.noSpace = function (options) {
-    // Definir los valores predeterminados
     var settings = $.extend(
       {
         replaceWith: "-",

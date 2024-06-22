@@ -7,7 +7,7 @@ export default class ProductsDAO {
       const enterprise = await Enterprise.find();
       return enterprise;
     } catch (error) {
-      logger.error("Error al obtener empresa:", error);
+      logger.error("Error getting enterprise:", error);
       throw error;
     }
   }

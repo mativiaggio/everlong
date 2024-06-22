@@ -42,6 +42,29 @@ export default class CategoriesDAO {
     }
   }
 
+  async addCategory(categoryData) {
+    try {
+      const categoryBySlug = await Category.findOne({
+        slug: categoryData.slug,
+      });
+
+      if (categoryBySlug) {
+        return {
+          status: "error",
+          field: ["slug"],
+          message: "Ya existe una categoría con ese slug",
+        };
+      } else {
+        const category = new Category(categoryData);
+        await category.save();
+        return { status: "Categoría agregada correctamente" };
+      }
+    } catch (error) {
+      logger.error("Error adding the category: ", error);
+      return { error: "Error adding the category: " + error };
+    }
+  }
+
   async updateCategory(categoryData) {
     try {
       const categoryId = categoryData.id;
@@ -65,10 +88,10 @@ export default class CategoriesDAO {
         category: updatedCategory,
       };
     } catch (error) {
-      logger.error("Error al actualizar la categoría:", error);
+      logger.error("Error updating the category: ", error);
       return {
         status: "error",
-        message: "Error al actualizar la categoría: " + error,
+        message: "Error updating the category: " + error,
       };
     }
   }
@@ -78,7 +101,7 @@ export default class CategoriesDAO {
       const count = await Category.countDocuments(filter);
       return count;
     } catch (error) {
-      logger.error("Error contando categorias:", error);
+      logger.error("Error counting categories:", error);
       throw error;
     }
   }

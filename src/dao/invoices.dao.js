@@ -13,8 +13,24 @@ export default class InvoicesDAO {
 
       return invoices;
     } catch (error) {
-      logger.error("Error al obtener ingresos:", error);
+      logger.error("Errors encountered while obtaining invoices:", error);
       throw error;
+    }
+  }
+
+  async findById(invoiceId) {
+    try {
+      const invoice = await Invoice.findById(invoiceId).lean();
+
+      if (invoice) {
+        return invoice;
+      } else {
+        logger.error("Invoice not found");
+        return null;
+      }
+    } catch (error) {
+      logger.error("Error retrieving invoice:", error);
+      return null;
     }
   }
 
@@ -23,7 +39,7 @@ export default class InvoicesDAO {
       const count = await Invoice.countDocuments(filter);
       return count;
     } catch (error) {
-      logger.error("Error contando ingresos:", error);
+      logger.error("Error counting invoices:", error);
       throw error;
     }
   }
@@ -46,7 +62,7 @@ export default class InvoicesDAO {
       ]);
       return stats;
     } catch (error) {
-      logger.error("Error obteniendo total de facturas por mes:", error);
+      logger.error("Error obtaining total invoices per month:", error);
       throw error;
     }
   }
@@ -69,7 +85,7 @@ export default class InvoicesDAO {
       ]);
       return stats;
     } catch (error) {
-      logger.error("Error obteniendo total de montos por mes:", error);
+      logger.error("Error obtaining total amounts per month:", error);
       throw error;
     }
   }
@@ -86,7 +102,7 @@ export default class InvoicesDAO {
       ]);
       return stats;
     } catch (error) {
-      logger.error("Error obteniendo total de facturas por tipo:", error);
+      logger.error("Error obtaining total invoices by type:", error);
       throw error;
     }
   }

@@ -79,6 +79,23 @@ export default class CategoriesController {
     }
   }
 
+  async addCategory(req, res) {
+    try {
+      const categoryData = req.body;
+      categoryData.owner = req.session.user._id;
+      const result = await categoriesDAO.addCategory(categoryData);
+
+      if (result.status === "error") {
+        return res.status(500).json(result);
+      }
+
+      return res.json(result);
+    } catch (error) {
+      logger.error("Error adding category:", error);
+      return res.status(500).json({ error: "Error adding category" });
+    }
+  }
+
   async updateCategory(req, res) {
     try {
       const categoryData = req.body;
@@ -104,7 +121,7 @@ export default class CategoriesController {
       const totalCategories = await Category.countDocuments();
       return totalCategories;
     } catch (error) {
-      logger.error("Error contando categorias:", error);
+      logger.error("Error counting categories:", error);
       throw error;
     }
   }

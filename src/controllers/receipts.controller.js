@@ -58,7 +58,7 @@ export default class ReceiptsController {
       const totalReceipts = await receiptsDAO.countReceipts();
       return totalReceipts;
     } catch (error) {
-      logger.error("Error contando egresos:", error);
+      logger.error("Error counting receipts:", error);
       throw error;
     }
   }

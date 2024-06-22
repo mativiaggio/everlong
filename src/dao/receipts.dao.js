@@ -11,7 +11,7 @@ export default class ReceiptsDAO {
 
       return receipts;
     } catch (error) {
-      logger.error("Error al obtener egresos:", error);
+      logger.error("Error getting receipts:", error);
       throw error;
     }
   }
@@ -20,7 +20,7 @@ export default class ReceiptsDAO {
       const count = await Receipt.countDocuments(filter);
       return count;
     } catch (error) {
-      logger.error("Error contando egresos:", error);
+      logger.error("Error counting receipts: ", error);
       throw error;
     }
   }

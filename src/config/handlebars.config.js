@@ -36,6 +36,18 @@ const hbs = exphbs.create({
     ifEquals: function (arg1, arg2, options) {
       return arg1 == arg2 ? options.fn(this) : options.inverse(this);
     },
+    parseJSON: function (jsonString) {
+      return JSON.parse(jsonString);
+    },
+    join: function (array, delimiter) {
+      return array.join(delimiter);
+    },
+    formatCurrency: function (value) {
+      return new Intl.NumberFormat("es-AR", {
+        style: "currency",
+        currency: "ARS",
+      }).format(value);
+    },
   },
   defaultLayout: "main",
   layoutsDir: getPath("views/layouts"),

@@ -28,6 +28,14 @@ const privateAccess = async (req, res, next) => {
   next();
 };
 
+adminCategoriesRouter.post("/", privateAccess, async (req, res) => {
+  try {
+    await categoriesController.addCategory(req, res);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 adminCategoriesRouter.put("/", privateAccess, async (req, res) => {
   try {
     console.log("Received PUT request with body:", req.body);

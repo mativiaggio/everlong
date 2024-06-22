@@ -67,6 +67,14 @@ export function loadScripts() {
 
 export function contextAction(screen, action, reg_id) {
   switch (screen) {
+    case "products":
+      switch (action) {
+        case "edit":
+          return `/admin/productos/editar/${reg_id}`;
+        case "delete":
+          return `/admin/productos/eliminar-categoria/${reg_id}`;
+      }
+      break;
     case "categories":
       switch (action) {
         case "edit":
@@ -75,12 +83,14 @@ export function contextAction(screen, action, reg_id) {
           return `/admin/categorias/eliminar-categoria/${reg_id}`;
       }
       break;
-    case "products":
+    case "invoices":
       switch (action) {
+        case "print":
+          return `/admin/ingresos/imprimir/${reg_id}`;
         case "edit":
-          return `/admin/productos/editar/${reg_id}`;
+          return `/admin/ingresos/editar/${reg_id}`;
         case "delete":
-          return `/admin/categorias/eliminar-categoria/${reg_id}`;
+          return `/admin/ingresos/eliminar-categoria/${reg_id}`;
       }
       break;
   }

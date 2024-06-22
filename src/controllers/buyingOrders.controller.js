@@ -58,7 +58,7 @@ export default class BuyingOrdersController {
       const totalBuyingOrders = await buyingOrdersDAO.countBuyingOrders();
       return totalBuyingOrders;
     } catch (error) {
-      logger.error("Error contando ordenes de compra:", error);
+      logger.error("Error counting buying orders:", error);
       throw error;
     }
   }
