@@ -35,6 +35,9 @@ export function loadScripts() {
     case "/admin/categorias":
       script.src = "/js/admin/categories.js";
       break;
+    case "/admin/categorias/agregar-categoria":
+      script.src = "/js/admin/admin-add-category.js";
+      break;
     case "/admin/categorias/editar":
       script.src = "/js/admin/admin-edit-category.js";
       break;

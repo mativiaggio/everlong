@@ -41,6 +41,38 @@ export default class CategoriesDAO {
       return null;
     }
   }
+
+  async updateCategory(categoryData) {
+    try {
+      const categoryId = categoryData.id;
+      delete categoryData.id;
+
+      const updatedCategory = await Category.findByIdAndUpdate(
+        categoryId,
+        categoryData,
+        { new: true, runValidators: true }
+      );
+
+      if (!updatedCategory) {
+        return {
+          status: "error",
+          message: "Categoría no encontrada",
+        };
+      }
+
+      return {
+        status: "categoría actualizada correctamente",
+        category: updatedCategory,
+      };
+    } catch (error) {
+      logger.error("Error al actualizar la categoría:", error);
+      return {
+        status: "error",
+        message: "Error al actualizar la categoría: " + error,
+      };
+    }
+  }
+
   async countCategories(filter) {
     try {
       const count = await Category.countDocuments(filter);

@@ -5,6 +5,7 @@ import { contextAction } from "./functions.js";
     var settings = $.extend(
       {
         menuSelector: "#contextMenu",
+        allowDoubleClick: false,
       },
       options
     );
@@ -73,6 +74,28 @@ import { contextAction } from "./functions.js";
             rightClick(e, false);
           }
         });
+
+        if (settings.allowDoubleClick) {
+          $table.on("dblclick", "tbody tr", function (e) {
+            e.preventDefault();
+            let id = $(this).attr("id");
+            let screen = $menu.attr("screen");
+            if (!screen) {
+              console.error("Screen not found");
+              return;
+            }
+            let action = "edit"; // Assuming "edit" action is the default for double-click
+            let url = contextAction(screen, action, id);
+
+            if (!url) {
+              console.error(
+                "URL not found. \nCheck the contextAction function."
+              );
+            } else {
+              window.location.replace(url);
+            }
+          });
+        }
 
         $("#context-menu-ul")
           .find("li")

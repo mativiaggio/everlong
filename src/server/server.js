@@ -24,6 +24,7 @@ import adminProductsRouter from "../routes/api/admin/products.router.js";
 import adminUserRouter from "../routes/api/admin/user.router.js";
 import adminEnterpriseRouter from "../routes/api/admin/enterprise.router.js";
 import adminInvoicesRouter from "../routes/api/admin/invoices.router.js";
+import adminCategoriesRouter from "../routes/api/admin/categories.router.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -67,10 +68,6 @@ app.use(express.json());
 const publicPath = path.resolve(__dirname, "../public");
 app.use(express.static(publicPath));
 
-// app.engine("handlebars", hbs.engine);
-// app.set("view engine", "handlebars");
-// app.set("views", `${getPath("views")}`);
-
 const viewsPath = path.resolve(__dirname, "../views");
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
@@ -81,6 +78,7 @@ app.use(setLayout);
 // Routes
 app.use("/api/admin/sessions", adminSessionRouter);
 app.use("/api/admin/products", adminProductsRouter);
+app.use("/api/admin/categories", adminCategoriesRouter);
 app.use("/api/admin/users", adminUserRouter);
 app.use("/api/admin/enterprise", adminEnterpriseRouter);
 app.use("/api/admin/invoices", adminInvoicesRouter);

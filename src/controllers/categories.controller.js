@@ -79,6 +79,26 @@ export default class CategoriesController {
     }
   }
 
+  async updateCategory(req, res) {
+    try {
+      const categoryData = req.body;
+      if (categoryData["new-parent-id"]) {
+        categoryData.parent = categoryData["new-parent-id"];
+        delete categoryData["new-parent-id"];
+      }
+      const result = await categoriesDAO.updateCategory(categoryData);
+
+      if (result.status === "error") {
+        return res.status(500).json(result);
+      }
+
+      return res.json(result);
+    } catch (error) {
+      logger.error("Error updating category:", error);
+      return res.status(500).json({ error: "Error updating category" });
+    }
+  }
+
   async countCategories() {
     try {
       const totalCategories = await Category.countDocuments();

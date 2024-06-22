@@ -168,10 +168,23 @@ router.get("/categorias", privateAccess, async (req, res) => {
   }
 });
 
+router.get("/categorias/agregar-categoria", privateAccess, async (req, res) => {
+  const title = "Agregar Categoría";
+  const description = "Agrega una categoría nueva a la base de datos";
+  const categories = await categoriesController.getAll();
+  res.render("admin/add-category", {
+    isLoggedIn: true,
+    adminSidebarItems,
+    title,
+    description,
+    categories,
+  });
+});
+
 router.get("/categorias/editar/:pslug", privateAccess, async (req, res) => {
   try {
-    const title = "Editar Producto";
-    const description = "Edita un producto de la base de datos";
+    const title = "Editar Categoría";
+    const description = "Edita una categoría de la base de datos";
 
     const categoryData = await categoriesController.findBySlug(
       req.params.pslug
@@ -179,7 +192,7 @@ router.get("/categorias/editar/:pslug", privateAccess, async (req, res) => {
 
     const categories = await categoriesController.getAll();
 
-    res.render("admin/edit-categories", {
+    res.render("admin/edit-category", {
       isLoggedIn: true,
       adminSidebarItems,
       title,

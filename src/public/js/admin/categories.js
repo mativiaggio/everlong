@@ -1,5 +1,6 @@
 $("table").contextMenuPlugin({
   menuSelector: "#contextMenu",
+  allowDoubleClick: true,
 });
 
 $(".edit_button").on("click", function () {

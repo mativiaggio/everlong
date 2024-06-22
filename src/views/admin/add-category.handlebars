@@ -10,12 +10,12 @@
 
 <section>
     <div class="w-full md:w-[50%]">
-        <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">{{categoryData.name}}</h2>
+        <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Agregar una categoría</h2>
         <form action="" id="category-form" reg_id="{{categoryData._id}}">
             <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
                 <div class="w-full hidden">
-                    <label for="reg_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ID</label>
-                    <input type="text" name="reg_id" id="reg_id" value="{{categoryData._id}}"
+                    <label for="id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ID</label>
+                    <input type="text" name="id" id="id" value="{{categoryData._id}}"
                         class="bg-[var(--main-light-1)] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                         placeholder="ID" />
                 </div>
@@ -54,6 +54,16 @@
                         {{/each}}
                     </select>
                 </div>
+                <h4 class="sm:col-span-2">Propiedades</h4>
+                <!-- New section for dynamic properties -->
+                <div class="sm:col-span-2" id="properties-container">
+                    <!-- Dynamic properties will be added here -->
+                </div>
+
+                <button type="button" id="add-property-button"
+                    class="bg-[var(--main-bg-dark)] hover:bg-[var(--main-dark-5)] text-[var(--main-text-dark)] p-2 mt-2 rounded-md">
+                    Añadir Propiedad
+                </button>
             </div>
             <button id="edit-category-button" type="submit"
                 class="bg-[var(--main-bg-dark)] hover:bg-[var(--main-dark-5)] text-[var(--main-text-dark)] p-2 mt-2 rounded-md">
@@ -75,4 +85,3 @@
         </form>
     </div>
 </section>
-<script type="module" src="/js/admin/admin-edit-category.js"></script>
