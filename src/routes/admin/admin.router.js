@@ -84,8 +84,17 @@ router.get("/productos", privateAccess, async (req, res) => {
     const title = "Productos";
     const description =
       "Visualiza, actualiza o elimina cualquiera de los productos cargados";
+    const screen = "products";
+    const query = req.query.query || "";
     const limit = req.query.limit || 10;
-    const response = await productsController.getProducts(req, res, limit);
+    const page = req.query.page || 1;
+    const response = await productsController.getProducts(
+      req,
+      res,
+      query,
+      limit,
+      page
+    );
     const products = response.ResultSet;
 
     const totalProducts = await productsController.countProducts();
@@ -97,6 +106,7 @@ router.get("/productos", privateAccess, async (req, res) => {
     res.render("admin/products", {
       isLoggedIn: true,
       adminSidebarItems,
+      screen,
       contextMenu,
       title,
       description,
@@ -120,7 +130,7 @@ router.get("/productos/agregar-producto", privateAccess, (req, res) => {
   });
 });
 
-router.get("/products/edit/:pslug", privateAccess, async (req, res) => {
+router.get("/productos/editar/:pslug", privateAccess, async (req, res) => {
   const title = "Editar Producto";
   const description = "Edita un producto de la base de datos";
 
@@ -140,6 +150,7 @@ router.get("/categorias", privateAccess, async (req, res) => {
     const title = "Categorias";
     const description =
       "Visualiza, actualiza o elimina cualquiera de las categorias cargadas";
+    const screen = "categories";
     const limit = req.query.limit || 5;
     const response = await categoriesController.getCategories(req, res, limit);
     const categories = response.ResultSet;
@@ -152,6 +163,7 @@ router.get("/categorias", privateAccess, async (req, res) => {
     res.render("admin/categories", {
       isLoggedIn: true,
       adminSidebarItems,
+      screen,
       contextMenu,
       title,
       description,
@@ -160,6 +172,45 @@ router.get("/categorias", privateAccess, async (req, res) => {
     });
   } catch (error) {
     logger.error("Error al obtener categorias:", error);
+    res.status(500).send("Error al obtener categorias");
+  }
+});
+
+router.get("/categorias/agregar-categoria", privateAccess, async (req, res) => {
+  const title = "Agregar Categoría";
+  const description = "Agrega una categoría nueva a la base de datos";
+  const categories = await categoriesController.getAll();
+  res.render("admin/add-category", {
+    isLoggedIn: true,
+    adminSidebarItems,
+    title,
+    description,
+    categories,
+  });
+});
+
+router.get("/categorias/editar/:pslug", privateAccess, async (req, res) => {
+  try {
+    const title = "Editar Categoría";
+    const description = "Edita una categoría de la base de datos";
+
+    const categoryData = await categoriesController.findBySlug(
+      req.params.pslug
+    );
+
+    const categories = await categoriesController.getAll();
+    // categoryData.properties = categoryData.properties.map(JSON.parse);
+    console.log(categoryData);
+    res.render("admin/edit-category", {
+      isLoggedIn: true,
+      adminSidebarItems,
+      title,
+      description,
+      categoryData,
+      categories,
+    });
+  } catch (error) {
+    logger.error("Error al obtener categoria:", error);
     res.status(500).send("Error al obtener categorias");
   }
 });
@@ -230,6 +281,7 @@ router.get("/ingresos", privateAccess, async (req, res) => {
     const title = "Ingresos";
     const description =
       "Visualiza, actualiza o elimina las facturas de compra cargadas";
+    const screen = "invoices";
     const limit = req.query.limit || 10;
     const response = await invoicesController.getAllInvoices(req, res, limit);
     const invoices = response.ResultSet;
@@ -246,10 +298,32 @@ router.get("/ingresos", privateAccess, async (req, res) => {
       isLoggedIn: true,
       adminSidebarItems,
       contextMenu,
+      screen,
       title,
       description,
       invoices,
       pages,
+    });
+  } catch (error) {
+    logger.error("Error al obtener ingresos:", error);
+    res.status(500).send("Error al obtener ingresos");
+  }
+});
+
+router.get("/ingresos/imprimir/:id", privateAccess, async (req, res) => {
+  try {
+    const title = "Imprimir Factura";
+    const description = "Imprime una factura de compra";
+    const invoiceData = await invoicesController.findById(req.params.id);
+    const css = "invoice.css";
+
+    res.render("admin/print-invoice", {
+      isLoggedIn: true,
+      adminSidebarItems,
+      title,
+      description,
+      css,
+      invoiceData,
     });
   } catch (error) {
     logger.error("Error al obtener ingresos:", error);

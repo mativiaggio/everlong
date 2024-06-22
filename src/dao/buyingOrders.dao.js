@@ -11,7 +11,7 @@ export default class BuyingOrdersDAO {
 
       return buyingOrder;
     } catch (error) {
-      logger.error("Error al obtener ingresos:", error);
+      logger.error("Error getting buying orders: ", error);
       throw error;
     }
   }
@@ -20,7 +20,7 @@ export default class BuyingOrdersDAO {
       const count = await BuyingOrder.countDocuments(filter);
       return count;
     } catch (error) {
-      logger.error("Error contando ingresos:", error);
+      logger.error("Error counting buying orders:", error);
       throw error;
     }
   }

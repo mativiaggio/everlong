@@ -8,6 +8,10 @@
   </title>
   <meta name="description" content="{{description}}" />
   <link rel="stylesheet" href="/css/styles.css" />
+  {{!-- Css dinamico --}}
+  {{#if css}}
+  <link rel="stylesheet" href="/css/admin/{{css}}">
+  {{/if}}
 </head>
 
 <body>
@@ -30,7 +34,8 @@
     class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
     aria-label="Sidebar">
 
-    <div class="flex flex-col h-full px-3 py-4 overflow-y-auto bg-[var(--main-light-2)] dark:bg-[var(--main-bg-dark)]">
+    <div class="flex flex-col h-full px-3 py-4 overflow-y-auto bg-[var(--main-light-2)] dark:bg-[var(--main-bg-dark)]"
+      id="sidebar-container">
       <div class="w-full p-1">
         <span
           class="flex w-full space-y-2 font-bold px-2 text-[var(--main-text-light)] dark:text-[var(--main-text-dark)] text-xl">Everlong
@@ -88,15 +93,16 @@
       </ul>
     </div>
   </aside>
-  <div class="p-4 sm:ml-64 bg-[var(--main-bg-light)] dark:bg-[var(--main-dark-2)] min-h-screen">
+  <div class="p-4 sm:ml-64 bg-[var(--main-bg-light)] dark:bg-[var(--main-dark-2)] min-h-screen" id="body-container">
     {{{body}}}
   </div>
   {{! CONTEXT MENU }}
   <div id="contextMenu"
-    class="hidden absolute bg-[var(--main-bg-light)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-light)] dark:text-[var(--main-text-light)] rounded-md shadow-xl overflow-hidden min-w-[200px]">
+    class="hidden absolute bg-[var(--main-bg-light)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-light)] dark:text-[var(--main-text-light)] rounded-md shadow-xl overflow-hidden min-w-[200px]"
+    screen="{{screen}}">
 
     {{#if contextMenu}}
-    <ul class="context-menu-ul flex flex-col rounded-md shadow-xl overflow-hidden p-2">
+    <ul id="context-menu-ul" class="context-menu-ul flex flex-col rounded-md shadow-xl overflow-hidden p-2">
       {{#each contextMenu}}
       <li class="context-menu-item {{classes}}" action="{{action}}">
         {{{icon}}} {{title}}

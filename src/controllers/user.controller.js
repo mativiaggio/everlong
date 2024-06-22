@@ -93,7 +93,7 @@ class UserController {
       const totalAdmins = await userDao.countUsers();
       return totalAdmins;
     } catch (error) {
-      logger.error("Error contando categorias:", error);
+      logger.error("Error counting users:", error);
       throw error;
     }
   }

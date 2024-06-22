@@ -5,27 +5,16 @@ import { logger } from "../utils/logger.js";
 const productsDAO = new ProductsDAO();
 
 export default class ProductsController {
-  /**
-   * Retrieves a list of products based on the provided parameters.
-   *
-   * @param {Object} req - The request object containing query parameters.
-   * @param {Object} res - The response object to send the result.
-   * @param {number} limit - The maximum number of products to retrieve per page.
-   *
-   * @returns {Object} - An object containing the result of the operation.
-   *
-   * @throws Will throw an error if there is a problem with the database operation.
-   */
-  async getProducts(req, res, limit) {
+  async getProducts(req, res, query, limit, page) {
     try {
-      const { page = 1, sort, query } = req.query;
-      const skip = (page - 1) * limit;
+      const { sort, query } = req.query || {};
 
       const filter = {};
+
       if (query) {
         filter["$or"] = [
+          { title: { $regex: query, $options: "i" } },
           { category: { $regex: query, $options: "i" } },
-          { status: { $regex: query, $options: "i" } },
         ];
       }
 
@@ -34,12 +23,17 @@ export default class ProductsController {
         sortOptions.price = sort === "asc" ? 1 : -1;
       }
 
-      const products = await productsDAO.getProducts(
-        limit,
-        page,
-        sortOptions,
-        filter
-      );
+      let products;
+      if (query) {
+        products = await productsDAO.getProducts(limit, page, {}, filter);
+      } else {
+        products = await productsDAO.getProducts(
+          limit,
+          page,
+          sortOptions,
+          filter
+        );
+      }
 
       const totalProducts = await productsDAO.countProducts(filter);
       const totalPages = Math.ceil(totalProducts / limit);
@@ -63,20 +57,17 @@ export default class ProductsController {
 
       return result;
     } catch (error) {
-      logger.error("Error in /products route:", error);
+      const stackTrace = error.stack.split("\n");
+      const errorLine = stackTrace.find((line) =>
+        line.includes("at getProducts")
+      );
+
+      logger.error(`Error in /products route: ${errorLine}`, error);
       res
         .status(500)
         .json({ status: "error", message: "Internal server error" });
     }
   }
-
-  /**
-   * Counts the total number of products in the database.
-   *
-   * @returns {Promise<number>} - A promise that resolves to the total number of products.
-   *
-   * @throws Will throw an error if there is a problem with the database operation.
-   */
   async findById(paramproductId) {
     try {
       const productId = paramproductId;
@@ -109,26 +100,6 @@ export default class ProductsController {
     }
   }
 
-  /**
-   * Adds a new product to the database.
-   *
-   * @param {Object} req - The request object containing the product data.
-   * @param {Object} res - The response object to send the result.
-   * @param {Object} req.body - The product data to be added.
-   * @param {string} req.body.name - The name of the product.
-   * @param {string} req.body.description - The description of the product.
-   * @param {number} req.body.price - The price of the product.
-   * @param {string} req.body.category - The category of the product.
-   * @param {string} req.body.status - The status of the product.
-   * @param {string} req.session.user._id - The ID of the user who is adding the product.
-   *
-   * @returns {Object} - The response object containing the result of the operation.
-   * @returns {number} res.status - The HTTP status code of the response.
-   * @returns {Object} res.json - The JSON object containing the result.
-   * @returns {string} res.json.error - If there is an error, this property contains the error message.
-   *
-   * @throws Will throw an error if there is a problem with the database operation.
-   */
   async addProduct(req, res) {
     try {
       const productData = req.body;
@@ -146,21 +117,6 @@ export default class ProductsController {
     }
   }
 
-  /**
-   * Updates an existing product in the database.
-   *
-   * @param {Object} req - The request object containing the product data.
-   * @param {Object} res - The response object to send the result.
-   * @param {string} req.body.id - The ID of the product to be updated.
-   * @param {Object} req.body - The product data to be updated.
-   *
-   * @returns {Object} - The response object containing the result of the operation.
-   * @returns {number} res.status - The HTTP status code of the response.
-   * @returns {Object} res.json - The JSON object containing the result.
-   * @returns {string} res.json.error - If there is an error, this property contains the error message.
-   *
-   * @throws Will throw an error if there is a problem with the database operation.
-   */
   async updateProduct(req, res) {
     try {
       const productData = req.body;
@@ -192,14 +148,6 @@ export default class ProductsController {
     }
   }
 
-  /**
-   * Retrieves product statistics.
-   *
-   * @param {Object} req - The request object.
-   * @param {Object} res - The response object.
-   *
-   * @returns {Object} - An object containing product statistics.
-   */
   async getProductStats(req, res) {
     try {
       const totalProducts = await productsDAO.countProducts({});

@@ -4,44 +4,94 @@ export function isValidEmail(email) {
 }
 
 export function loadScripts() {
-  const page = window.location.pathname.split("/").pop();
+  const pagePath = window.location.pathname;
 
   let script;
   script = document.createElement("script");
   script.type = "module";
 
+  const adminIndex = pagePath.indexOf("/admin");
+  let page = adminIndex !== -1 ? pagePath.substring(adminIndex) : "";
+
+  if (page.includes("/admin/categorias/editar")) {
+    page = "/admin/categorias/editar";
+  } else if (page.includes("/admin/productos/editar")) {
+    page = "/admin/productos/editar";
+  }
+
   switch (page) {
-    case "admin":
+    case "/admin":
       script.src = "/js/admin/home.js";
-      document.body.appendChild(script);
       break;
-    case "productos":
+    case "/admin/productos":
       script.src = "/js/admin/products.js";
-      document.body.appendChild(script);
       break;
-    case "categorias":
+    case "/admin/productos/agregar-producto":
+      script.src = "/js/admin/admin-add-product.js";
+      break;
+    case "/admin/productos/editar":
+      script.src = "/js/admin/admin-edit-product.js";
+      break;
+    case "/admin/categorias":
       script.src = "/js/admin/categories.js";
-      document.body.appendChild(script);
       break;
-    case "usuarios":
+    case "/admin/categorias/agregar-categoria":
+      script.src = "/js/admin/admin-add-category.js";
+      break;
+    case "/admin/categorias/editar":
+      script.src = "/js/admin/admin-edit-category.js";
+      break;
+    case "/admin/usuarios":
       script.src = "/js/admin/users.js";
-      document.body.appendChild(script);
       break;
-    case "ordenes-compra":
+    case "/admin/ordenes-compra":
       script.src = "/js/admin/buying-orders.js";
-      document.body.appendChild(script);
       break;
-    case "ingresos":
+    case "/admin/ingresos":
       script.src = "/js/admin/invoices.js";
-      document.body.appendChild(script);
       break;
-    case "egresos":
+    case "/admin/egresos":
       script.src = "/js/admin/receipts.js";
-      document.body.appendChild(script);
       break;
-    case "empresa":
+    case "/admin/empresa":
       script.src = "/js/admin/enterprise.js";
-      document.body.appendChild(script);
+      break;
+    default:
+      // Handle cases where the page path doesn't match any of the expected admin paths
+      console.error("Unknown admin page:", page);
+      return;
+  }
+
+  document.body.appendChild(script);
+}
+
+export function contextAction(screen, action, reg_id) {
+  switch (screen) {
+    case "products":
+      switch (action) {
+        case "edit":
+          return `/admin/productos/editar/${reg_id}`;
+        case "delete":
+          return `/admin/productos/eliminar-categoria/${reg_id}`;
+      }
+      break;
+    case "categories":
+      switch (action) {
+        case "edit":
+          return `/admin/categorias/editar/${reg_id}`;
+        case "delete":
+          return `/admin/categorias/eliminar-categoria/${reg_id}`;
+      }
+      break;
+    case "invoices":
+      switch (action) {
+        case "print":
+          return `/admin/ingresos/imprimir/${reg_id}`;
+        case "edit":
+          return `/admin/ingresos/editar/${reg_id}`;
+        case "delete":
+          return `/admin/ingresos/eliminar-categoria/${reg_id}`;
+      }
       break;
   }
 }

@@ -53,13 +53,63 @@ export default class InvoicesController {
         .json({ status: "error", message: "Internal server error" });
     }
   }
+
+  async findById(invoiceId) {
+    try {
+      const id = invoiceId;
+      const invoice = await invoicesDAO.findById(id);
+      return invoice;
+    } catch (error) {
+      logger.error("Error getting invoice by ID:", error);
+      throw error;
+    }
+  }
   async countInvoices() {
     try {
       const totalInvoices = await invoicesDAO.countInvoices();
       return totalInvoices;
     } catch (error) {
-      logger.error("Error contando categorias:", error);
+      logger.error("Error counting invoices:", error);
       throw error;
+    }
+  }
+
+  async getTotalInvoicesByMonth(req, res) {
+    try {
+      const data = await invoicesDAO.getTotalInvoicesByMonth();
+      // res.json(stats);
+      return { data };
+    } catch (error) {
+      logger.error("Error getting the total invoices by month:", error);
+      res
+        .status(500)
+        .json({ status: "error", message: "Internal server error" });
+    }
+  }
+
+  async getTotalAmountByMonth(req, res) {
+    try {
+      const data = await invoicesDAO.getTotalAmountByMonth();
+      // res.json(stats);
+      return { data };
+    } catch (error) {
+      logger.error("Error getting the total amount by month:", error);
+      res
+        .status(500)
+        .json({ status: "error", message: "Internal server error" });
+    }
+  }
+
+  async getInvoicesByType(req, res) {
+    try {
+      const data = await invoicesDAO.getInvoicesByType();
+      // res.json(stats);
+      return { data };
+    } catch (error) {
+      logger.error("Error getting invoices by type:", error);
+      res
+        .status(500)
+        .json({ status: "error", message: "Internal server error" });
     }
   }
 }
