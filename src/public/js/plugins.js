@@ -185,3 +185,59 @@ import { contextAction } from "./functions.js";
     });
   };
 })(jQuery);
+
+(function ($) {
+  $.fn.dropdown = function (options) {
+    var settings = $.extend(
+      {
+        title: "Selecciona una opción",
+        items: [],
+        defaultSearch: "title",
+      },
+      options
+    );
+
+    function generalConfig(dropdown, defaultSearch) {
+      dropdown.addClass(
+        "text-white bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-dark)] dark:text-[var(--main-text-light)] focus:ring-4 focus:outline-none focus:ring-[var(--main-dark-10)] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center   dark:focus:ring-[var(--main-light-10)] mr-2"
+      );
+      dropdown.attr("type", "button").attr("findBy", defaultSearch);
+      dropdown.append(`<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+      fill="none" viewBox="0 0 10 6">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+    </svg>`);
+    }
+
+    function dropdownItems(dropdown, items) {
+      dropdown.append(`<div id="dropdown"
+    class="absolute inset-y-0 left-0 m-0 transform translate-x-[327px] translate-y-[70px] z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 h-fit dark:bg-[var(--main-bg-dark)]">
+    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+      ${items
+        .map(function (item) {
+          return `<li>
+        <span class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-[var(--main-dark-5)] dark:hover:text-white" id="${item.id}">${item.title}</span>
+      </li>`;
+        })
+        .join("")}
+    </div>`);
+    }
+
+    return this.each(function () {
+      var $dropdownButton = $(this);
+      $dropdownButton.text(settings.title);
+      generalConfig($dropdownButton, settings.defaultSearch);
+      dropdownItems($dropdownButton, settings.items);
+
+      $dropdownButton.on("click", function (event) {
+        event.stopPropagation();
+        $("#dropdown").toggleClass("hidden block");
+      });
+
+      $(document).on("click", function (event) {
+        if (!$(event.target).closest($dropdownButton).length) {
+          $("#dropdown").removeClass("block").addClass("hidden");
+        }
+      });
+    });
+  };
+})(jQuery);
