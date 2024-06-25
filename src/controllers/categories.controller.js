@@ -14,17 +14,13 @@ export default class CategoriesController {
     }
   }
 
-  async getCategories(req, res, limit) {
+  async getCategories(req, res, query, limit, page) {
     try {
-      const { page = 1, sort, query } = req.query;
-      const skip = (page - 1) * limit;
-
+      const { sort, query, findBy } = req.query || {};
       const filter = {};
+
       if (query) {
-        filter["$or"] = [
-          { category: { $regex: query, $options: "i" } },
-          { status: { $regex: query, $options: "i" } },
-        ];
+        filter["$or"] = [{ [findBy]: { $regex: query, $options: "i" } }];
       }
 
       const sortOptions = {};
@@ -32,12 +28,26 @@ export default class CategoriesController {
         sortOptions.price = sort === "asc" ? 1 : -1;
       }
 
-      const categories = await categoriesDAO.getCategories(
-        limit,
-        page,
-        sortOptions,
-        filter
-      );
+      // const categories = await categoriesDAO.getCategories(
+      //   limit,
+      //   page,
+      //   sortOptions,
+      //   filter
+      // );
+
+      let categories;
+      if (query) {
+        categories = await categoriesDAO.getCategories(limit, page, {}, filter);
+      } else {
+        console.log("entramos al no query");
+        console.log(limit, page, sortOptions, filter);
+        categories = await categoriesDAO.getCategories(
+          limit,
+          page,
+          sortOptions,
+          filter
+        );
+      }
 
       const totalCategories = await categoriesDAO.countCategories(filter);
       const totalPages = Math.ceil(totalCategories / limit);

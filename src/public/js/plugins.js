@@ -138,7 +138,7 @@ import { contextAction } from "./functions.js";
     this.each(function () {
       var $form = $(this);
 
-      $form.find("input").each(function () {
+      $form.find("input[required]").each(function () {
         if (
           ($(this).attr("type") === "text" && $(this).val() === "") ||
           ($(this).attr("type") === "number" &&

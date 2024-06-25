@@ -8,7 +8,6 @@ export default class ProductsController {
   async getProducts(req, res, query, limit, page) {
     try {
       const { sort, query, findBy } = req.query || {};
-      console.log("controller " + query, findBy);
       const filter = {};
 
       if (query) {

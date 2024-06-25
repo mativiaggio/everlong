@@ -18,6 +18,7 @@ $("#add-property-button").click(function () {
     placeholder: "Nombre de la propiedad",
     class:
       "bg-[var(--main-light-1)] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500",
+    required: "true",
   });
 
   const valuesInput = $("<input>", {
@@ -26,6 +27,7 @@ $("#add-property-button").click(function () {
     placeholder: "Valores",
     class:
       "property-values bg-[var(--main-light-1)] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500",
+    required: "true",
   });
 
   propertyDiv.append(nameInput, valuesInput);
@@ -52,11 +54,11 @@ $("#category-form").on("submit", function (e) {
       properties.push({ name, values });
     });
 
-    $("<input>", {
-      type: "hidden",
-      name: "properties",
-      value: JSON.stringify(properties),
-    }).appendTo("#category-form");
+    // $("<input>", {
+    //   type: "hidden",
+    //   name: "properties",
+    //   value: properties,
+    // }).appendTo("#category-form");
 
     const formElement = $(this)[0];
     const formData = new FormData(formElement);
@@ -65,12 +67,17 @@ $("#category-form").on("submit", function (e) {
       obj[key] = value;
     });
 
-    properties.forEach((prop) => {
-      obj[prop.clave] = prop.valor;
-    });
+    // properties.forEach((prop) => {
+    //   obj[prop.name] = prop.values;
+    // });
+
+    obj.properties = properties;
 
     obj.parent = obj["new-parent-id"];
     delete obj["new-parent-id"];
+    delete obj["parent_id"];
+    delete obj["property-name"];
+    delete obj["property-values"];
 
     fetch("/api/admin/categories", {
       method: "PUT",
