@@ -42,10 +42,11 @@ adminProductsRouter.post("/", privateAccess, async (req, res) => {
 
 adminProductsRouter.get("/search", privateAccess, async (req, res) => {
   try {
+    const findBy = req.query.findBy || "";
     const query = req.query.query || "";
     const limit = req.query.limit || 10;
     const page = req.query.page || 1;
-    // const sort = req.query.sort || "";
+    console.log("Entro: " + findBy + " " + query);
     const response = await productController.getProducts(
       req,
       res,

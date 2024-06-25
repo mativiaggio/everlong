@@ -7,15 +7,12 @@ const productsDAO = new ProductsDAO();
 export default class ProductsController {
   async getProducts(req, res, query, limit, page) {
     try {
-      const { sort, query } = req.query || {};
-
+      const { sort, query, findBy } = req.query || {};
+      console.log("controller " + query, findBy);
       const filter = {};
 
       if (query) {
-        filter["$or"] = [
-          { title: { $regex: query, $options: "i" } },
-          { category: { $regex: query, $options: "i" } },
-        ];
+        filter["$or"] = [{ [findBy]: { $regex: query, $options: "i" } }];
       }
 
       const sortOptions = {};
@@ -27,6 +24,8 @@ export default class ProductsController {
       if (query) {
         products = await productsDAO.getProducts(limit, page, {}, filter);
       } else {
+        console.log("entramos al no query");
+        console.log(limit, page, sortOptions, filter);
         products = await productsDAO.getProducts(
           limit,
           page,
@@ -34,6 +33,8 @@ export default class ProductsController {
           filter
         );
       }
+
+      console.log(products);
 
       const totalProducts = await productsDAO.countProducts(filter);
       const totalPages = Math.ceil(totalProducts / limit);
