@@ -199,7 +199,7 @@ import { contextAction } from "./functions.js";
 
     function generalConfig(dropdown, defaultSearch) {
       dropdown.addClass(
-        "text-white bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-dark)] dark:text-[var(--main-text-light)] focus:ring-4 focus:outline-none focus:ring-[var(--main-dark-10)] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center   dark:focus:ring-[var(--main-light-10)] mr-2"
+        "text-white bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-dark)] dark:text-[var(--main-text-light)] focus:ring-4 focus:outline-none focus:ring-[var(--main-dark-10)] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center   dark:focus:ring-[var(--main-light-10)] mr-2 !min-w-40 justify-between"
       );
       dropdown.attr("type", "button").attr("findBy", defaultSearch);
       dropdown.append(`<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -224,7 +224,9 @@ import { contextAction } from "./functions.js";
 
     return this.each(function () {
       var $dropdownButton = $(this);
-      $dropdownButton.text(settings.title);
+
+      const spanTitle = `<span id="searchButtonTitle">${settings.title}</span>`;
+      $dropdownButton.text("").append(spanTitle);
       generalConfig($dropdownButton, settings.defaultSearch);
       dropdownItems($dropdownButton, settings.items);
 
@@ -238,6 +240,13 @@ import { contextAction } from "./functions.js";
           $("#dropdown").removeClass("block").addClass("hidden");
         }
       });
+
+      $("#dropdown")
+        .find("span")
+        .on("click", function (event) {
+          $dropdownButton.attr("findBy", $(this).attr("id"));
+          $dropdownButton.find("span#searchButtonTitle").text($(this).text());
+        });
     });
   };
 })(jQuery);

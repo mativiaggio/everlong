@@ -1,21 +1,25 @@
-<h1 class="text-[var(--main-text-light)] dark:text-[var(--main-text-dark)] text-2xl">Products Admin</h1>
-<a href="/admin/productos/agregar-producto"
-  class="flex w-fit mb-2 bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-dark)] dark:text-[var(--main-text-light)] p-2 rounded-2xl cursor-pointer hover:underline"
-  id="add-new-product">
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus">
-    <path d="M5 12h14" />
-    <path d="M12 5v14" />
-  </svg>
-  Agregar un producto
-</a>
+<div class="flex items-center mb-2">
+  <h1 class="text-[var(--main-text-light)] dark:text-[var(--main-text-dark)] text-2xl mr-2">Products Admin</h1>
+  <a href="/admin/productos/agregar-producto"
+    class="flex w-fit bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-dark)] dark:text-[var(--main-text-light)] p-2 rounded-full cursor-pointer hover:underline"
+    id="add-new-product">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus">
+      <path d="M5 12h14" />
+      <path d="M12 5v14" />
+    </svg>
+  </a>
 
+</div>
 <div class="mb-4 flex">
   <button
-    class="text-white bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-dark)] dark:text-[var(--main-text-light)] focus:ring-4 focus:outline-none focus:ring-[var(--main-dark-10)] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[var(--main-light-10)] mr-2"
-    id="productSearchDropdown">Nombre</button>
+    class="text-white bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-dark)] dark:text-[var(--main-text-light)] focus:ring-4 focus:outline-none focus:ring-[var(--main-dark-10)] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[var(--main-light-10)] mr-2 !min-w-40 justify-between"
+    id="productSearchDropdown">Nombre<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+      fill="none" viewBox="0 0 10 6">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+    </svg></button>
   <div
-    class="flex bg-[var(--main-light-1)] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full md:w-1/4 dark:bg-[var(--main-dark-7)] dark:border-[var(--main-dark-7)] dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+    class="flex bg-[var(--main-light-1)] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full dark:bg-[var(--main-dark-7)] dark:border-[var(--main-dark-7)] dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
     <span class="pl-2.5 py-2.5"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
         class="lucide lucide-search text-[#9ca3af]">

@@ -28,13 +28,6 @@ export default class CategoriesController {
         sortOptions.price = sort === "asc" ? 1 : -1;
       }
 
-      // const categories = await categoriesDAO.getCategories(
-      //   limit,
-      //   page,
-      //   sortOptions,
-      //   filter
-      // );
-
       let categories;
       if (query) {
         categories = await categoriesDAO.getCategories(limit, page, {}, filter);
