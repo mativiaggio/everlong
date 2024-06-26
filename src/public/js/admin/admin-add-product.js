@@ -4,6 +4,21 @@ $("#published_date").val(formattedDate);
 
 $("#slug").noSpace();
 
+$("#dropzone-file").on("change", function () {
+  const files = this.files;
+  $("#image-preview").empty();
+  for (let i = 0; i < files.length; i++) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const img = document.createElement("img");
+      img.src = e.target.result;
+      img.classList.add("h-32", "w-32", "object-cover", "mr-2", "mb-2");
+      $("#image-preview").append(img);
+    };
+    reader.readAsDataURL(files[i]);
+  }
+});
+
 $("#add-product-button").on("click", function (e) {
   e.preventDefault();
   let required_flag = $("#product-form").validateForm();
@@ -39,8 +54,7 @@ $("#add-product-button").on("click", function (e) {
       })
 
       .then((data) => {
-        alert("Producto agregado correctamente!");
-        // window.location.href = "/admin/products";
+        window.location.href = "/admin/productos";
       })
       .catch((error) => {
         console.error("Error al agregar el producto:", error.message);

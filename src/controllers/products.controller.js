@@ -11,7 +11,11 @@ export default class ProductsController {
       const filter = {};
 
       if (query) {
-        filter["$or"] = [{ [findBy]: { $regex: query, $options: "i" } }];
+        filter["$or"] = [
+          {
+            [findBy]: { $regex: query, $options: "i" },
+          },
+        ];
       }
 
       const sortOptions = {};
@@ -25,12 +29,7 @@ export default class ProductsController {
       } else {
         console.log("entramos al no query");
         console.log(limit, page, sortOptions, filter);
-        products = await productsDAO.getProducts(
-          limit,
-          page,
-          sortOptions,
-          filter
-        );
+        products = await productsDAO.getProducts(limit, page, sortOptions, filter);
       }
 
       console.log(products);
@@ -47,25 +46,17 @@ export default class ProductsController {
         page: parseInt(page),
         hasPrevPage: page > 1,
         hasNextPage: page < totalPages,
-        prevLink:
-          page > 1 ? `/api/products?limit=${limit}&page=${page - 1}` : null,
-        nextLink:
-          page < totalPages
-            ? `/api/products?limit=${limit}&page=${page + 1}`
-            : null,
+        prevLink: page > 1 ? `/api/products?limit=${limit}&page=${page - 1}` : null,
+        nextLink: page < totalPages ? `/api/products?limit=${limit}&page=${page + 1}` : null,
       };
 
       return result;
     } catch (error) {
       const stackTrace = error.stack.split("\n");
-      const errorLine = stackTrace.find((line) =>
-        line.includes("at getProducts")
-      );
+      const errorLine = stackTrace.find((line) => line.includes("at getProducts"));
 
       logger.error(`Error in /products route: ${errorLine}`, error);
-      res
-        .status(500)
-        .json({ status: "error", message: "Internal server error" });
+      res.status(500).json({ status: "error", message: "Internal server error" });
     }
   }
   async findById(paramproductId) {
@@ -151,10 +142,7 @@ export default class ProductsController {
   async getProductStats(req, res) {
     try {
       const totalProducts = await productsDAO.countProducts({});
-      const productsByCategory = await Product.aggregate([
-        { $unwind: "$categories" },
-        { $group: { _id: "$categories", count: { $sum: 1 } } },
-      ]);
+      const productsByCategory = await Product.aggregate([{ $unwind: "$categories" }, { $group: { _id: "$categories", count: { $sum: 1 } } }]);
       const lowStockProducts = await Product.find({ stock: { $lt: 10 } });
 
       res.json({
@@ -167,9 +155,7 @@ export default class ProductsController {
       });
     } catch (error) {
       logger.error("Error fetching product stats:", error);
-      res
-        .status(500)
-        .json({ status: "error", message: "Internal server error" });
+      res.status(500).json({ status: "error", message: "Internal server error" });
     }
   }
 }

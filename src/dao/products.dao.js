@@ -106,11 +106,7 @@ export default class ProductsDAO {
       const productId = productData.id;
       delete productData.id; // Remove ID from data to avoid updating it
 
-      const updatedProduct = await Product.findByIdAndUpdate(
-        productId,
-        productData,
-        { new: true, runValidators: true }
-      );
+      const updatedProduct = await Product.findByIdAndUpdate(productId, productData, { new: true, runValidators: true });
 
       if (!updatedProduct) {
         return {
