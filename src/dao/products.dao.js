@@ -71,8 +71,8 @@ export default class ProductsDAO {
         return { status: "Producto agregado correctamente" };
       }
     } catch (error) {
-      logger.error("Error adding product:", error);
-      return { error: "Error adding product: " + error };
+      logger.error("[DAO] Error adding product:", error);
+      return { error: "[DAO] Error adding product: " + error };
     }
   }
 

@@ -29,7 +29,14 @@ const privateAccess = async (req, res, next) => {
   next();
 };
 
-adminProductsRouter.post("/", privateAccess, async (req, res) => {
+// adminProductsRouter.post("/", privateAccess, async (req, res) => {
+//   try {
+//     await productController.addProduct(req, res);
+//   } catch (error) {
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// });
+adminProductsRouter.post("/", privateAccess, upload.array("productImages", 5), async (req, res) => {
   try {
     await productController.addProduct(req, res);
   } catch (error) {

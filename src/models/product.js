@@ -21,7 +21,7 @@ const ProductSchema = new Schema({
   _status: { type: String, required: true },
   price: { type: Number, required: true },
   stock: { type: Number, required: true },
-  images: [],
+  images: [{ type: String }],
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
   __v: { type: Number, default: 0 },
