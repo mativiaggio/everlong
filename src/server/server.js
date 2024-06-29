@@ -16,6 +16,7 @@ import hbs from "../config/handlebars.config.js";
 import path from "path";
 import { fileURLToPath } from "url";
 
+
 // Importing routes
 import adminRouter from "../routes/admin/admin.router.js";
 import clientRouter from "../routes/client/client.router.js";
@@ -26,7 +27,8 @@ import adminEnterpriseRouter from "../routes/api/admin/enterprise.router.js";
 import adminInvoicesRouter from "../routes/api/admin/invoices.router.js";
 import adminCategoriesRouter from "../routes/api/admin/categories.router.js";
 
-const __filename = fileURLToPath(import.meta.url);
+const __filename = fileURLToPath(
+    import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Iniciar express
@@ -35,25 +37,24 @@ const app = express();
 // MongoDB connection
 connect();
 
-// App
 
 // Session middleware
 app.use(cookieParser());
 app.use(
-  session({
-    secret: "ourSecret",
-    resave: true,
-    saveUninitialized: true,
-    store: MongoStore.create({
-      mongoUrl: MONGO_URI,
-    }),
-  })
+    session({
+        secret: "ourSecret",
+        resave: true,
+        saveUninitialized: true,
+        store: MongoStore.create({
+            mongoUrl: MONGO_URI,
+        }),
+    })
 );
 app.use(flash());
 
 app.use((req, res, next) => {
-  res.locals.messages = req.flash();
-  next();
+    res.locals.messages = req.flash();
+    next();
 });
 
 // Passport initialization
@@ -86,5 +87,5 @@ app.use("/admin", adminRouter);
 app.use("/", clientRouter);
 
 app.listen(PORT, () => {
-  logger.info(`Server running http://localhost:${PORT}/`);
+    logger.info(`Server running http://localhost:${PORT}/`);
 });

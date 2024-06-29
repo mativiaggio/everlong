@@ -43,23 +43,27 @@ class UserDAO {
   async getAllUsers(limit, page, sortOptions = {}, filter = {}) {
     try {
       // Prioritize users with the "admin" role
-      const users = await User.aggregate([
-        {
-          $sort: {
-            isAdmin: -1,
-            ...sortOptions,
-          },
-        },
-        {
-          $match: filter,
-        },
-        {
-          $skip: (page - 1) * limit,
-        },
-        {
-          $limit: limit,
-        },
-      ]).exec();
+      // const users = await User.aggregate([
+      //   {
+      //     $sort: {
+      //       isAdmin: -1,
+      //       ...sortOptions,
+      //     },
+      //   },
+      //   {
+      //     $match: filter,
+      //   },
+      //   {
+      //     $skip: (page - 1) * limit,
+      //   },
+      //   {
+      //     $limit: limit,
+      //   },
+      // ]).exec();
+      const users = await User.find(filter)
+        .limit(limit)
+        .skip((page - 1) * limit)
+        .lean();
 
       return users;
     } catch (error) {

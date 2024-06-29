@@ -1,15 +1,30 @@
-$("#searchInput").on("blur change", function (e) {
-  e.preventDefault();
-  const query = this.value;
-  fetch(`/api/admin/products/search?query=${query}`)
+$("#productSearchDropdown").dropdown({
+  title: "Nombre",
+  items: [
+    {
+      title: "Nombre",
+      id: "title",
+    },
+    {
+      title: "Categoría",
+      id: "category",
+    },
+  ],
+});
+
+function searchProduct() {
+  const findBy = $("#productSearchDropdown").attr("findBy");
+  const query = $("#searchInput").val();
+
+  fetch(`/api/admin/products/search?findBy=${findBy}&query=${query}`)
     .then((response) => response.json())
     .then((data) => {
       const tbody = document.getElementById("products_tbody");
       tbody.innerHTML = "";
 
       data.products.forEach((product) => {
-        console.log(product);
         const row = document.createElement("tr");
+        debugger;
         row.className =
           "even:bg-[var(--main-light-1)] even:dark:bg-[var(--main-dark-7)] odd:bg-[var(--main-light-2)] odd:dark:bg-[var(--main-dark-3)] border-b dark:border-[var(--main-dark-10)] cursor-pointer";
         row.id = product.slug;
@@ -21,9 +36,18 @@ $("#searchInput").on("blur change", function (e) {
           <td class="px-2 py-2">$${product.price}</td>
         `;
         tbody.appendChild(row);
+        $("#searchButton").prop("disabled", false);
       });
     })
-    .catch((error) => console.error("Error:", error));
+    .catch((error) => {
+      console.error("Error:", error);
+      $("#searchButton").prop("disabled", false);
+    });
+}
+$("#searchButton").on("click", function (e) {
+  e.preventDefault();
+  $(this).prop("disabled", true);
+  searchProduct();
 });
 
 $("table").contextMenuPlugin({

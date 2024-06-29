@@ -5,14 +5,6 @@ import { sortUsers } from "../utils/functions.js";
 const userDao = new UserDAO();
 
 class UserController {
-  /**
-   * Retrieves all admins from the database.
-   *
-   * @returns {Promise<{status: string, admins: Array} | {status: string, message: string}>}
-   * - A promise that resolves to an object with 'status' as 'success' and 'admins' as an array of admin objects.
-   * - If no admins are found, resolves to an object with 'status' as 'error' and 'message' as 'No admins in database'.
-   * - If an error occurs during the process, rejects the promise with the error.
-   */
   async isThereAnAdmin() {
     try {
       const admins = await userDao.isThereAnAdmin();
@@ -26,20 +18,30 @@ class UserController {
     }
   }
 
-  async getAllUsers(req, res, limit) {
+  async getAllUsers(req, res, query, limit, page) {
     try {
-      const { page = 1, sort, query } = req.query;
-      const skip = (page - 1) * limit;
-
+      const { sort, query, findBy } = req.query || {};
       const filter = {};
+
       if (query) {
+        filter["$or"] = [{ [findBy]: { $regex: query, $options: "i" } }];
       }
 
       const sortOptions = {};
       if (sort) {
+        sortOptions.price = sort === "asc" ? 1 : -1;
       }
 
-      const users = await userDao.getAllUsers(limit, page, sortOptions, filter);
+      // const users = await userDao.getAllUsers(limit, page, sortOptions, filter);
+
+      let users;
+      if (query) {
+        users = await userDao.getAllUsers(limit, page, {}, filter);
+      } else {
+        console.log(limit, page, sortOptions, filter);
+        users = await userDao.getAllUsers(limit, page, sortOptions, filter);
+      }
+
       const sortedUsers = sortUsers(users);
       const totalUsers = await userDao.countUsers(filter);
       const totalPages = Math.ceil(totalUsers / limit);
@@ -70,11 +72,6 @@ class UserController {
     }
   }
 
-  /**
-   * Retrieves statistics of the users.
-   *
-   * @returns {Promise<Object>} A promise that resolves to an object with user statistics.
-   */
   async getUserStats() {
     try {
       const totalUsers = await userDao.getTotalUsers();

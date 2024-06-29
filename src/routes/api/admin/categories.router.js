@@ -50,4 +50,32 @@ adminCategoriesRouter.put("/", privateAccess, async (req, res) => {
   }
 });
 
+adminCategoriesRouter.get("/search", privateAccess, async (req, res) => {
+  try {
+    const findBy = req.query.findBy || "";
+    const query = req.query.query || "";
+    const limit = req.query.limit || 10;
+    const page = req.query.page || 1;
+    const response = await categoriesController.getCategories(
+      req,
+      res,
+      query,
+      limit,
+      page
+    );
+    console.log("response: " + JSON.stringify(response));
+    const categories = response.ResultSet;
+
+    const totalCategories = await categoriesController.countCategories(query);
+    const categoriesPerPage = 10;
+    const totalPages = Math.ceil(totalCategories / categoriesPerPage);
+    const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+    res.json({ categories, pages });
+  } catch (error) {
+    logger.error("Error al buscar categorías:", error);
+    res.status(500).send("Error al buscar categorías");
+  }
+});
+
 export default adminCategoriesRouter;

@@ -151,8 +151,16 @@ router.get("/categorias", privateAccess, async (req, res) => {
     const description =
       "Visualiza, actualiza o elimina cualquiera de las categorias cargadas";
     const screen = "categories";
-    const limit = req.query.limit || 5;
-    const response = await categoriesController.getCategories(req, res, limit);
+    const query = req.query.query || "";
+    const limit = req.query.limit || 10;
+    const page = req.query.page || 1;
+    const response = await categoriesController.getCategories(
+      req,
+      res,
+      query,
+      limit,
+      page
+    );
     const categories = response.ResultSet;
 
     const totalCategories = await categoriesController.countCategories();
@@ -198,15 +206,16 @@ router.get("/categorias/editar/:pslug", privateAccess, async (req, res) => {
       req.params.pslug
     );
 
+    const properties = categoryData.properties;
+
     const categories = await categoriesController.getAll();
-    // categoryData.properties = categoryData.properties.map(JSON.parse);
-    console.log(categoryData);
     res.render("admin/edit-category", {
       isLoggedIn: true,
       adminSidebarItems,
       title,
       description,
       categoryData,
+      properties,
       categories,
     });
   } catch (error) {

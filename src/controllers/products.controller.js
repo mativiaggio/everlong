@@ -1,20 +1,25 @@
+import { fileURLToPath } from "url";
 import ProductsDAO from "../dao/products.dao.js";
 import Product from "../models/product.js";
 import { logger } from "../utils/logger.js";
+import path from "path";
 
 const productsDAO = new ProductsDAO();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export default class ProductsController {
   async getProducts(req, res, query, limit, page) {
     try {
-      const { sort, query } = req.query || {};
-
+      const { sort, query, findBy } = req.query || {};
       const filter = {};
 
       if (query) {
         filter["$or"] = [
-          { title: { $regex: query, $options: "i" } },
-          { category: { $regex: query, $options: "i" } },
+          {
+            [findBy]: { $regex: query, $options: "i" },
+          },
         ];
       }
 
@@ -100,10 +105,55 @@ export default class ProductsController {
     }
   }
 
+  // async addProduct(req, res) {
+  //   try {
+  //     const productData = req.body;
+  //     productData.owner = req.session.user._id;
+  //     const result = await productsDAO.addProduct(productData);
+
+  //     if (result.status === "error") {
+  //       return res.status(500).json(result);
+  //     }
+
+  //     return res.json(result);
+  //   } catch (error) {
+  //     logger.error("Error adding product:", error);
+  //     return res.status(500).json({ error: "Error adding product" });
+  //   }
+  // }
+  // async addProduct(req, res) {
+  //   console.log("Controller: " + JSON.stringify(req.body));
+  //   try {
+  //     const productData = req.body;
+  //     productData.owner = req.session.user._id;
+
+  //     if (req.files) {
+  //       productData.images = req.files.map((file) => file.path.replace("public", ""));
+  //     }
+
+  //     const result = await productsDAO.addProduct(productData);
+
+  //     if (result.status === "error") {
+  //       return res.status(500).json(result);
+  //     }
+
+  //     return res.json(result);
+  //   } catch (error) {
+  //     logger.error("[Controller] Error adding product:", error);
+  //     return res.status(500).json({ error: "[Controller] Error adding product" });
+  //   }
+  // }
   async addProduct(req, res) {
     try {
       const productData = req.body;
       productData.owner = req.session.user._id;
+
+      if (req.files) {
+        productData.images = req.files.map((file) =>
+          path.relative(path.join(__dirname, "../public"), file.path)
+        );
+      }
+
       const result = await productsDAO.addProduct(productData);
 
       if (result.status === "error") {
@@ -112,8 +162,10 @@ export default class ProductsController {
 
       return res.json(result);
     } catch (error) {
-      logger.error("Error adding product:", error);
-      return res.status(500).json({ error: "Error adding product" });
+      logger.error("[Controller] Error adding product:", error);
+      return res
+        .status(500)
+        .json({ error: "[Controller] Error adding product" });
     }
   }
 

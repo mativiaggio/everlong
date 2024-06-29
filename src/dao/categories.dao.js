@@ -11,9 +11,9 @@ export default class CategoriesDAO {
       throw error;
     }
   }
-  async getCategories(limit, page) {
+  async getCategories(limit, page, sortOptions = {}, filter = {}) {
     try {
-      const categories = await Category.find()
+      const categories = await Category.find(filter)
         .limit(limit)
         .skip((page - 1) * limit)
         .populate("parent", "name")
@@ -67,13 +67,20 @@ export default class CategoriesDAO {
 
   async updateCategory(categoryData) {
     try {
+      console.log("Entramos al dao");
       const categoryId = categoryData.id;
+      console.log("category id: " + categoryId);
+      console.log("categoryData.id: " + categoryData.id);
+      console.log("categoryData: " + JSON.stringify(categoryData));
       delete categoryData.id;
+
+      if (categoryData.parent === "") {
+        categoryData.parent = null;
+      }
 
       const updatedCategory = await Category.findByIdAndUpdate(
         categoryId,
-        categoryData,
-        { new: true, runValidators: true }
+        categoryData
       );
 
       if (!updatedCategory) {

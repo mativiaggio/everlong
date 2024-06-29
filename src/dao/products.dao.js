@@ -71,8 +71,8 @@ export default class ProductsDAO {
         return { status: "Producto agregado correctamente" };
       }
     } catch (error) {
-      logger.error("Error adding product:", error);
-      return { error: "Error adding product: " + error };
+      logger.error("[DAO] Error adding product:", error);
+      return { error: "[DAO] Error adding product: " + error };
     }
   }
 
@@ -106,11 +106,7 @@ export default class ProductsDAO {
       const productId = productData.id;
       delete productData.id; // Remove ID from data to avoid updating it
 
-      const updatedProduct = await Product.findByIdAndUpdate(
-        productId,
-        productData,
-        { new: true, runValidators: true }
-      );
+      const updatedProduct = await Product.findByIdAndUpdate(productId, productData, { new: true, runValidators: true });
 
       if (!updatedProduct) {
         return {
