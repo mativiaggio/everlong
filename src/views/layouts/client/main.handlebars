@@ -2,12 +2,398 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Everlong</title>
+    <title>
+      Everlong{{#if title}} | {{title}}{{/if}}
+    </title>
+    <meta name="description" content="{{description}}" />
     <link rel="stylesheet" href="/css/styles.css" />
-    {{! <script src="https://cdn.tailwindcss.com"></script> }}
   </head>
-  <body>
-    <h1>Everlong</h1>
+  <body
+    class="bg-[var(--main-bg-light)] dark:bg-[var(--main-bg-dark)] text-[var(--main-text-light)] dark:text-[var(--main-text-dark)]"
+  >
+
+    <nav
+      class="bg-[var(--main-bg-light)] border-gray-200 dark:bg-[var(--main-bg-dark)] text-sm text-[var(--main-text-light)] dark:text-[var(--main-text-dark)]"
+    >
+      <div
+        class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4"
+      >
+        <a
+          href="https://flowbite.com"
+          class="flex items-center space-x-3 rtl:space-x-reverse"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-hand-metal"
+          ><path d="M18 12.5V10a2 2 0 0 0-2-2a2 2 0 0 0-2 2v1.4" /><path
+              d="M14 11V9a2 2 0 1 0-4 0v2"
+            /><path d="M10 10.5V5a2 2 0 1 0-4 0v9" /><path
+              d="m7 15-1.76-1.76a2 2 0 0 0-2.83 2.82l3.6 3.6C7.5 21.14 9.2 22 12 22h2a8 8 0 0 0 8-8V7a2 2 0 1 0-4 0v5"
+            /></svg>
+          <span
+            class="self-center text-2xl font-semibold whitespace-nowrap"
+          >Everlong</span>
+        </a>
+        <div class="flex items-center space-x-6 rtl:space-x-reverse">
+          <a
+            href="tel:5541251234"
+            class="hidden md:flex items-center hover:underline"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              fill="currentColor"
+              class="mr-2"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"
+              />
+            </svg>
+            +54 9 (2323) 123456
+          </a>
+          {{#if user}}
+            <a
+              href="#"
+              class="hidden md:flex text-sm text-blue-600 dark:text-blue-500 hover:underline"
+            >Cerrar Sesión</a>
+          {{else}}
+            <a
+              href="#"
+              class="hidden md:flex text-sm text-blue-600 dark:text-blue-500 hover:underline"
+            >Iniciar sesión</a>
+            <a
+              href="#"
+              class="hidden md:flex text-sm text-blue-600 dark:text-blue-500 hover:underline"
+            >Registrarse</a>
+          {{/if}}
+
+          <a
+            href="/cart"
+            class="hidden md:flex items-center text-sm hover:underline"
+          ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-shopping-basket"
+            ><path d="m15 11-1 9" /><path d="m19 11-4-7" /><path
+                d="M2 11h20"
+              /><path
+                d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4"
+              /><path d="M4.5 15.5h15" /><path d="m5 11 4-7" /><path
+                d="m9 11 1 9"
+              /></svg></a>
+
+          <button
+            id="toggle-dark-mode"
+            type="button"
+            class="hidden md:flex items-center w-9 h-9 justify-center text-xs font-medium text-gray-700 bg-[var(--main-bg-light)] rounded-lg hover:bg-[var(--main-light-4)] focus:z-10 dark:bg-[var(--main-bg-dark)] focus:outline-none dark:text-[var(--main-text-dark)] dark:hover:bg-[var(--main-dark-4)]"
+          >
+            <svg
+              id="toggle-icon-moon"
+              {{! class="w-3.5 h-3.5" }}
+              width="20"
+              height="20"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 18 20"
+            >
+              <path
+                d="M17.8 13.75a1 1 0 0 0-.859-.5A7.488 7.488 0 0 1 10.52 2a1 1 0 0 0 0-.969A1.035 1.035 0 0 0 9.687.5h-.113a9.5 9.5 0 1 0 8.222 14.247 1 1 0 0 0 .004-.997Z"
+              >
+              </path>
+            </svg>
+            <svg
+              id="toggle-icon-sun"
+              class="hidden"
+              width="20"
+              height="20"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                d="M10 15a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0-11a1 1 0 0 0 1-1V1a1 1 0 0 0-2 0v2a1 1 0 0 0 1 1Zm0 12a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1ZM4.343 5.757a1 1 0 0 0 1.414-1.414L4.343 2.929a1 1 0 0 0-1.414 1.414l1.414 1.414Zm11.314 8.486a1 1 0 0 0-1.414 1.414l1.414 1.414a1 1 0 0 0 1.414-1.414l-1.414-1.414ZM4 10a1 1 0 0 0-1-1H1a1 1 0 0 0 0 2h2a1 1 0 0 0 1-1Zm15-1h-2a1 1 0 1 0 0 2h2a1 1 0 0 0 0-2ZM4.343 14.243l-1.414 1.414a1 1 0 1 0 1.414 1.414l1.414-1.414a1 1 0 0 0-1.414-1.414ZM14.95 6.05a1 1 0 0 0 .707-.293l1.414-1.414a1 1 0 1 0-1.414-1.414l-1.414 1.414a1 1 0 0 0 .707 1.707Z"
+              >
+              </path>
+            </svg>
+            <span class="sr-only">Toggle dark/light mode</span>
+          </button>
+          <div
+            class="md:hidden bg-[var(--main-bg-light)] dark:bg-[var(--main-dark-2)]"
+          >
+            <button
+              id="open-sidebar"
+              data-drawer-target="default-sidebar"
+              data-drawer-toggle="default-sidebar"
+              aria-controls="default-sidebar"
+              type="button"
+              class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            >
+              <span class="sr-only">Open sidebar</span>
+              <svg
+                class="w-6 h-6"
+                aria-hidden="true"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  fill-rule="evenodd"
+                  d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+                >
+                </path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <nav
+      class="hidden md:block bg-[var(--main-light-1)] dark:bg-[var(--main-dark-10)]"
+    >
+      <div class="max-w-screen-xl px-4 py-3 mx-auto">
+        <div class="flex items-center">
+          <ul
+            class="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm"
+          >
+            <li>
+              <a
+                href="#"
+                class="text-gray-900 dark:text-white hover:underline"
+                aria-current="page"
+              >Inicio</a>
+            </li>
+            <li>
+              <a
+                href="#"
+                class="text-gray-900 dark:text-white hover:underline"
+              >Categorías</a>
+            </li>
+            <li>
+              <a
+                href="#"
+                class="text-gray-900 dark:text-white hover:underline"
+              >Productos</a>
+            </li>
+            <li>
+              <a
+                href="#"
+                class="text-gray-900 dark:text-white hover:underline"
+              >Acerca de Nosotros</a>
+            </li>
+            <li>
+              <a
+                href="#"
+                class="text-gray-900 dark:text-white hover:underline"
+              >Contacto</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <aside
+      id="default-sidebar"
+      class="md:hidden fixed top-0 left-0 z-40 w-full h-screen transition-transform -translate-x-full sm:translate-x-0"
+      aria-label="Sidebar"
+    >
+
+      <div
+        class="flex flex-col h-full px-3 py-4 overflow-y-auto bg-[var(--main-light-2)] dark:bg-[var(--main-bg-dark)]"
+        id="sidebar-container"
+      >
+        <div class="w-full p-1">
+          <a
+            href="https://flowbite.com"
+            class="flex items-center space-x-3 rtl:space-x-reverse text-sm text-[var(--main-text-light)] dark:text-[var(--main-text-dark)]"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-hand-metal"
+            ><path d="M18 12.5V10a2 2 0 0 0-2-2a2 2 0 0 0-2 2v1.4" /><path
+                d="M14 11V9a2 2 0 1 0-4 0v2"
+              /><path d="M10 10.5V5a2 2 0 1 0-4 0v9" /><path
+                d="m7 15-1.76-1.76a2 2 0 0 0-2.83 2.82l3.6 3.6C7.5 21.14 9.2 22 12 22h2a8 8 0 0 0 8-8V7a2 2 0 1 0-4 0v5"
+              /></svg>
+            <span
+              class="self-center text-2xl font-semibold whitespace-nowrap"
+            >Everlong</span>
+          </a>
+          <button
+            id="close-aside-button"
+            class="text-red-500 float-right sm:hidden"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-x"
+            >
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
+            </svg>
+          </button>
+        </div>
+        <ul class="space-y-2 font-medium">
+          {{#each clientSidebarItems}}
+            <li>
+              <a
+                href="{{url}}"
+                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[var(--main-dark-10)] group
+                  {{classes}}"
+              >
+                {{{icon}}}
+                <span class="ms-3 font-bold">{{title}}</span>
+              </a>
+            </li>
+          {{/each}}
+
+          {{#if user}}
+            <li>
+              <button
+                id="logout"
+                class="flex w-full items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group hover:!text-red-600"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-log-out"
+                >
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                  <polyline points="16 17 21 12 16 7" />
+                  <line x1="21" x2="9" y1="12" y2="12" />
+                </svg>
+                <span class="ms-3 font-bold">Cerrar Sesión</span>
+              </button>
+            </li>
+          {{else}}
+            <li>
+              <button
+                id="logout"
+                class="flex w-full items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-log-in"
+                ><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" /><polyline
+                    points="10 17 15 12 10 7"
+                  /><line x1="15" x2="3" y1="12" y2="12" /></svg>
+                <span class="ms-3 font-bold">Iniciar Sesión</span>
+              </button>
+            </li>
+            <li>
+              <button
+                id="logout"
+                class="flex w-full items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-circle-user-round"
+                ><path d="M18 20a6 6 0 0 0-12 0" /><circle
+                    cx="12"
+                    cy="10"
+                    r="4"
+                  /><circle cx="12" cy="12" r="10" /></svg>
+                <span class="ms-3 font-bold">Registrarse</span>
+              </button>
+            </li>
+          {{/if}}
+
+          <li>
+            <button
+              id="aside-toggle-dark-mode"
+              type="button"
+              class="flex items-center w-9 h-9 justify-center text-xs font-medium text-gray-700 bg-[var(--main-light-2)] rounded-lg hover:bg-[var(--main-light-4)] focus:z-10 dark:bg-[var(--main-bg-dark)] focus:outline-none dark:text-[var(--main-text-dark)] dark:hover:bg-[var(--main-dark-4)]"
+            >
+              <svg
+                id="aside-toggle-icon-moon"
+                class="w-3.5 h-3.5"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 18 20"
+              >
+                <path
+                  d="M17.8 13.75a1 1 0 0 0-.859-.5A7.488 7.488 0 0 1 10.52 2a1 1 0 0 0 0-.969A1.035 1.035 0 0 0 9.687.5h-.113a9.5 9.5 0 1 0 8.222 14.247 1 1 0 0 0 .004-.997Z"
+                >
+                </path>
+              </svg>
+              <svg
+                id="aside-toggle-icon-sun"
+                class="w-3.5 h-3.5 hidden"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M10 15a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0-11a1 1 0 0 0 1-1V1a1 1 0 0 0-2 0v2a1 1 0 0 0 1 1Zm0 12a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1ZM4.343 5.757a1 1 0 0 0 1.414-1.414L4.343 2.929a1 1 0 0 0-1.414 1.414l1.414 1.414Zm11.314 8.486a1 1 0 0 0-1.414 1.414l1.414 1.414a1 1 0 0 0 1.414-1.414l-1.414-1.414ZM4 10a1 1 0 0 0-1-1H1a1 1 0 0 0 0 2h2a1 1 0 0 0 1-1Zm15-1h-2a1 1 0 1 0 0 2h2a1 1 0 0 0 0-2ZM4.343 14.243l-1.414 1.414a1 1 0 1 0 1.414 1.414l1.414-1.414a1 1 0 0 0-1.414-1.414ZM14.95 6.05a1 1 0 0 0 .707-.293l1.414-1.414a1 1 0 1 0-1.414-1.414l-1.414 1.414a1 1 0 0 0 .707 1.707Z"
+                >
+                </path>
+              </svg>
+              <span class="sr-only">Toggle dark/light mode</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
     {{{body}}}
     {{! Jquery }}
     <script
@@ -15,5 +401,8 @@
       integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
       crossorigin="anonymous"
     ></script>
+    <script type="module" src="/js/client/main.js"></script>
+    <script type="module" src="/js/plugins.js"></script>
+    <script type="module" src="/js/functions.js"></script>
   </body>
 </html>

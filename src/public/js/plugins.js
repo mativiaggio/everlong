@@ -262,12 +262,122 @@ import { contextAction } from "./functions.js";
 
     return this.each(function () {
       var $panel_container = $(this);
-      $panel_container.addClass("border border-[var(--main-text-light)] dark:border-[var(--main-text-dark)] rounded-md overflow-hidden mb-2");
+      $panel_container.addClass(
+        "border border-[var(--main-text-light)] dark:border-[var(--main-text-dark)] rounded-md overflow-hidden mb-2"
+      );
       var $panel_title_container = document.createElement("div");
-      $panel_title_container.className = "flex justify-between p-2 text-[var(--main-text-dark)] dark:text-[var(--main-text-light)] bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)]";
+      $panel_title_container.className =
+        "flex justify-between p-2 text-[var(--main-text-dark)] dark:text-[var(--main-text-light)] bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)]";
       $panel_title_container.innerHTML = settings.title;
       $panel_title_container.innerHTML += `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-plus"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>`;
       $panel_container.prepend($panel_title_container);
+    });
+  };
+})(jQuery);
+
+(function ($) {
+  $.fn.simpleCarousel = function (options) {
+    var settings = $.extend(
+      {
+        items: [],
+        classes: "",
+      },
+      options
+    );
+
+    return this.each(function () {
+      var $this = $(this);
+      $this.addClass(settings.classes);
+
+      // Create carousel structure
+      var carouselWrapper = $(
+        '<div class="relative h-full overflow-hidden"></div>'
+      );
+      var indicators = $(
+        '<div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse"></div>'
+      );
+      var prevButton = $(
+        '<button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev></button>'
+      );
+      var nextButton = $(
+        '<button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next></button>'
+      );
+
+      // Create carousel items
+      settings.items.forEach(function (item, index) {
+        var carouselItem = $(
+          '<div class="duration-700 ease-in-out"></div>'
+        ).attr("data-carousel-item", index === 0 ? "active" : "");
+        var img = $("<img>")
+          .attr("src", item)
+          .addClass(
+            "absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+          )
+          .attr("alt", "...");
+        carouselItem.append(img);
+        carouselWrapper.append(carouselItem);
+
+        // Create indicator buttons
+        var indicator = $(
+          '<button type="button" class="w-3 h-3 rounded-full"></button>'
+        )
+          .attr("aria-current", index === 0 ? "true" : "false")
+          .attr("aria-label", "Slide " + (index + 1))
+          .attr("data-carousel-slide-to", index);
+        indicators.append(indicator);
+      });
+
+      // Append controls
+      prevButton.html(
+        '<span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none"><svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/></svg><span class="sr-only">Previous</span></span>'
+      );
+      nextButton.html(
+        '<span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none"><svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/></svg><span class="sr-only">Next</span></span>'
+      );
+
+      // Append elements to main container
+      $this
+        .append(carouselWrapper)
+        .append(indicators)
+        .append(prevButton)
+        .append(nextButton);
+
+      // Carousel functionality
+      var currentIndex = 0;
+      var itemsCount = settings.items.length;
+
+      function goToSlide(index) {
+        carouselWrapper
+          .children("div")
+          .removeClass("active")
+          .addClass("hidden");
+        carouselWrapper
+          .children("div")
+          .eq(index)
+          .removeClass("hidden")
+          .addClass("active");
+        indicators.children("button").attr("aria-current", "false");
+        indicators.children("button").eq(index).attr("aria-current", "true");
+      }
+
+      prevButton.on("click", function () {
+        currentIndex = currentIndex > 0 ? currentIndex - 1 : itemsCount - 1;
+        goToSlide(currentIndex);
+      });
+
+      nextButton.on("click", function () {
+        currentIndex = currentIndex < itemsCount - 1 ? currentIndex + 1 : 0;
+        goToSlide(currentIndex);
+      });
+
+      indicators.find("button").on("click", function () {
+        var index = $(this).attr("data-carousel-slide-to");
+        currentIndex = index;
+        goToSlide(currentIndex);
+      });
+
+      // Initialize first slide
+      goToSlide(currentIndex);
     });
   };
 })(jQuery);

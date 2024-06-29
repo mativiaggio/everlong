@@ -20,6 +20,10 @@ export function loadScripts() {
   }
 
   switch (page) {
+    case "":
+    case "/":
+      script.src = "/js/client/home.js";
+      break;
     case "/admin":
       script.src = "/js/admin/home.js";
       break;
