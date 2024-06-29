@@ -48,6 +48,9 @@ const hbs = exphbs.create({
         currency: "ARS",
       }).format(value);
     },
+    index: function (array, index) {
+      return array[index];
+    },
   },
   defaultLayout: "main",
   layoutsDir: getPath("views/layouts"),
