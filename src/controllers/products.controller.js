@@ -73,13 +73,14 @@ export default class ProductsController {
         .json({ status: "error", message: "Internal server error" });
     }
   }
+
   async findById(paramproductId) {
     try {
       const productId = paramproductId;
       const product = await productsDAO.getProductById(productId);
       return product;
     } catch (error) {
-      logger.error("Error getting product by ID:", error);
+      logger.error("[Controller] Error getting product by ID:", error);
       throw error;
     }
   }
@@ -90,7 +91,17 @@ export default class ProductsController {
       const product = await productsDAO.getProductBySlug(product_slug);
       return product;
     } catch (error) {
-      logger.error("Error getting product by Slug:", error);
+      logger.error("[Controller] Error getting product by Slug:", error);
+      throw error;
+    }
+  }
+
+  async findByFeatured() {
+    try {
+      const product = await productsDAO.getFeaturedProducts();
+      return product;
+    } catch (error) {
+      logger.error("[Controller] Error getting product by Slug:", error);
       throw error;
     }
   }
@@ -100,49 +111,11 @@ export default class ProductsController {
       const totalProducts = await Product.countDocuments();
       return totalProducts;
     } catch (error) {
-      logger.error("Error contando productos:", error);
+      logger.error("[Controller] Error contando productos:", error);
       throw error;
     }
   }
 
-  // async addProduct(req, res) {
-  //   try {
-  //     const productData = req.body;
-  //     productData.owner = req.session.user._id;
-  //     const result = await productsDAO.addProduct(productData);
-
-  //     if (result.status === "error") {
-  //       return res.status(500).json(result);
-  //     }
-
-  //     return res.json(result);
-  //   } catch (error) {
-  //     logger.error("Error adding product:", error);
-  //     return res.status(500).json({ error: "Error adding product" });
-  //   }
-  // }
-  // async addProduct(req, res) {
-  //   console.log("Controller: " + JSON.stringify(req.body));
-  //   try {
-  //     const productData = req.body;
-  //     productData.owner = req.session.user._id;
-
-  //     if (req.files) {
-  //       productData.images = req.files.map((file) => file.path.replace("public", ""));
-  //     }
-
-  //     const result = await productsDAO.addProduct(productData);
-
-  //     if (result.status === "error") {
-  //       return res.status(500).json(result);
-  //     }
-
-  //     return res.json(result);
-  //   } catch (error) {
-  //     logger.error("[Controller] Error adding product:", error);
-  //     return res.status(500).json({ error: "[Controller] Error adding product" });
-  //   }
-  // }
   async addProduct(req, res) {
     try {
       const productData = req.body;
@@ -180,7 +153,7 @@ export default class ProductsController {
 
       return res.json(result);
     } catch (error) {
-      logger.error("Error updating product:", error);
+      logger.error("[Controller] Error updating product:", error);
       return res.status(500).json({ error: "Error updating product" });
     }
   }
@@ -195,7 +168,7 @@ export default class ProductsController {
       }
       return res.json(result);
     } catch (error) {
-      logger.error("Error deleting product:", error);
+      logger.error("[Controller] Error deleting product:", error);
       return res.status(500).json({ error: "Error deleting product" });
     }
   }
@@ -218,7 +191,7 @@ export default class ProductsController {
         },
       });
     } catch (error) {
-      logger.error("Error fetching product stats:", error);
+      logger.error("[Controller] Error fetching product stats:", error);
       res
         .status(500)
         .json({ status: "error", message: "Internal server error" });

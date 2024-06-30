@@ -51,6 +51,32 @@ const hbs = exphbs.create({
     index: function (array, index) {
       return array[index];
     },
+    truncate: function (str, len) {
+      if (str.length > len) {
+        return str.substring(0, len) + "...";
+      }
+      return str;
+    },
+    currency: function (price, locale) {
+      let formattedPrice;
+
+      switch (locale) {
+        case "arg":
+          formattedPrice = new Intl.NumberFormat("es-AR", {
+            style: "currency",
+            currency: "ARS",
+            minimumFractionDigits: 2,
+          }).format(price);
+          break;
+
+        // Puedes agregar más casos aquí para otros formatos de moneda
+        default:
+          formattedPrice = price;
+          break;
+      }
+
+      return formattedPrice;
+    },
   },
   defaultLayout: "main",
   layoutsDir: getPath("views/layouts"),

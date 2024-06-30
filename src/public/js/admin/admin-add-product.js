@@ -77,6 +77,7 @@ $("#add-product-button").on("click", function (e) {
     formData.append("price", $("#price").val());
     formData.append("category", $("#category").val());
     formData.append("stock", $("#stock").val());
+    formData.append("featured", $("#featured").is(":checked"));
     formData.append("description", $("#description").val());
     formData.append("_status", "active");
 
