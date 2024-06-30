@@ -39,9 +39,7 @@ const userMiddleware = (req, res, next) => {
 router.get("/", userMiddleware, async (req, res) => {
   const title = "Inicio";
   const description = "Bienvenido a everlong, tu comercio de confianza";
-  const product = await productController.findById("66807fc8afdfee027600c582");
-  let products = [];
-  products.push(product);
+  const products = await productController.findByFeatured();
   console.log(products);
   res.render("client/home", {
     user: req.user,

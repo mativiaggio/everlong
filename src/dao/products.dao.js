@@ -12,7 +12,7 @@ export default class ProductsDAO {
 
       return products;
     } catch (error) {
-      logger.error("Error al obtener productos:", error);
+      logger.error("[DAO] Error al obtener productos:", error);
       throw error;
     }
   }
@@ -29,7 +29,7 @@ export default class ProductsDAO {
         return null;
       }
     } catch (error) {
-      logger.error("Error retrieving product:", error);
+      logger.error("[DAO] Error retrieving product:", error);
       return null;
     }
   }
@@ -45,7 +45,22 @@ export default class ProductsDAO {
         return null;
       }
     } catch (error) {
-      logger.error("Error retrieving product:", error);
+      logger.error("[DAO] Error retrieving product:", error);
+      return null;
+    }
+  }
+
+  async getFeaturedProducts() {
+    try {
+      const product = await Product.find({ featured: true }).lean();
+      if (product) {
+        return product;
+      } else {
+        logger.error("Producto no encontrado");
+        return null;
+      }
+    } catch (error) {
+      logger.error("[DAO] Error retrieving product:", error);
       return null;
     }
   }
@@ -86,7 +101,7 @@ export default class ProductsDAO {
 
       return products;
     } catch (error) {
-      logger.error("Error al obtener productos:", error);
+      logger.error("[DAO] Error al obtener productos:", error);
       throw error;
     }
   }
@@ -96,7 +111,7 @@ export default class ProductsDAO {
       const count = await Product.countDocuments(filter);
       return count;
     } catch (error) {
-      logger.error("Error al contar productos:", error);
+      logger.error("[DAO] Error al contar productos:", error);
       throw error;
     }
   }
@@ -106,7 +121,11 @@ export default class ProductsDAO {
       const productId = productData.id;
       delete productData.id; // Remove ID from data to avoid updating it
 
-      const updatedProduct = await Product.findByIdAndUpdate(productId, productData, { new: true, runValidators: true });
+      const updatedProduct = await Product.findByIdAndUpdate(
+        productId,
+        productData,
+        { new: true, runValidators: true }
+      );
 
       if (!updatedProduct) {
         return {
@@ -120,7 +139,7 @@ export default class ProductsDAO {
         product: updatedProduct,
       };
     } catch (error) {
-      logger.error("Error updating product:", error);
+      logger.error("[DAO] Error updating product:", error);
       return { error: "Error updating product: " + error };
     }
   }
@@ -130,7 +149,7 @@ export default class ProductsDAO {
       const count = await Product.countDocuments(filter);
       return count;
     } catch (error) {
-      logger.error("Error contando productos:", error);
+      logger.error("[DAO] Error contando productos:", error);
       throw error;
     }
   }
@@ -151,7 +170,7 @@ export default class ProductsDAO {
       logger.info("Product successfully deleted");
       return { status: "Producto eliminado correctamente" };
     } catch (error) {
-      logger.error("Error deleting product:", error);
+      logger.error("[DAO] Error deleting product:", error);
       return { error: "Error deleting product" };
     }
   }
