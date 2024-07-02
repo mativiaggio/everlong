@@ -17,6 +17,8 @@ const mailing = {
 };
 const NODE_ENV = process.env.NODE_ENV;
 
+const JWT_SK = process.env.JWT_SECRET;
+
 export {
   PORT,
   MONGO_PASSWORD,
@@ -25,5 +27,6 @@ export {
   CALLBACK_URL,
   CLIENT_SECRET,
   mailing,
+  JWT_SK,
   NODE_ENV,
 };

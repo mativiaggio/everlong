@@ -14,10 +14,10 @@
   >
 
     <nav
-      class="bg-[var(--main-bg-light)] border-gray-200 dark:bg-[var(--main-bg-dark)] text-sm text-[var(--main-text-light)] dark:text-[var(--main-text-dark)]"
+      class="flex items-center h-fit max-h-[15vh] bg-[var(--main-bg-light)] border-gray-200 dark:bg-[var(--main-bg-dark)] text-sm text-[var(--main-text-light)] dark:text-[var(--main-text-dark)]"
     >
       <div
-        class="flex flex-wrap justify-between items-center mx-auto max-w-screen p-4"
+        class="w-full flex flex-wrap justify-between items-center mx-auto max-w-screen p-4"
       >
         <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
           <svg
@@ -117,7 +117,7 @@
           <button
             id="toggle-dark-mode"
             type="button"
-            class="hidden md:flex items-center w-9 h-9 justify-center text-xs font-medium text-gray-700 bg-[var(--main-bg-light)] rounded-lg hover:bg-[var(--main-light-4)] focus:z-10 dark:bg-[var(--main-bg-dark)] focus:outline-none dark:text-[var(--main-text-dark)] dark:hover:bg-[var(--main-dark-4)]"
+            class="hidden md:flex items-center w-9 h-9 justify-center text-xs font-medium focus:z-10"
           >
             <svg
               id="toggle-icon-moon"
@@ -189,7 +189,7 @@
                   <li>
                     <button
                       id="logout"
-                      class="px-4 py-2 hidden md:flex text-sm hover:underline"
+                      class="px-4 py-2 md:flex text-sm hover:underline"
                     >Cerrar Sesión</button>
                   </li>
                 </ul>
@@ -235,9 +235,9 @@
       </div>
     </nav>
     <nav
-      class="hidden md:block bg-[var(--main-light-1)] dark:bg-[var(--main-dark-10)]"
+      class="h-fit max-h-[10vh] hidden md:flex justify-start items-center bg-[var(--main-light-1)] dark:bg-[var(--main-dark-10)]"
     >
-      <div class="max-w-screen px-4 py-3 mx-auto">
+      <div class="max-w-screen px-4 py-3">
         <div class="flex items-center">
           <ul
             class="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm"
@@ -291,7 +291,7 @@
         <div class="w-full p-1">
           <a
             href="/"
-            class="flex items-center space-x-3 rtl:space-x-reverse text-sm text-[var(--main-text-light)] dark:text-[var(--main-text-dark)]"
+            class="w-fit flex items-center space-x-3 rtl:space-x-reverse text-sm text-[var(--main-text-light)] dark:text-[var(--main-text-dark)]"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -426,7 +426,7 @@
             <button
               id="aside-toggle-dark-mode"
               type="button"
-              class="flex items-center w-9 h-9 justify-center text-xs font-medium text-gray-700 bg-[var(--main-light-2)] rounded-lg hover:bg-[var(--main-light-4)] focus:z-10 dark:bg-[var(--main-bg-dark)] focus:outline-none dark:text-[var(--main-text-dark)] dark:hover:bg-[var(--main-dark-4)]"
+              class="flex items-center w-9 h-9 justify-center text-xs font-medium focus:z-10"
             >
               <svg
                 id="aside-toggle-icon-moon"

@@ -718,6 +718,9 @@ video {
 .h-\[30vh\] {
   height: 30vh;
 }
+.h-\[85vh\] {
+  height: 85vh;
+}
 .h-auto {
   height: auto;
 }
@@ -730,6 +733,12 @@ video {
 }
 .h-screen {
   height: 100vh;
+}
+.max-h-\[10vh\] {
+  max-height: 10vh;
+}
+.max-h-\[15vh\] {
+  max-height: 15vh;
 }
 .max-h-\[48px\] {
   max-height: 48px;
@@ -867,6 +876,9 @@ video {
 .items-center {
   align-items: center;
 }
+.justify-start {
+  justify-content: flex-start;
+}
 .justify-center {
   justify-content: center;
 }
@@ -947,6 +959,10 @@ video {
 }
 .rounded-sm {
   border-radius: 0.125rem;
+}
+.rounded-l {
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
 }
 .rounded-t-lg {
   border-top-left-radius: 0.5rem;
@@ -1535,11 +1551,6 @@ video {
   --tw-ring-color: rgb(229 231 235 / var(--tw-ring-opacity));
 }
 
-.focus\:ring-gray-300:focus {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(209 213 219 / var(--tw-ring-opacity));
-}
-
 .active\:text-gray-600:active {
   --tw-text-opacity: 1;
   color: rgb(75 85 99 / var(--tw-text-opacity));
@@ -1598,11 +1609,6 @@ video {
 .dark\:border-red-800:is([data-mode="dark"] *) {
   --tw-border-opacity: 1;
   border-color: rgb(153 27 27 / var(--tw-border-opacity));
-}
-
-.dark\:bg-\[\#1e1e1e\]:is([data-mode="dark"] *) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(30 30 30 / var(--tw-bg-opacity));
 }
 
 .dark\:bg-\[var\(--main-bg-dark\)\]:is([data-mode="dark"] *) {
@@ -1799,11 +1805,6 @@ video {
   --tw-ring-color: var(--main-light-10);
 }
 
-.dark\:focus\:ring-gray-500:focus:is([data-mode="dark"] *) {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(107 114 128 / var(--tw-ring-opacity));
-}
-
 .dark\:focus\:ring-gray-600:focus:is([data-mode="dark"] *) {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(75 85 99 / var(--tw-ring-opacity));
@@ -1855,10 +1856,6 @@ video {
     position: static;
   }
 
-  .md\:block {
-    display: block;
-  }
-
   .md\:flex {
     display: flex;
   }
@@ -1869,6 +1866,10 @@ video {
 
   .md\:h-\[60vh\] {
     height: 60vh;
+  }
+
+  .md\:h-\[75vh\] {
+    height: 75vh;
   }
 
   .md\:w-\[50\%\] {
@@ -1896,6 +1897,10 @@ video {
 
   .lg\:w-1\/2 {
     width: 50%;
+  }
+
+  .lg\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .lg\:grid-cols-3 {

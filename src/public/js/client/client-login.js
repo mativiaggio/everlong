@@ -62,6 +62,7 @@ loginForm.on("submit", function (event) {
     .then((res) => res.json())
     .then((data) => {
       if (data.status === "success") {
+        localStorage.setItem("token", data.token);
         window.location.replace("/");
       } else {
         $("#submit").prop("disabled", false).css({

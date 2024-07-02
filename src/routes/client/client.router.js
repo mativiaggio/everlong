@@ -100,7 +100,12 @@ clientRouter.get("/registro", (req, res) => {
   const description =
     "Registrate en nuestra tienda para pasar a ser parte de esta gran familia.";
   const customClasses = "overflow-hidden";
-  res.render("client/register", { title, description, customClasses });
+  res.render("client/register", {
+    title,
+    description,
+    customClasses,
+    clientSidebarItems,
+  });
 });
 
 clientRouter.get("/ingresar", (req, res) => {
@@ -108,7 +113,27 @@ clientRouter.get("/ingresar", (req, res) => {
   const description =
     "Inicia sesión en tu cuenta para poder manejar tu carrito y finalizar la compra..";
   const customClasses = "overflow-hidden";
-  res.render("client/login", { title, description, customClasses });
+  res.render("client/login", {
+    title,
+    description,
+    customClasses,
+    clientSidebarItems,
+  });
+});
+
+clientRouter.get("/carrito", async (req, res) => {
+  const title = "Carrito";
+  const description = "Aquí verás tus productos seleccionados.";
+  let user;
+  if (req.user) {
+    user = await userController.findById(req.user._id);
+  }
+  res.render("client/cart", {
+    user: user ? user.user : null,
+    clientSidebarItems,
+    title,
+    description,
+  });
 });
 
 export default clientRouter;

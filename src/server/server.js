@@ -29,6 +29,7 @@ import adminCategoriesRouter from "../routes/api/admin/categories.router.js";
 import clientRouter from "../routes/client/client.router.js";
 import clientSessionRouter from "../routes/api/client/session.router.js";
 import clientCartRouter from "../routes/api/client/carts.router.js";
+import clientProductsRouter from "../routes/api/client/products.router.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -79,12 +80,13 @@ app.use(setLayout);
 
 // Routes
 app.use("/api/admin/sessions", adminSessionRouter);
-app.use("/api/client/sessions", clientSessionRouter);
 app.use("/api/admin/products", adminProductsRouter);
 app.use("/api/admin/categories", adminCategoriesRouter);
 app.use("/api/admin/users", adminUserRouter);
 app.use("/api/admin/enterprise", adminEnterpriseRouter);
 app.use("/api/admin/invoices", adminInvoicesRouter);
+app.use("/api/client/sessions", clientSessionRouter);
+app.use("/api/client/products", clientProductsRouter);
 app.use("/api/client/carts", clientCartRouter);
 app.use("/admin", adminRouter);
 app.use("/", clientRouter);
