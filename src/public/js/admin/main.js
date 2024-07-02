@@ -1,5 +1,5 @@
 import { loadScripts } from "../functions.js";
-loadScripts();
+loadScripts("admin");
 
 $("#logout").click(function () {
   fetch("/api/admin/sessions/logout", {

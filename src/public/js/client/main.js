@@ -1,5 +1,5 @@
 import { loadScripts } from "../functions.js";
-loadScripts();
+loadScripts("client");
 
 $("#open-sidebar").on("click", () => {
   $("#default-sidebar").removeClass("-translate-x-full");
@@ -33,4 +33,26 @@ $(document).ready(() => {
     $("#aside-toggle-icon-moon").removeClass("hidden");
     $("#aside-toggle-icon-sun").addClass("hidden");
   }
+});
+
+$("#logout").click(function () {
+  fetch("/api/client/sessions/logout", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => {
+      const status = res.status;
+      if (status === 200) {
+        window.location.replace("/");
+      } else {
+        console.error("Error de red:", res.status);
+      }
+    })
+    .catch((error) => console.error("Error:", error));
+});
+
+$("#user_dropdown_button").on("click", function () {
+  $("#user_dropdown").toggleClass("hidden");
 });

@@ -42,36 +42,6 @@ const initializePassport = () => {
     )
   );
 
-  // passport.use(
-  //   "login",
-  //   new LocalStrategy(
-  //     {
-  //       usernameField: "email",
-  //     },
-  //     async (email, password, done) => {
-  //       try {
-  //         const user = await User.findOne({
-  //           email: email,
-  //           roles: { $in: ["admin"] },
-  //         });
-
-  //         if (!user) {
-  //           return done(null, false, {
-  //             message: "User not found or not an admin",
-  //           });
-  //         }
-
-  //         if (!isValidPassword(user, password)) {
-  //           return done(null, false, { message: "Incorrect password" });
-  //         }
-
-  //         return done(null, user);
-  //       } catch (error) {
-  //         return done(error);
-  //       }
-  //     }
-  //   )
-  // );
   passport.use(
     "login",
     new LocalStrategy(
@@ -93,10 +63,41 @@ const initializePassport = () => {
             return done(null, false, { message: "Incorrect password" });
           }
 
-          if (!user.roles.includes("admin")) {
+          if (level != "client") {
+            if (!user.roles.includes("admin")) {
+              return done(null, false, {
+                message: "User not an admin",
+              });
+            }
+          }
+
+          return done(null, user);
+        } catch (error) {
+          return done(error);
+        }
+      }
+    )
+  );
+
+  passport.use(
+    "client-login",
+    new LocalStrategy(
+      {
+        usernameField: "email",
+      },
+      async (email, password, done) => {
+        try {
+          const user = await User.findOne({
+            email: email,
+          });
+          if (!user) {
             return done(null, false, {
-              message: "User not an admin",
+              message: "User not found or not an admin",
             });
+          }
+
+          if (!isValidPassword(user, password)) {
+            return done(null, false, { message: "Incorrect password" });
           }
 
           return done(null, user);

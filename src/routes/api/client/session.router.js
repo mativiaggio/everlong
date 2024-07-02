@@ -2,45 +2,33 @@ import { Router } from "express";
 import User from "../../../models/user.js";
 import passport from "passport";
 
-const adminSessionRouter = Router();
+const clientSessionRouter = Router();
 
 // User registration
-adminSessionRouter.post(
+clientSessionRouter.post(
   "/register",
   passport.authenticate("register", {
-    failurlRedirect: "/api/admin/registerFail",
+    failurlRedirect: "/api/client/registerFail",
   }),
   async (req, res, next) => {
     try {
       const { email, full_name, roles } = req.user;
-      res.redirect(`/admin`);
+      res.redirect(`/client`);
     } catch (error) {
       next(error);
     }
   }
 );
-
-// Registration failure route
-adminSessionRouter.get("/registerFail", (req, res) => {
-  res.status(401).send({ status: "error", error: "Authentication error" });
-});
-
-adminSessionRouter.post("/login", (req, res, next) => {
-  passport.authenticate("login", (err, user, info) => {
+clientSessionRouter.post("/login", (req, res, next) => {
+  passport.authenticate("client-login", (err, user, info) => {
     if (err) {
       return next(err);
     }
     if (!user) {
-      if (info && info.message === "User not found or not an admin") {
+      if (info && info.message === "User not found.") {
         return res.status(401).json({
           status: "fail",
-          message: "User not found or not an admin",
-          action: "redirect",
-        });
-      } else if (info && info.message === "User not an admin") {
-        return res.status(401).json({
-          status: "fail",
-          message: "User not an admin",
+          message: "User not found.",
           action: "redirect",
         });
       } else {
@@ -70,12 +58,12 @@ adminSessionRouter.post("/login", (req, res, next) => {
 });
 
 // Login failure route
-adminSessionRouter.get("/login-fail", (req, res) => {
-  res.redirect("/admin/login-fail");
+clientSessionRouter.get("/login-fail", (req, res) => {
+  res.redirect("/client/login-fail");
 });
 
 // Logout route
-adminSessionRouter.get("/logout", (req, res) => {
+clientSessionRouter.get("/logout", (req, res) => {
   req.session.destroy((err) => {
     if (err) return res.status(500).send("Error destroying session");
     res.status(200).send("Loged out");
@@ -83,13 +71,13 @@ adminSessionRouter.get("/logout", (req, res) => {
 });
 
 // Github authentication route
-adminSessionRouter.get(
+clientSessionRouter.get(
   "/github",
   passport.authenticate("github", { scope: ["user:email"] })
 );
 
 // Github authentication callback route
-adminSessionRouter.get(
+clientSessionRouter.get(
   "/githubcallback",
   passport.authenticate("github", { failureRedirect: "/login" }),
   async (req, res) => {
@@ -101,7 +89,7 @@ adminSessionRouter.get(
 );
 
 // Route to get current user session
-adminSessionRouter.get("/current", (req, res) => {
+clientSessionRouter.get("/current", (req, res) => {
   if (req.session.user) {
     res.send({ user: req.session.user });
   } else {
@@ -109,4 +97,4 @@ adminSessionRouter.get("/current", (req, res) => {
   }
 });
 
-export default adminSessionRouter;
+export default clientSessionRouter;

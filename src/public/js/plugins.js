@@ -256,6 +256,7 @@ import { contextAction } from "./functions.js";
     var settings = $.extend(
       {
         title: "Titulo del panel",
+        button_id: "",
       },
       options
     );
@@ -269,8 +270,13 @@ import { contextAction } from "./functions.js";
       $panel_title_container.className =
         "flex justify-between p-2 text-[var(--main-text-dark)] dark:text-[var(--main-text-light)] bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)]";
       $panel_title_container.innerHTML = settings.title;
-      $panel_title_container.innerHTML += `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-plus"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>`;
+      $panel_title_container.innerHTML += `<svg class="cursor-pointer" id="${settings.button_id}" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-plus"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>`;
       $panel_container.prepend($panel_title_container);
+      if (settings.button_id != "" && settings.button_id != null) {
+        $(`#${settings.button_id}`).on("click", function () {
+          $($panel_title_container).next().toggleClass("hidden");
+        });
+      }
     });
   };
 })(jQuery);
