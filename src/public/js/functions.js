@@ -34,6 +34,9 @@ export function loadScripts(level) {
     case "/productos":
       script.src = "/js/client/products.js";
       break;
+    case "/carrito":
+      script.src = "/js/client/cart.js";
+      break;
     case "/ingresar":
       script.src = "/js/client/client-login.js";
       break;

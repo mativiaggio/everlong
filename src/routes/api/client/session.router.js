@@ -1,6 +1,8 @@
 import { Router } from "express";
 import User from "../../../models/user.js";
 import passport from "passport";
+import jwt from "jsonwebtoken";
+import { JWT_SK } from "../../../config/env.js";
 
 const clientSessionRouter = Router();
 
@@ -43,16 +45,20 @@ clientSessionRouter.post("/login", (req, res, next) => {
       if (err) {
         return next(err);
       }
-      const { _id, email, name, roles, createdAt, updatedAt } = req.user;
+      const { _id, email, full_name, roles, createdAt, updatedAt } = req.user;
+      const token = jwt.sign({ id: _id }, JWT_SK, {
+        expiresIn: "1h",
+      });
+
       req.session.user = {
         _id,
         email,
-        name,
+        full_name,
         roles,
         createdAt,
         updatedAt,
       };
-      return res.json({ status: "success", user: user });
+      return res.json({ status: "success", user: user, token: token });
     });
   })(req, res, next);
 });
