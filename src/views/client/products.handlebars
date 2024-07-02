@@ -1,0 +1,126 @@
+<div class="flex flex-col md:flex-row">
+  <div class="bg-[var(--main-bg-light)] dark:bg-[var(--main-dark-2)]">
+    <button
+      id="product-open-sidebar"
+      data-drawer-target="default-sidebar"
+      data-drawer-toggle="default-sidebar"
+      aria-controls="default-sidebar"
+      type="button"
+      class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+    >
+      <span class="sr-only">Open sidebar</span>
+      <svg
+        class="w-6 h-6"
+        aria-hidden="true"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          clip-rule="evenodd"
+          fill-rule="evenodd"
+          d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+        >
+        </path>
+      </svg>
+    </button>
+  </div>
+
+  <aside
+    id="product-default-sidebar"
+    class="fixed md:static top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+    aria-label="Sidebar"
+  >
+
+    <div
+      class="flex flex-col h-full px-3 py-4 overflow-y-auto bg-[var(--main-light-2)] dark:bg-[var(--main-bg-dark)]"
+      id="sidebar-container"
+    >
+      <div class="w-full p-1">
+        <button
+          id="product-close-aside-button"
+          class="text-red-500 float-right sm:hidden absolute right-[20px] top-[16px]"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-x"
+          >
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+  <div
+    class="p-4 bg-[var(--main-bg-light)] dark:bg-[var(--main-dark-2)] min-h-screen"
+    id="body-container"
+  >
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mt-2"
+    >
+
+      {{#each products}}
+        <div class="flex justify-center items-center" id="{{_id}}">
+          <div
+            class="flex flex-col justify-between max-w-sm h-fit w-full bg-[var(--main-bg-light)] border border-gray-200 rounded-lg shadow-md dark:shadow-slate-900 dark:bg-[var(--main-bg-dark)] dark:border-[var(--main-dark-10)] overflow-hidden"
+          >
+            <a href="#" class="bg-[var(--main-bg-light)] h-[300px]">
+              <img
+                class="rounded-t-lg object-cover h-full w-full"
+                src="{{index images 0}}"
+                alt=""
+              />
+            </a>
+            <div class="p-5">
+              <a href="#">
+                <h5
+                  class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+                >{{title}}</h5>
+              </a>
+              <p
+                class="max-h-[48px] font-normal text-[var(--main-dark-10)] dark:text-gray-400"
+              >
+                {{truncate description 70}}
+                <a
+                  href="/productos/{{slug}}"
+                  class="underline text-blue-600 dark:text-blue-500 hover:text-blue-500 dark:hover:text-blue-400"
+                >Ver mas</a>
+              </p>
+            </div>
+            <div class="p-5 flex justify-between items-center">
+              <p class="text-xl font-bold">{{currency price "arg"}}</p>
+              <button
+                class="addToCart inline-flex items-center px-3 py-2 text-sm font-medium text-center bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-dark)] dark:text-[var(--main-text-light)] rounded-md"
+                data-product-id="{{_id}}"
+              >
+
+                Agregar al carrito
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-plus ml-2"
+                ><path d="M5 12h14" /><path d="M12 5v14" /></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</div>

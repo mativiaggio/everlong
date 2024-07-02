@@ -9,19 +9,17 @@
     <link rel="stylesheet" href="/css/styles.css" />
   </head>
   <body
-    class="bg-[var(--main-bg-light)] dark:bg-[var(--main-bg-dark)] text-[var(--main-text-light)] dark:text-[var(--main-text-dark)]"
+    class="bg-[var(--main-bg-light)] dark:bg-[var(--main-bg-dark)] text-[var(--main-text-light)] dark:text-[var(--main-text-dark)]
+      {{customClasses}}"
   >
 
     <nav
       class="bg-[var(--main-bg-light)] border-gray-200 dark:bg-[var(--main-bg-dark)] text-sm text-[var(--main-text-light)] dark:text-[var(--main-text-dark)]"
     >
       <div
-        class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4"
+        class="flex flex-wrap justify-between items-center mx-auto max-w-screen p-4"
       >
-        <a
-          href="https://flowbite.com"
-          class="flex items-center space-x-3 rtl:space-x-reverse"
-        >
+        <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -42,6 +40,39 @@
             class="self-center text-2xl font-semibold whitespace-nowrap"
           >Everlong</span>
         </a>
+        <div class="hidden">
+          <div
+            class="flex bg-[var(--main-light-1)] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full dark:bg-[var(--main-dark-7)] dark:border-[var(--main-dark-7)] dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          >
+            <span class="pl-2.5 py-2.5"><svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-search text-[#9ca3af]"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.3-4.3" />
+              </svg></span>
+            <input
+              class="w-full bg-transparent border-none outline-none pr-2.5 py-2.5"
+              type="text"
+              name="search"
+              id="searchInput"
+              placeholder="Escribi tu busqueda acá"
+            />
+          </div>
+
+          <button
+            id="searchButton"
+            class="bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-dark)] dark:text-[var(--main-text-light)] focus:ring-4 focus:outline-none focus:ring-[var(--main-dark-10)] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[var(--main-light-10)] ml-2"
+          >Buscar</button>
+        </div>
         <div class="flex items-center space-x-6 rtl:space-x-reverse">
           <a
             href="tel:5541251234"
@@ -61,24 +92,8 @@
             </svg>
             +54 9 (2323) 123456
           </a>
-          {{#if user}}
-            <a
-              href="#"
-              class="hidden md:flex text-sm text-blue-600 dark:text-blue-500 hover:underline"
-            >Cerrar Sesión</a>
-          {{else}}
-            <a
-              href="#"
-              class="hidden md:flex text-sm text-blue-600 dark:text-blue-500 hover:underline"
-            >Iniciar sesión</a>
-            <a
-              href="#"
-              class="hidden md:flex text-sm text-blue-600 dark:text-blue-500 hover:underline"
-            >Registrarse</a>
-          {{/if}}
-
           <a
-            href="/cart"
+            href="/carrito"
             class="hidden md:flex items-center text-sm hover:underline"
           ><svg
               xmlns="http://www.w3.org/2000/svg"
@@ -136,6 +151,60 @@
             </svg>
             <span class="sr-only">Toggle dark/light mode</span>
           </button>
+
+          {{#if user}}
+            <div class="relative">
+              <button
+                class="flex justify-center items-center dark:hover:underline"
+                id="user_dropdown_button"
+              >
+
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-circle-user-round mr-2"
+                ><path d="M18 20a6 6 0 0 0-12 0" /><circle
+                    cx="12"
+                    cy="10"
+                    r="4"
+                  /><circle cx="12" cy="12" r="10" /></svg>
+                {{user.full_name}}
+              </button>
+              <div
+                id="user_dropdown"
+                class="z-10 hidden absolute right-0 top-[150%] bg-[var(--main-bg-light)] divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-[var(--main-dark-2)]"
+              >
+                <ul
+                  class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                  aria-labelledby="dropdownDelayButton"
+                >
+
+                  <li>
+                    <button
+                      id="logout"
+                      class="px-4 py-2 hidden md:flex text-sm hover:underline"
+                    >Cerrar Sesión</button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          {{else}}
+            <a
+              href="/ingresar"
+              class="px-4 py-2 hidden md:flex text-sm hover:underline"
+            >Iniciar sesión</a>
+            <a
+              href="/registro"
+              class="px-4 py-2 hidden md:flex text-sm hover:underline"
+            >Registrarse</a>
+          {{/if}}
           <div class="md:hidden">
             <button
               id="open-sidebar"
@@ -168,39 +237,39 @@
     <nav
       class="hidden md:block bg-[var(--main-light-1)] dark:bg-[var(--main-dark-10)]"
     >
-      <div class="max-w-screen-xl px-4 py-3 mx-auto">
+      <div class="max-w-screen px-4 py-3 mx-auto">
         <div class="flex items-center">
           <ul
             class="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm"
           >
             <li>
               <a
-                href="#"
+                href="/"
                 class="text-gray-900 dark:text-white hover:underline"
                 aria-current="page"
               >Inicio</a>
             </li>
             <li>
               <a
-                href="#"
+                href="/categorias"
                 class="text-gray-900 dark:text-white hover:underline"
               >Categorías</a>
             </li>
             <li>
               <a
-                href="#"
+                href="/productos"
                 class="text-gray-900 dark:text-white hover:underline"
               >Productos</a>
             </li>
             <li>
               <a
-                href="#"
+                href="/nosotros"
                 class="text-gray-900 dark:text-white hover:underline"
               >Acerca de Nosotros</a>
             </li>
             <li>
               <a
-                href="#"
+                href="/contacto"
                 class="text-gray-900 dark:text-white hover:underline"
               >Contacto</a>
             </li>
@@ -211,7 +280,7 @@
 
     <aside
       id="default-sidebar"
-      class="md:hidden fixed top-0 left-0 z-40 w-full h-screen transition-transform -translate-x-full sm:translate-x-0"
+      class="md:hidden fixed top-0 left-0 z-[100000] w-full h-screen transition-transform -translate-x-full sm:translate-x-0"
       aria-label="Sidebar"
     >
 
@@ -221,7 +290,7 @@
       >
         <div class="w-full p-1">
           <a
-            href="https://flowbite.com"
+            href="/"
             class="flex items-center space-x-3 rtl:space-x-reverse text-sm text-[var(--main-text-light)] dark:text-[var(--main-text-dark)]"
           >
             <svg
@@ -307,7 +376,7 @@
           {{else}}
             <li>
               <button
-                id="logout"
+                id="login"
                 class="flex w-full items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <svg
@@ -329,7 +398,7 @@
             </li>
             <li>
               <button
-                id="logout"
+                id="register"
                 class="flex w-full items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <svg
@@ -392,13 +461,16 @@
       </div>
     </aside>
 
-    {{{body}}}
+    <div class="relative">
+      {{{body}}}
+    </div>
     {{! Jquery }}
     <script
       src="https://code.jquery.com/jquery-3.7.1.js"
       integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="module" src="/js/client/main.js"></script>
     <script type="module" src="/js/plugins.js"></script>
     <script type="module" src="/js/functions.js"></script>

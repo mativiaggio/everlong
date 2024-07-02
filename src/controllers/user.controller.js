@@ -94,6 +94,19 @@ class UserController {
       throw error;
     }
   }
+
+  async findById(id) {
+    try {
+      const user = await userDao.findById(id);
+      if (user.length === 0) {
+        return { status: "error", message: "No user found" };
+      }
+      return { status: "success", user: user };
+    } catch (error) {
+      logger.error("Error getting user:", error.message);
+      throw error;
+    }
+  }
 }
 
 export default UserController;

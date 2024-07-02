@@ -16,7 +16,7 @@ import {
   basic_print_edit_delete,
 } from "../../utils/constants.js";
 
-const router = Router();
+const adminRouter = Router();
 const userController = new UserController();
 const productsController = new ProductsController();
 const categoriesController = new CategoriesController();
@@ -46,7 +46,7 @@ const privateAccess = async (req, res, next) => {
   next();
 };
 
-router.get("/", privateAccess, (req, res) => {
+adminRouter.get("/", privateAccess, (req, res) => {
   const title = "Inicio";
   const description = "Este es el admin panel de Everlong";
   res.render("admin/home", {
@@ -57,7 +57,7 @@ router.get("/", privateAccess, (req, res) => {
   });
 });
 
-router.get("/register", publicAccess, async (req, res) => {
+adminRouter.get("/register", publicAccess, async (req, res) => {
   const admins = await userController.isThereAnAdmin();
   if (admins.status === "error") {
     res.render("admin/register");
@@ -66,20 +66,20 @@ router.get("/register", publicAccess, async (req, res) => {
   }
 });
 
-router.get("/login", publicAccess, (req, res) => {
+adminRouter.get("/login", publicAccess, (req, res) => {
   const title = "Login";
   const description =
     "Inicia sesion en el panel administrador de Everlong para comenzar a manejar tu negocio";
   res.render("admin/login", { isLoggedIn: false, title, description });
 });
 
-router.get("/login-fail", publicAccess, (req, res) => {
+adminRouter.get("/login-fail", publicAccess, (req, res) => {
   const title = "No Autorizado";
   const description = "Usuario no autorizado en el panel administrador";
   res.render("admin/unauthorized", { title, description });
 });
 
-router.get("/productos", privateAccess, async (req, res) => {
+adminRouter.get("/productos", privateAccess, async (req, res) => {
   try {
     const title = "Productos";
     const description =
@@ -119,7 +119,7 @@ router.get("/productos", privateAccess, async (req, res) => {
   }
 });
 
-router.get("/productos/agregar-producto", privateAccess, (req, res) => {
+adminRouter.get("/productos/agregar-producto", privateAccess, (req, res) => {
   const title = "Agregar Producto";
   const description = "Agrega un producto nuevo a la base de datos";
   res.render("admin/add-product", {
@@ -130,7 +130,7 @@ router.get("/productos/agregar-producto", privateAccess, (req, res) => {
   });
 });
 
-router.get("/productos/editar/:pslug", privateAccess, async (req, res) => {
+adminRouter.get("/productos/editar/:pslug", privateAccess, async (req, res) => {
   const title = "Editar Producto";
   const description = "Edita un producto de la base de datos";
 
@@ -145,7 +145,7 @@ router.get("/productos/editar/:pslug", privateAccess, async (req, res) => {
   });
 });
 
-router.get("/categorias", privateAccess, async (req, res) => {
+adminRouter.get("/categorias", privateAccess, async (req, res) => {
   try {
     const title = "Categorias";
     const description =
@@ -184,47 +184,55 @@ router.get("/categorias", privateAccess, async (req, res) => {
   }
 });
 
-router.get("/categorias/agregar-categoria", privateAccess, async (req, res) => {
-  const title = "Agregar Categoría";
-  const description = "Agrega una categoría nueva a la base de datos";
-  const categories = await categoriesController.getAll();
-  res.render("admin/add-category", {
-    isLoggedIn: true,
-    adminSidebarItems,
-    title,
-    description,
-    categories,
-  });
-});
-
-router.get("/categorias/editar/:pslug", privateAccess, async (req, res) => {
-  try {
-    const title = "Editar Categoría";
-    const description = "Edita una categoría de la base de datos";
-
-    const categoryData = await categoriesController.findBySlug(
-      req.params.pslug
-    );
-
-    const properties = categoryData.properties;
-
+adminRouter.get(
+  "/categorias/agregar-categoria",
+  privateAccess,
+  async (req, res) => {
+    const title = "Agregar Categoría";
+    const description = "Agrega una categoría nueva a la base de datos";
     const categories = await categoriesController.getAll();
-    res.render("admin/edit-category", {
+    res.render("admin/add-category", {
       isLoggedIn: true,
       adminSidebarItems,
       title,
       description,
-      categoryData,
-      properties,
       categories,
     });
-  } catch (error) {
-    logger.error("Error al obtener categoria:", error);
-    res.status(500).send("Error al obtener categorias");
   }
-});
+);
 
-router.get("/usuarios", privateAccess, async (req, res) => {
+adminRouter.get(
+  "/categorias/editar/:pslug",
+  privateAccess,
+  async (req, res) => {
+    try {
+      const title = "Editar Categoría";
+      const description = "Edita una categoría de la base de datos";
+
+      const categoryData = await categoriesController.findBySlug(
+        req.params.pslug
+      );
+
+      const properties = categoryData.properties;
+
+      const categories = await categoriesController.getAll();
+      res.render("admin/edit-category", {
+        isLoggedIn: true,
+        adminSidebarItems,
+        title,
+        description,
+        categoryData,
+        properties,
+        categories,
+      });
+    } catch (error) {
+      logger.error("Error al obtener categoria:", error);
+      res.status(500).send("Error al obtener categorias");
+    }
+  }
+);
+
+adminRouter.get("/usuarios", privateAccess, async (req, res) => {
   try {
     const title = "Usuarios";
     const description = "Visualiza, actualiza o elimina usuarios cargados";
@@ -252,7 +260,7 @@ router.get("/usuarios", privateAccess, async (req, res) => {
   }
 });
 
-router.get("/ordenes-compra", privateAccess, async (req, res) => {
+adminRouter.get("/ordenes-compra", privateAccess, async (req, res) => {
   try {
     const title = "Ordenes de Compra";
     const description =
@@ -285,7 +293,7 @@ router.get("/ordenes-compra", privateAccess, async (req, res) => {
   }
 });
 
-router.get("/ingresos", privateAccess, async (req, res) => {
+adminRouter.get("/ingresos", privateAccess, async (req, res) => {
   try {
     const title = "Ingresos";
     const description =
@@ -319,7 +327,7 @@ router.get("/ingresos", privateAccess, async (req, res) => {
   }
 });
 
-router.get("/ingresos/imprimir/:id", privateAccess, async (req, res) => {
+adminRouter.get("/ingresos/imprimir/:id", privateAccess, async (req, res) => {
   try {
     const title = "Imprimir Factura";
     const description = "Imprime una factura de compra";
@@ -340,7 +348,7 @@ router.get("/ingresos/imprimir/:id", privateAccess, async (req, res) => {
   }
 });
 
-router.get("/egresos", privateAccess, async (req, res) => {
+adminRouter.get("/egresos", privateAccess, async (req, res) => {
   try {
     const title = "Egresos";
     const description =
@@ -372,7 +380,7 @@ router.get("/egresos", privateAccess, async (req, res) => {
   }
 });
 
-router.get("/empresa", privateAccess, async (req, res) => {
+adminRouter.get("/empresa", privateAccess, async (req, res) => {
   const title = "Empresa";
   const description = "Editar Información de la empresa";
 
@@ -388,4 +396,4 @@ router.get("/empresa", privateAccess, async (req, res) => {
   });
 });
 
-export default router;
+export default adminRouter;

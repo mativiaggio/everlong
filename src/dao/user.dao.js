@@ -42,24 +42,6 @@ class UserDAO {
   }
   async getAllUsers(limit, page, sortOptions = {}, filter = {}) {
     try {
-      // Prioritize users with the "admin" role
-      // const users = await User.aggregate([
-      //   {
-      //     $sort: {
-      //       isAdmin: -1,
-      //       ...sortOptions,
-      //     },
-      //   },
-      //   {
-      //     $match: filter,
-      //   },
-      //   {
-      //     $skip: (page - 1) * limit,
-      //   },
-      //   {
-      //     $limit: limit,
-      //   },
-      // ]).exec();
       const users = await User.find(filter)
         .limit(limit)
         .skip((page - 1) * limit)
@@ -68,6 +50,16 @@ class UserDAO {
       return users;
     } catch (error) {
       logger.error("Error getting all users", error);
+      throw error;
+    }
+  }
+
+  async findById(id) {
+    try {
+      const user = await User.findOne({ _id: id }).lean();
+      return user;
+    } catch (error) {
+      logger.error("Error getting user: ", error.message);
       throw error;
     }
   }
