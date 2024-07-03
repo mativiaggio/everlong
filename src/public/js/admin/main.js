@@ -20,10 +20,13 @@ $("#logout").click(function () {
 });
 
 $("#open-sidebar").on("click", () => {
-  $("#default-sidebar").removeClass("-translate-x-full");
+  debugger;
+  $("#default-sidebar")
+    .removeClass("-translate-x-full")
+    .removeClass("sm:hidden");
 });
 $("#close-aside-button").on("click", () => {
-  $("#default-sidebar").addClass("-translate-x-full");
+  $("#default-sidebar").addClass("-translate-x-full").addClass("sm:hidden");
 });
 $("#toggle-dark-mode").on("click", () => {
   const htmlElement = document.documentElement;

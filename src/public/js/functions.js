@@ -161,8 +161,8 @@ export function addToCart(productId) {
       return response.json();
     })
     .then((data) => {
-      if (!data.session) {
-        addToLocalStorage(data.data);
+      if (!data.result.session) {
+        addToLocalStorage(data.result.data);
       }
       toast({
         status: "success",
@@ -199,4 +199,53 @@ export function toast(options = {}) {
     icon: status,
     title: message,
   });
+}
+
+export function formatCurrency(value) {
+  return new Intl.NumberFormat("es-AR", {
+    style: "currency",
+    currency: "ARS",
+  }).format(value);
+}
+
+export function localCartHandler(productId, action) {
+  let cart = JSON.parse(localStorage.getItem("cart"));
+
+  const updateCartTotal = () => {
+    let newTotal = 0;
+    cart.products.forEach((product) => {
+      newTotal += product.quantity * product.price;
+    });
+    cart.total = newTotal;
+    localStorage.setItem("cart", JSON.stringify(cart));
+  };
+
+  const findProductIndex = (id) => {
+    return cart.products.findIndex((product) => product.id === id);
+  };
+
+  switch (action) {
+    case "update":
+      let updateIndex = findProductIndex(productId);
+      if (updateIndex !== -1) {
+        cart.products[updateIndex].quantity = $(
+          `#quantity-${productId}`
+        ).text();
+        updateCartTotal();
+        console.log("Updated cart:", cart);
+      } else {
+        console.log("Product not found");
+      }
+      break;
+    case "delete":
+      let deleteIndex = findProductIndex(productId);
+      if (deleteIndex !== -1) {
+        cart.products.splice(deleteIndex, 1);
+        updateCartTotal();
+        console.log("Updated cart:", cart);
+      } else {
+        console.log("Product not found");
+      }
+      break;
+  }
 }
