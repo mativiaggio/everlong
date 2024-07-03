@@ -18,7 +18,7 @@ export default class CartController {
       const { products } = req.body;
       const newCart = await this.cartDAO.createCart(products);
 
-      return { cart: newCart };
+      return { cart: newCart, session: true };
     } catch (error) {
       console.error("Error creating cart:", error);
       throw error;
@@ -37,16 +37,27 @@ export default class CartController {
     }
   }
 
+  async getCartByUserId(userId) {
+    try {
+      console.log("Entro al controller");
+      const cart = await this.cartDAO.getCartByUserId(userId);
+      return cart;
+    } catch (error) {
+      console.error("Error getting cart by ID:", error);
+      throw error;
+    }
+  }
+
   // Añade un producto al carrito de un usuario
-  async addProductToCart(userId, productId) {
+  async addProductToCart(userId, cartId, productId) {
     try {
       // Buscar el carrito del usuario
       const cart = await this.cartDAO.getCartByUserId(userId);
 
       if (!cart) {
         // Si el usuario no tiene un carrito, crear uno nuevo
-        const newCart = await this.cartDAO.createCart([productId]);
-        return newCart;
+        const newCart = await this.cartDAO.createCart(userId, productId);
+        return { newCart, session: true };
       }
 
       // Agregar el producto al carrito del usuario
@@ -56,7 +67,7 @@ export default class CartController {
         return { error: result.error };
       }
 
-      return result;
+      return { result, session: true };
     } catch (error) {
       console.error("Error adding product to cart:", error);
       res.status(500).json({ error: "Internal Server Error" });
@@ -66,10 +77,11 @@ export default class CartController {
   // Actualiza la cantidad de un producto en el carrito
   async updateProductQuantity(req, res) {
     try {
-      const { cartId, productId } = req.params;
+      const { productId } = req.params;
       const { quantity } = req.body;
+      const { _id } = req.session.user;
       const result = await this.cartDAO.updateProductQuantity(
-        cartId,
+        _id,
         productId,
         quantity
       );

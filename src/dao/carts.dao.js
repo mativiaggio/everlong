@@ -1,21 +1,28 @@
 import Product from "../models/product.js";
 import Cart from "../models/cart.js";
+import ProductsController from "../controllers/products.controller.js";
+
+const productsController = new ProductsController();
 
 export default class CartsDAO {
   // Crea un carrito con los productos proporcionados
-  async createCart(products) {
+  async createCart(userId, productId) {
     try {
-      const productsWithQuantity = products.map((productId) => ({
-        id: productId,
-        quantity: 1,
-      }));
+      const result = await productsController.findById(productId);
+      const products = {};
+      products.id = result._id;
+      products.quantity = 1;
+      products.price = result.price;
 
+      console.log([products]);
       const cart = new Cart({
-        products: productsWithQuantity,
+        user: userId,
+        products: [products],
+        total: products.price,
       });
 
       await cart.save();
-      return cart;
+      return { id: productId, quantity: 1 };
     } catch (error) {
       console.error("Error creating cart:", error.message);
       throw error;
@@ -36,7 +43,8 @@ export default class CartsDAO {
   // Obtiene un carrito por el ID de usuario
   async getCartByUserId(userId) {
     try {
-      const cart = await Cart.findOne({ user: userId });
+      console.log("Entro al DAO");
+      const cart = await Cart.findOne({ user: userId }).lean();
       return cart;
     } catch (error) {
       console.error("Error getting cart by user ID:", error.message);
@@ -77,9 +85,9 @@ export default class CartsDAO {
     }
   }
 
-  async updateProductQuantity(cartId, productId, quantity) {
+  async updateProductQuantity(userId, productId, quantity) {
     try {
-      const cart = await Cart.findById(cartId);
+      const cart = await Cart.findOne({ user: userId });
 
       if (!cart) {
         console.error("Cart not found");

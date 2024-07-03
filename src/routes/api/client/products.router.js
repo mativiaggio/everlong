@@ -32,6 +32,7 @@ clientProductsRouter.get("/search", async (req, res) => {
 
       res.json({ products, pages });
     } else {
+      console.log("Entramos al router: " + findBy + " " + query);
       const response = await productController.findById(query);
       const product = response;
       res.json({ product });

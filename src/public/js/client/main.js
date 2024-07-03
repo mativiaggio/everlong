@@ -46,6 +46,7 @@ $("#logout").click(function () {
       const status = res.status;
       if (status === 200) {
         localStorage.removeItem("token");
+        localStorage.removeItem("userId");
         window.location.replace("/");
       } else {
         console.error("Error de red:", res.status);

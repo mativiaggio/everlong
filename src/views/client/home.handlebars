@@ -107,9 +107,9 @@
           </div>
           <div class="p-5 flex justify-between items-center">
             <p class="text-xl font-bold">{{currency price "arg"}}</p>
-            <a
-              href="#"
-              class="inline-flex items-center px-3 py-2 text-sm font-medium text-center bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-dark)] dark:text-[var(--main-text-light)] rounded-md"
+            <button
+              class="addToCart inline-flex items-center px-3 py-2 text-sm font-medium text-center bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-dark)] dark:text-[var(--main-text-light)] rounded-md"
+              data-product-id="{{_id}}"
             >
 
               Agregar al carrito
@@ -125,7 +125,7 @@
                 stroke-linejoin="round"
                 class="lucide lucide-plus ml-2"
               ><path d="M5 12h14" /><path d="M12 5v14" /></svg>
-            </a>
+            </button>
           </div>
         </div>
       </div>
