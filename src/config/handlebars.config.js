@@ -1,4 +1,3 @@
-// handlebarsConfig.js
 import exphbs from "express-handlebars";
 import { getPath } from "../utils/functions.js";
 
@@ -69,7 +68,6 @@ const hbs = exphbs.create({
           }).format(price);
           break;
 
-        // Puedes agregar más casos aquí para otros formatos de moneda
         default:
           formattedPrice = price;
           break;

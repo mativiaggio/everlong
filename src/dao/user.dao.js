@@ -15,7 +15,6 @@ class UserDAO {
   async isThereAnAdmin() {
     try {
       const admins = await User.find({ roles: { $in: ["admin"] } });
-      //   logger.info("admins from db: " + admins);
       return admins;
     } catch (error) {
       logger.error("Error checking for admins: ", error.message);

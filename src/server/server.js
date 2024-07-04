@@ -30,6 +30,7 @@ import clientRouter from "../routes/client/client.router.js";
 import clientSessionRouter from "../routes/api/client/session.router.js";
 import clientCartRouter from "../routes/api/client/carts.router.js";
 import clientProductsRouter from "../routes/api/client/products.router.js";
+import clientMailerRouter from "../routes/api/client/emails.router.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -88,6 +89,7 @@ app.use("/api/admin/invoices", adminInvoicesRouter);
 app.use("/api/client/sessions", clientSessionRouter);
 app.use("/api/client/products", clientProductsRouter);
 app.use("/api/client/carts", clientCartRouter);
+app.use("/api/client/mailer", clientMailerRouter);
 app.use("/admin", adminRouter);
 app.use("/", clientRouter);
 
