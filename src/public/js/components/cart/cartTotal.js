@@ -1,19 +1,20 @@
 import { formatCurrency } from "../../functions.js";
 
 export function cartTotal(cart) {
-  const q = cart.products.length;
-  let envio = q > 0 ? 5000 : 0;
-  const finalPrice = cart.total + envio;
+  let q = 0;
+  let envio = 0;
+  let total = 0;
+  let finalPrice = 0;
 
-  let flag;
-  let disabled;
-  if (finalPrice === 0) {
-    flag = true;
-    disabled = "cursor-not-allowed";
-  } else {
-    flag = false;
-    disabled = "cursor-pointer";
+  if (cart) {
+    q = cart.products.length;
+    total = cart.total;
+    envio = q > 0 ? 5000 : 0;
+    finalPrice = total + envio;
   }
+
+  const flag = finalPrice === 0;
+  const disabled = flag ? "cursor-not-allowed" : "cursor-pointer";
 
   return `
         <div class="mb-2 border border-[var(--main-light-2)] dark:border-[var(--main-dark-8)] rounded-lg overflow-hidden shadow relative bg-[var(--main-bg-light)] dark:bg-[var(--main-dark-3)]">
@@ -26,7 +27,7 @@ export function cartTotal(cart) {
                     <p>Envío</p>
                 </div>
                 <div class="flex flex-col">
-                    <p class="text-right">${formatCurrency(cart.total)}</p>
+                    <p class="text-right">${formatCurrency(total)}</p>
                     <p class="text-right">${formatCurrency(envio)}</p>
                 </div>
             </div>
