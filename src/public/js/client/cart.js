@@ -112,7 +112,6 @@ if (localStorage.getItem("token")) {
   const localCart = JSON.parse(localStorage.getItem("cart"));
 
   async function getProducts() {
-    debugger;
     if (localCart) {
       if (localCart.products.length > 0) {
         const productPromises = localCart.products.map(async (product) => {
