@@ -67,21 +67,14 @@ export default class CategoriesDAO {
 
   async updateCategory(categoryData) {
     try {
-      console.log("Entramos al dao");
       const categoryId = categoryData.id;
-      console.log("category id: " + categoryId);
-      console.log("categoryData.id: " + categoryData.id);
-      console.log("categoryData: " + JSON.stringify(categoryData));
       delete categoryData.id;
 
       if (categoryData.parent === "") {
         categoryData.parent = null;
       }
 
-      const updatedCategory = await Category.findByIdAndUpdate(
-        categoryId,
-        categoryData
-      );
+      const updatedCategory = await Category.findByIdAndUpdate(categoryId, categoryData);
 
       if (!updatedCategory) {
         return {

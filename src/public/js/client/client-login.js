@@ -63,7 +63,6 @@ loginForm.on("submit", function (event) {
     .then((data) => {
       if (data.status === "success") {
         localStorage.setItem("token", data.token);
-        debugger;
         localStorage.setItem("userId", data.user._id);
         window.location.replace("/");
       } else {
@@ -77,9 +76,7 @@ loginForm.on("submit", function (event) {
             window.location.replace("/client/login-fail");
             break;
           default:
-            $("#warning_message")
-              .removeClass("opacity-0")
-              .addClass("opacity-100");
+            $("#warning_message").removeClass("opacity-0").addClass("opacity-100");
             $("#password").val("").addClass("input-tiene-error");
             break;
         }

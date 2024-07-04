@@ -14,7 +14,6 @@ export default class CartsDAO {
       products.quantity = 1;
       products.price = result.price;
 
-      console.log([products]);
       const cart = new Cart({
         user: userId,
         products: [products],
@@ -43,7 +42,6 @@ export default class CartsDAO {
   // Obtiene un carrito por el ID de usuario
   async getCartByUserId(userId) {
     try {
-      console.log("Entro al DAO");
       const cart = await Cart.findOne({ user: userId }).lean();
       return cart;
     } catch (error) {
@@ -108,10 +106,9 @@ export default class CartsDAO {
     }
   }
 
-  async removeProductFromCart(cartId, productId) {
+  async removeProductFromCart(userId, productId) {
     try {
-      const cart = await Cart.findById(cartId);
-
+      const cart = await Cart.findOne({ user: userId });
       if (!cart) {
         console.error("Cart not found");
         return { error: "Cart not found" };
@@ -123,7 +120,7 @@ export default class CartsDAO {
         cart.products.splice(indexToRemove, 1);
         await this.calculateAndUpdateTotal(cart);
         await cart.save();
-        return { message: "Product removed from cart" };
+        return cart;
       } else {
         console.error("Product not found in the cart");
         return { error: "Product not found in the cart" };

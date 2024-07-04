@@ -60,7 +60,6 @@ registerForm.on("submit", function (event) {
         await fetch("/api/client/mailer/register/" + data.email, {
           method: "POST",
         });
-        debugger;
         window.location.replace("/ingresar");
       }
     })

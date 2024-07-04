@@ -38,7 +38,6 @@ class UserController {
       if (query) {
         users = await userDao.getAllUsers(limit, page, {}, filter);
       } else {
-        console.log(limit, page, sortOptions, filter);
         users = await userDao.getAllUsers(limit, page, sortOptions, filter);
       }
 
@@ -55,20 +54,14 @@ class UserController {
         page: parseInt(page),
         hasPrevPage: page > 1,
         hasNextPage: page < totalPages,
-        prevLink:
-          page > 1 ? `/api/users?limit=${limit}&page=${page - 1}` : null,
-        nextLink:
-          page < totalPages
-            ? `/api/users?limit=${limit}&page=${page + 1}`
-            : null,
+        prevLink: page > 1 ? `/api/users?limit=${limit}&page=${page - 1}` : null,
+        nextLink: page < totalPages ? `/api/users?limit=${limit}&page=${page + 1}` : null,
       };
 
       return result;
     } catch (error) {
       console.error("Error in /users route:", error);
-      res
-        .status(500)
-        .json({ status: "error", message: "Internal server error" });
+      res.status(500).json({ status: "error", message: "Internal server error" });
     }
   }
 

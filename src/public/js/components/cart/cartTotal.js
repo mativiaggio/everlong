@@ -5,6 +5,16 @@ export function cartTotal(cart) {
   let envio = q > 0 ? 5000 : 0;
   const finalPrice = cart.total + envio;
 
+  let flag;
+  let disabled;
+  if (finalPrice === 0) {
+    flag = true;
+    disabled = "cursor-not-allowed";
+  } else {
+    flag = false;
+    disabled = "cursor-pointer";
+  }
+
   return `
         <div class="mb-2 border border-[var(--main-light-2)] dark:border-[var(--main-dark-8)] rounded-lg overflow-hidden shadow relative bg-[var(--main-bg-light)] dark:bg-[var(--main-dark-3)]">
             <div class="p-6 border-b border-[var(--main-light-2)] dark:border-[var(--main-dark-8)]">
@@ -29,9 +39,9 @@ export function cartTotal(cart) {
                 </div>
             </div>
             <div class="w-full px-6 pb-6">
-                <button class="w-full rounded-lg  p-2 bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-dark)] dark:text-[var(--main-text-light)]">
-                Continuar compra
-            </button>
+                <button class="w-full rounded-lg  p-2 bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-dark)] dark:text-[var(--main-text-light)] ${disabled}" disabled="${flag}">
+                    Continuar compra
+                </button>
             </div>
         </div>
     `;

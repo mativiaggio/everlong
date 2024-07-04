@@ -24,7 +24,6 @@ function searchProduct() {
 
       data.products.forEach((product) => {
         const row = document.createElement("tr");
-        debugger;
         row.className = "even:bg-[var(--main-light-1)] even:dark:bg-[var(--main-dark-7)] odd:bg-[var(--main-light-2)] odd:dark:bg-[var(--main-dark-3)] border-b dark:border-[var(--main-dark-10)] cursor-pointer";
         row.id = product.slug;
         row.innerHTML = `

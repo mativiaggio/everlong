@@ -39,7 +39,6 @@ export default class CartController {
 
   async getCartByUserId(userId) {
     try {
-      console.log("Entro al controller");
       const cart = await this.cartDAO.getCartByUserId(userId);
       return cart;
     } catch (error) {
@@ -49,7 +48,7 @@ export default class CartController {
   }
 
   // Añade un producto al carrito de un usuario
-  async addProductToCart(userId, cartId, productId) {
+  async addProductToCart(userId, productId) {
     try {
       // Buscar el carrito del usuario
       const cart = await this.cartDAO.getCartByUserId(userId);
@@ -80,13 +79,9 @@ export default class CartController {
       const { productId } = req.params;
       const { quantity } = req.body;
       const { _id } = req.session.user;
-      const result = await this.cartDAO.updateProductQuantity(
-        _id,
-        productId,
-        quantity
-      );
+      const result = await this.cartDAO.updateProductQuantity(_id, productId, quantity);
 
-      res.status(200).json(result);
+      return { result, session: true };
     } catch (error) {
       console.error("Error updating product quantity:", error);
       res.status(500).json({ error: "Internal Server Error" });
@@ -96,13 +91,11 @@ export default class CartController {
   // Elimina un producto del carrito
   async removeProductFromCart(req, res) {
     try {
-      const { cartId, productId } = req.params;
-      const result = await this.cartDAO.removeProductFromCart(
-        cartId,
-        productId
-      );
+      const { productId } = req.params;
+      const { _id } = req.session.user;
+      const result = await this.cartDAO.removeProductFromCart(_id, productId);
 
-      res.status(200).json(result);
+      return { result, session: true };
     } catch (error) {
       console.error("Error removing product from cart:", error);
       res.status(500).json({ error: "Internal Server Error" });

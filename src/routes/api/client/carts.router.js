@@ -9,7 +9,6 @@ const productsController = new ProductsController();
 
 clientCartRouter.get("/:uid", async (req, res) => {
   try {
-    console.log("Entro al router");
     const userId = req.params.uid;
     const cart = await cartController.getCartByUserId(userId);
     res.status(200).json(cart);
@@ -26,11 +25,7 @@ clientCartRouter.post("/add-to-cart/:productId", async (req, res) => {
 
     if (req.session.user) {
       // Si cartId existe, agregar el producto al carrito en la base de datos
-      result = await cartController.addProductToCart(
-        req.session.user._id,
-        cartId,
-        productId
-      );
+      result = await cartController.addProductToCart(req.session.user._id, productId);
       res.json({ result });
     } else {
       const product = await productsController.findById(productId);
@@ -45,20 +40,28 @@ clientCartRouter.post("/add-to-cart/:productId", async (req, res) => {
     }
   } catch (error) {
     logger.error("Error adding product to cart:", error);
-    res
-      .status(500)
-      .json({ status: "error", message: "Error adding product to cart" });
+    res.status(500).json({ status: "error", message: "Error adding product to cart" });
   }
 });
 
 clientCartRouter.put("/update-quantity/:productId", async (req, res) => {
   try {
-    await cartController.updateProductQuantity(req, res);
+    const result = await cartController.updateProductQuantity(req, res);
+    res.json(result);
   } catch (error) {
     logger.error("Error updating product:", error);
-    res
-      .status(500)
-      .json({ status: "error", message: "Error updating product" });
+    res.status(500).json({ status: "error", message: "Error updating product" });
   }
 });
+
+clientCartRouter.put("/remove-product/:productId", async (req, res) => {
+  try {
+    const result = await cartController.removeProductFromCart(req, res);
+    res.json(result);
+  } catch (error) {
+    logger.error("Error updating product:", error);
+    res.status(500).json({ status: "error", message: "Error updating product" });
+  }
+});
+
 export default clientCartRouter;
