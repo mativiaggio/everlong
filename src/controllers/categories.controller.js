@@ -32,14 +32,7 @@ export default class CategoriesController {
       if (query) {
         categories = await categoriesDAO.getCategories(limit, page, {}, filter);
       } else {
-        console.log("entramos al no query");
-        console.log(limit, page, sortOptions, filter);
-        categories = await categoriesDAO.getCategories(
-          limit,
-          page,
-          sortOptions,
-          filter
-        );
+        categories = await categoriesDAO.getCategories(limit, page, sortOptions, filter);
       }
 
       const totalCategories = await categoriesDAO.countCategories(filter);
@@ -54,20 +47,14 @@ export default class CategoriesController {
         page: parseInt(page),
         hasPrevPage: page > 1,
         hasNextPage: page < totalPages,
-        prevLink:
-          page > 1 ? `/api/categories?limit=${limit}&page=${page - 1}` : null,
-        nextLink:
-          page < totalPages
-            ? `/api/categories?limit=${limit}&page=${page + 1}`
-            : null,
+        prevLink: page > 1 ? `/api/categories?limit=${limit}&page=${page - 1}` : null,
+        nextLink: page < totalPages ? `/api/categories?limit=${limit}&page=${page + 1}` : null,
       };
 
       return result;
     } catch (error) {
       console.error("Error in /categories route:", error);
-      res
-        .status(500)
-        .json({ status: "error", message: "Internal server error" });
+      res.status(500).json({ status: "error", message: "Internal server error" });
     }
   }
 

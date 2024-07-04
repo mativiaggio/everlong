@@ -76,10 +76,8 @@ adminProductsRouter.get("/search", privateAccess, async (req, res) => {
     const query = req.query.query || "";
     const limit = req.query.limit || 10;
     const page = req.query.page || 1;
-    console.log("Entro: " + findBy + " " + query);
     const response = await productController.getProducts(req, res, query, limit, page);
     const products = response.ResultSet;
-
     const totalProducts = await productController.countProducts(query);
     const productsPerPage = 10;
     const totalPages = Math.ceil(totalProducts / productsPerPage);

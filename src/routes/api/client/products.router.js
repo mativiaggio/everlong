@@ -13,16 +13,9 @@ clientProductsRouter.get("/search", async (req, res) => {
     const query = req.query.query || "";
     const limit = req.query.limit || 10;
     const page = req.query.page || 1;
-    console.log("Entro: " + findBy + " " + query);
 
     if (findBy !== "id") {
-      const response = await productController.getProducts(
-        req,
-        res,
-        query,
-        limit,
-        page
-      );
+      const response = await productController.getProducts(req, res, query, limit, page);
       const products = response.ResultSet;
 
       const totalProducts = await productController.countProducts(query);
@@ -32,7 +25,6 @@ clientProductsRouter.get("/search", async (req, res) => {
 
       res.json({ products, pages });
     } else {
-      console.log("Entramos al router: " + findBy + " " + query);
       const response = await productController.findById(query);
       const product = response;
       res.json({ product });

@@ -38,7 +38,6 @@ adminCategoriesRouter.post("/", privateAccess, async (req, res) => {
 
 adminCategoriesRouter.put("/", privateAccess, async (req, res) => {
   try {
-    console.log("Received PUT request with body:", req.body);
     if (req.body.id) {
       await categoriesController.updateCategory(req, res);
     } else {
@@ -56,16 +55,8 @@ adminCategoriesRouter.get("/search", privateAccess, async (req, res) => {
     const query = req.query.query || "";
     const limit = req.query.limit || 10;
     const page = req.query.page || 1;
-    const response = await categoriesController.getCategories(
-      req,
-      res,
-      query,
-      limit,
-      page
-    );
-    console.log("response: " + JSON.stringify(response));
+    const response = await categoriesController.getCategories(req, res, query, limit, page);
     const categories = response.ResultSet;
-
     const totalCategories = await categoriesController.countCategories(query);
     const categoriesPerPage = 10;
     const totalPages = Math.ceil(totalCategories / categoriesPerPage);

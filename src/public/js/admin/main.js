@@ -20,10 +20,7 @@ $("#logout").click(function () {
 });
 
 $("#open-sidebar").on("click", () => {
-  debugger;
-  $("#default-sidebar")
-    .removeClass("-translate-x-full")
-    .removeClass("sm:hidden");
+  $("#default-sidebar").removeClass("-translate-x-full").removeClass("sm:hidden");
 });
 $("#close-aside-button").on("click", () => {
   $("#default-sidebar").addClass("-translate-x-full").addClass("sm:hidden");
