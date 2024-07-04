@@ -112,22 +112,26 @@ if (localStorage.getItem("token")) {
   const localCart = JSON.parse(localStorage.getItem("cart"));
 
   async function getProducts() {
-    if (localCart.products.length > 0) {
-      const productPromises = localCart.products.map(async (product) => {
-        try {
-          const response = await fetch(`/api/client/products/search?findBy=id&query=${product.id}`);
-          const data = await response.json();
-          const productData = data.product;
-          productData.quantity = product.quantity;
-          return cartItem(productData);
-        } catch (error) {
-          console.error("Error:", error);
-          return "";
-        }
-      });
+    if (localCart) {
+      if (localCart.products.length > 0) {
+        const productPromises = localCart.products.map(async (product) => {
+          try {
+            const response = await fetch(`/api/client/products/search?findBy=id&query=${product.id}`);
+            const data = await response.json();
+            const productData = data.product;
+            productData.quantity = product.quantity;
+            return cartItem(productData);
+          } catch (error) {
+            console.error("Error:", error);
+            return "";
+          }
+        });
 
-      const products = await Promise.all(productPromises);
-      return products.join("");
+        const products = await Promise.all(productPromises);
+        return products.join("");
+      } else {
+        return cartIsEmpty();
+      }
     } else {
       return cartIsEmpty();
     }
