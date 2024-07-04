@@ -62,7 +62,6 @@ loginForm.on("submit", function (event) {
     .then((res) => res.json())
     .then((data) => {
       if (data.status === "success") {
-        localStorage.setItem("token", data.token);
         localStorage.setItem("userId", data.user._id);
         window.location.replace("/");
       } else {

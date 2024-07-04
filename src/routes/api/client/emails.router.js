@@ -13,8 +13,6 @@ const clientMailerRouter = Router();
 
 clientMailerRouter.post("/test-email/:email", async (req, res) => {
   const destination = req.params.email || "";
-  const { nombre } = req.body; // Asegúrate de que 'nombre' se envíe en el cuerpo de la solicitud
-
   try {
     const filePath = path.join(__dirname, "../../../views/client/emails/test-email.handlebars");
     const templateSource = await readFile(filePath, "utf8");
@@ -38,7 +36,6 @@ clientMailerRouter.post("/test-email/:email", async (req, res) => {
         },
       ],
     });
-
     res.status(200).json(html);
   } catch (err) {
     console.error("Error leyendo el archivo HTML:", err);
@@ -48,20 +45,17 @@ clientMailerRouter.post("/test-email/:email", async (req, res) => {
 
 clientMailerRouter.post("/register/:email", async (req, res) => {
   const destination = req.params.email || "";
+  const data = req.body.data || "";
+  console.log("data de email: " + JSON.stringify(req.body.data));
   try {
     const filePath = path.join(__dirname, "../../../views/client/emails/register.handlebars");
     const templateSource = await readFile(filePath, "utf8");
-
     const template = Handlebars.compile(templateSource);
-
-    const data = { email: destination, full_name: "Matías Viaggio" };
-
     const html = template(data);
-
     await mailerTransport.sendMail({
       from: `Everlong <${mailing.auth.EMAIL_USER}>`,
       to: destination,
-      subject: "Test email",
+      subject: "Solicitud de registro procesada con éxito",
       html: html,
       attachments: [
         {
@@ -71,7 +65,6 @@ clientMailerRouter.post("/register/:email", async (req, res) => {
         },
       ],
     });
-
     res.status(200).json(html);
   } catch (err) {
     console.error("Error leyendo el archivo HTML:", err);

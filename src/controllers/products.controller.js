@@ -32,12 +32,7 @@ export default class ProductsController {
       if (query) {
         products = await productsDAO.getProducts(limit, page, {}, filter);
       } else {
-        products = await productsDAO.getProducts(
-          limit,
-          page,
-          sortOptions,
-          filter
-        );
+        products = await productsDAO.getProducts(limit, page, sortOptions, filter);
       }
 
       const totalProducts = await productsDAO.countProducts(filter);
@@ -52,25 +47,17 @@ export default class ProductsController {
         page: parseInt(page),
         hasPrevPage: page > 1,
         hasNextPage: page < totalPages,
-        prevLink:
-          page > 1 ? `/api/products?limit=${limit}&page=${page - 1}` : null,
-        nextLink:
-          page < totalPages
-            ? `/api/products?limit=${limit}&page=${page + 1}`
-            : null,
+        prevLink: page > 1 ? `/api/products?limit=${limit}&page=${page - 1}` : null,
+        nextLink: page < totalPages ? `/api/products?limit=${limit}&page=${page + 1}` : null,
       };
 
       return result;
     } catch (error) {
       const stackTrace = error.stack.split("\n");
-      const errorLine = stackTrace.find((line) =>
-        line.includes("at getProducts")
-      );
+      const errorLine = stackTrace.find((line) => line.includes("at getProducts"));
 
       logger.error(`Error in /products route: ${errorLine}`, error);
-      res
-        .status(500)
-        .json({ status: "error", message: "Internal server error" });
+      res.status(500).json({ status: "error", message: "Internal server error" });
     }
   }
 
@@ -116,15 +103,39 @@ export default class ProductsController {
     }
   }
 
+  // async addProduct(req, res) {
+  //   try {
+  //     const productData = req.body;
+  //     productData.owner = req.session.user._id;
+
+  //     if (req.files) {
+  //       productData.images = req.files.map((file) =>
+  //         path.relative(path.join(__dirname, "../public"), file.path)
+  //       );
+  //     }
+
+  //     const result = await productsDAO.addProduct(productData);
+
+  //     if (result.status === "error") {
+  //       return res.status(500).json(result);
+  //     }
+
+  //     return res.json(result);
+  //   } catch (error) {
+  //     logger.error("[Controller] Error adding product:", error);
+  //     return res
+  //       .status(500)
+  //       .json({ error: "[Controller] Error adding product" });
+  //   }
+  // }
+
   async addProduct(req, res) {
     try {
       const productData = req.body;
       productData.owner = req.session.user._id;
 
       if (req.files) {
-        productData.images = req.files.map((file) =>
-          path.relative(path.join(__dirname, "../public"), file.path)
-        );
+        productData.images = req.files.map((file) => path.relative(path.join(__dirname, "../public"), file.path));
       }
 
       const result = await productsDAO.addProduct(productData);
@@ -136,9 +147,7 @@ export default class ProductsController {
       return res.json(result);
     } catch (error) {
       logger.error("[Controller] Error adding product:", error);
-      return res
-        .status(500)
-        .json({ error: "[Controller] Error adding product" });
+      return res.status(500).json({ error: "[Controller] Error adding product" });
     }
   }
 
@@ -176,10 +185,7 @@ export default class ProductsController {
   async getProductStats(req, res) {
     try {
       const totalProducts = await productsDAO.countProducts({});
-      const productsByCategory = await Product.aggregate([
-        { $unwind: "$categories" },
-        { $group: { _id: "$categories", count: { $sum: 1 } } },
-      ]);
+      const productsByCategory = await Product.aggregate([{ $unwind: "$categories" }, { $group: { _id: "$categories", count: { $sum: 1 } } }]);
       const lowStockProducts = await Product.find({ stock: { $lt: 10 } });
 
       res.json({
@@ -192,9 +198,7 @@ export default class ProductsController {
       });
     } catch (error) {
       logger.error("[Controller] Error fetching product stats:", error);
-      res
-        .status(500)
-        .json({ status: "error", message: "Internal server error" });
+      res.status(500).json({ status: "error", message: "Internal server error" });
     }
   }
 }

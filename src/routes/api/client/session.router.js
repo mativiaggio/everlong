@@ -47,9 +47,6 @@ clientSessionRouter.post("/login", (req, res, next) => {
         return next(err);
       }
       const { _id, email, full_name, roles, createdAt, updatedAt } = req.user;
-      const token = jwt.sign({ id: _id }, JWT_SK, {
-        expiresIn: "1h",
-      });
 
       req.session.user = {
         _id,
@@ -59,7 +56,7 @@ clientSessionRouter.post("/login", (req, res, next) => {
         createdAt,
         updatedAt,
       };
-      return res.json({ status: "success", user: user, token: token });
+      return res.json({ status: "success", user: user });
     });
   })(req, res, next);
 });
