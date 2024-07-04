@@ -112,26 +112,30 @@ if (localStorage.getItem("token")) {
   const localCart = JSON.parse(localStorage.getItem("cart"));
 
   async function getProducts() {
-    const productPromises = localCart.products.map(async (product) => {
-      return fetch(`/api/client/products/search?findBy=id&query=${product.id}`)
-        .then((response) => response.json())
-        .then((data) => {
+    if (localCart.products.length > 0) {
+      const productPromises = localCart.products.map(async (product) => {
+        try {
+          const response = await fetch(`/api/client/products/search?findBy=id&query=${product.id}`);
+          const data = await response.json();
           const productData = data.product;
           productData.quantity = product.quantity;
           return cartItem(productData);
-        })
-        .catch((error) => {
+        } catch (error) {
           console.error("Error:", error);
           return "";
-        });
-    });
+        }
+      });
 
-    return Promise.all(productPromises);
+      const products = await Promise.all(productPromises);
+      return products.join("");
+    } else {
+      return cartIsEmpty();
+    }
   }
 
   async function refreshCards() {
     const cards = await getProducts();
-    $("#cards-container").html(cards.join(""));
+    $("#cards-container").html(cards);
   }
 
   $("#total-container").html(cartTotal(localCart));
@@ -152,6 +156,10 @@ if (localStorage.getItem("token")) {
         localCartHandler(dataId, "delete");
         toast({ status: "success", message: "Producto eliminado del carrito" });
         const localCart = JSON.parse(localStorage.getItem("cart"));
+
+        if (localCart.products.length <= 0) {
+          $("#cards-container").html(cartIsEmpty());
+        }
         $("#total-container").html(cartTotal(localCart));
       }
     });
