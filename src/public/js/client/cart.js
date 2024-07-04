@@ -3,7 +3,7 @@ import { cartItem } from "../components/cart/cartItem.js";
 import { cartTotal } from "../components/cart/cartTotal.js";
 import { localCartHandler, toast } from "../functions.js";
 
-if (localStorage.getItem("token")) {
+if (localStorage.getItem("userId")) {
   fetch(`/api/client/carts/${localStorage.getItem("userId")}`)
     .then((response) => response.json())
     .then((data) => {

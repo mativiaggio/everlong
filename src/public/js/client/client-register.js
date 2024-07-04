@@ -57,8 +57,13 @@ registerForm.on("submit", function (event) {
     })
     .then(async (data) => {
       if (data) {
+        debugger;
         await fetch("/api/client/mailer/register/" + data.email, {
           method: "POST",
+          body: JSON.stringify({ data: data }),
+          headers: {
+            "Content-Type": "application/json",
+          },
         });
         window.location.replace("/ingresar");
       }
