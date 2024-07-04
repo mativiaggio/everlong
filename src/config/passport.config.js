@@ -63,15 +63,49 @@ const initializePassport = () => {
             return done(null, false, { message: "Incorrect password" });
           }
 
-          if (level != "client") {
-            if (!user.roles.includes("admin")) {
-              return done(null, false, {
-                message: "User not an admin",
-              });
-            }
+          if (!user.roles.includes("admin")) {
+            return done(null, false, {
+              message: "User not an admin",
+            });
           }
 
           return done(null, user);
+        } catch (error) {
+          return done(error);
+        }
+      }
+    )
+  );
+
+  passport.use(
+    "client-register",
+    new LocalStrategy(
+      {
+        passReqToCallback: true,
+        usernameField: "email",
+      },
+      async (req, username, password, done) => {
+        const { full_name, email } = req.body;
+
+        try {
+          let user = await User.findOne({ email: username });
+
+          if (user) {
+            return done(null, false, {
+              message: "El correo electrónico ya está en uso",
+            });
+          }
+
+          const hashedPassword = createHash(password);
+
+          const result = await User.create({
+            full_name,
+            email,
+            roles: ["user"],
+            password: hashedPassword,
+          });
+
+          done(null, result);
         } catch (error) {
           return done(error);
         }

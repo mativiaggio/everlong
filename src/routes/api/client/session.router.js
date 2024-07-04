@@ -9,13 +9,14 @@ const clientSessionRouter = Router();
 // User registration
 clientSessionRouter.post(
   "/register",
-  passport.authenticate("register", {
+  passport.authenticate("client-register", {
     failurlRedirect: "/api/client/registerFail",
   }),
   async (req, res, next) => {
     try {
       const { email, full_name, roles } = req.user;
-      res.redirect(`/client`);
+
+      res.status(200).json({ email: email, full_name: full_name, roles: roles });
     } catch (error) {
       next(error);
     }
@@ -77,22 +78,15 @@ clientSessionRouter.get("/logout", (req, res) => {
 });
 
 // Github authentication route
-clientSessionRouter.get(
-  "/github",
-  passport.authenticate("github", { scope: ["user:email"] })
-);
+clientSessionRouter.get("/github", passport.authenticate("github", { scope: ["user:email"] }));
 
 // Github authentication callback route
-clientSessionRouter.get(
-  "/githubcallback",
-  passport.authenticate("github", { failureRedirect: "/login" }),
-  async (req, res) => {
-    const { first_name, email, age } = req.user;
-    req.session.user = { name: first_name, email, age };
+clientSessionRouter.get("/githubcallback", passport.authenticate("github", { failureRedirect: "/login" }), async (req, res) => {
+  const { first_name, email, age } = req.user;
+  req.session.user = { name: first_name, email, age };
 
-    res.redirect("/");
-  }
-);
+  res.redirect("/");
+});
 
 // Route to get current user session
 clientSessionRouter.get("/current", (req, res) => {

@@ -25,13 +25,10 @@ function searchProduct() {
       data.products.forEach((product) => {
         const row = document.createElement("tr");
         debugger;
-        row.className =
-          "even:bg-[var(--main-light-1)] even:dark:bg-[var(--main-dark-7)] odd:bg-[var(--main-light-2)] odd:dark:bg-[var(--main-dark-3)] border-b dark:border-[var(--main-dark-10)] cursor-pointer";
+        row.className = "even:bg-[var(--main-light-1)] even:dark:bg-[var(--main-dark-7)] odd:bg-[var(--main-light-2)] odd:dark:bg-[var(--main-dark-3)] border-b dark:border-[var(--main-dark-10)] cursor-pointer";
         row.id = product.slug;
         row.innerHTML = `
-          <td scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">${
-            product.title
-          }</td>
+          <td scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">${product.title}</td>
           <td class="px-2 py-2">${product.category || ""}</td>
           <td class="px-2 py-2">$${product.price}</td>
         `;
@@ -52,6 +49,7 @@ $("#searchButton").on("click", function (e) {
 
 $("table").contextMenuPlugin({
   menuSelector: "#contextMenu",
+  allowDoubleClick: true,
 });
 
 $(".edit_button").on("click", function () {

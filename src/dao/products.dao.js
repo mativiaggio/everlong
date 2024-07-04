@@ -80,7 +80,6 @@ export default class ProductsDAO {
           message: "Ya existe un producto con ese slug",
         };
       } else {
-        // FALTA LOGICA PARA Q SOLO AGREGUE ADMINS
         const product = new Product(productData);
         await product.save();
         return { status: "Producto agregado correctamente" };
@@ -119,13 +118,9 @@ export default class ProductsDAO {
   async updateProduct(productData) {
     try {
       const productId = productData.id;
-      delete productData.id; // Remove ID from data to avoid updating it
+      delete productData.id;
 
-      const updatedProduct = await Product.findByIdAndUpdate(
-        productId,
-        productData,
-        { new: true, runValidators: true }
-      );
+      const updatedProduct = await Product.findByIdAndUpdate(productId, productData, { new: true, runValidators: true });
 
       if (!updatedProduct) {
         return {
