@@ -122,6 +122,8 @@ adminRouter.get("/productos/editar/:pslug", privateAccess, async (req, res) => {
   const description = "Edita un producto de la base de datos";
 
   const productData = await productsController.findBySlug(req.params.pslug);
+
+  console.log("productos: " + productData.description);
   res.render("admin/edit-product", {
     isLoggedIn: true,
     adminSidebarItems,

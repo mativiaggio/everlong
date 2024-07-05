@@ -53,14 +53,14 @@
   --active-text-color: #121212;
 }
 
-.input-tiene-error:not([type="number"]) {
+.input-tiene-error {
   border-color: var(--error-border-color) !important;
   outline-color: var(--error-border-color) !important;
   background-color: var(--error-bg-color) !important;
   color: black !important;
 }
 
-.input-tiene-error:focus:not([type="number"]) {
+.input-tiene-error:focus {
   border-color: var(--error-border-color) !important;
   outline-color: var(--error-border-color) !important;
   background-color: var(--error-bg-color) !important;

@@ -75,6 +75,10 @@ const hbs = exphbs.create({
 
       return formattedPrice;
     },
+    trim: function (str) {
+      console.log(str);
+      return str.trim();
+    },
   },
   defaultLayout: "main",
   layoutsDir: getPath("views/layouts"),
