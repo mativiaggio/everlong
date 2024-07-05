@@ -7,6 +7,7 @@ $("#slug").on("input", function () {
 $("#product-form").on("submit", function (e) {
   e.preventDefault();
 
+  debugger;
   let required_flag = false;
   required_flag = $("#product-form").validateForm();
 
@@ -34,6 +35,7 @@ $("#product-form").on("submit", function (e) {
       obj[key] = value;
     });
 
+    debugger;
     fetch("/api/admin/products", {
       method: "PUT",
       headers: {
