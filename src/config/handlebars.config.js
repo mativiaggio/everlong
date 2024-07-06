@@ -48,6 +48,7 @@ const hbs = exphbs.create({
       }).format(value);
     },
     index: function (array, index) {
+      console.log("image: " + array[index]);
       return array[index];
     },
     truncate: function (str, len) {

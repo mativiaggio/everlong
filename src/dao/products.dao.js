@@ -96,6 +96,7 @@ export default class ProductsDAO {
         .limit(limit)
         .skip((page - 1) * limit)
         .sort(sortOptions)
+        .populate("category", "name")
         .lean();
 
       return products;
@@ -120,7 +121,13 @@ export default class ProductsDAO {
       const productId = productData.id;
       delete productData.id;
 
-      const updatedProduct = await Product.findByIdAndUpdate(productId, productData, { new: true, runValidators: true });
+      console.log("product: " + JSON.stringify(productData));
+
+      const updatedProduct = await Product.findByIdAndUpdate(
+        productId,
+        productData,
+        { new: true, runValidators: true }
+      );
 
       if (!updatedProduct) {
         return {

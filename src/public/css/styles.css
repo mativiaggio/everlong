@@ -984,10 +984,6 @@ video {
 .rounded-sm {
   border-radius: 0.125rem;
 }
-.rounded-l {
-  border-top-left-radius: 0.25rem;
-  border-bottom-left-radius: 0.25rem;
-}
 .rounded-t-lg {
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
@@ -1937,6 +1933,10 @@ video {
 
   .md\:h-\[75vh\] {
     height: 75vh;
+  }
+
+  .md\:h-auto {
+    height: auto;
   }
 
   .md\:w-\[50\%\] {

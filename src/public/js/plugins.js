@@ -132,8 +132,8 @@ import { contextAction } from "./functions.js";
     this.each(function () {
       var $form = $(this);
 
-      $form.find("input[required-field], textarea[required-field]").each(function () {
-        if ((($(this).attr("type") === "text" || $(this).is("textarea")) && $(this).val() === "") || ($(this).attr("type") === "number" && ($(this).val() === "0" || $(this).val() === ""))) {
+      $form.find("input[required]").each(function () {
+        if (($(this).attr("type") === "text" && $(this).val() === "") || ($(this).attr("type") === "number" && ($(this).val() === "0" || $(this).val() === ""))) {
           if ($(this).attr("id") === "price") {
             $(this).closest("div").addClass("input-tiene-error");
             required_flag = true;

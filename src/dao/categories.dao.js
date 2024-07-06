@@ -11,6 +11,28 @@ export default class CategoriesDAO {
       throw error;
     }
   }
+
+  async findBySlug(slug) {
+    try {
+      const categories = await Category.findOne({ slug: slug }).lean();
+      return categories;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async findSubcategories(categoryId) {
+    try {
+      const categories = await Category.find({
+        $or: [{ _id: categoryId }, { parent: categoryId }],
+      }).lean();
+
+      return categories;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async getCategories(limit, page, sortOptions = {}, filter = {}) {
     try {
       const categories = await Category.find(filter)
@@ -44,6 +66,10 @@ export default class CategoriesDAO {
 
   async addCategory(categoryData) {
     try {
+      if (categoryData.parent === "") {
+        categoryData.parent = null;
+      }
+
       const categoryBySlug = await Category.findOne({
         slug: categoryData.slug,
       });
@@ -74,7 +100,10 @@ export default class CategoriesDAO {
         categoryData.parent = null;
       }
 
-      const updatedCategory = await Category.findByIdAndUpdate(categoryId, categoryData);
+      const updatedCategory = await Category.findByIdAndUpdate(
+        categoryId,
+        categoryData
+      );
 
       if (!updatedCategory) {
         return {

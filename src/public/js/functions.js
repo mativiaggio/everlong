@@ -25,7 +25,10 @@ export function loadScripts(level) {
     page = "/admin/categorias/editar";
   } else if (page.includes("/admin/productos/editar")) {
     page = "/admin/productos/editar";
+  } else if (page.includes("/productos/buscar/")) {
+    page = "/productos";
   }
+
   switch (page) {
     case "":
     case "/":

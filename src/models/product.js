@@ -6,9 +6,7 @@ const ProductSchema = new Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
   publishedOn: { type: String, required: true },
-  categories: [
-    { type: Schema.Types.ObjectId, ref: "Category", required: true },
-  ],
+  category: { type: Schema.Types.ObjectId, ref: "Category", required: true },
   relatedProducts: [
     { type: Schema.Types.ObjectId, ref: "Product", required: true },
   ],
