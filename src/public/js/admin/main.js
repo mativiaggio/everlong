@@ -25,12 +25,26 @@ $("#open-sidebar").on("click", () => {
 $("#close-aside-button").on("click", () => {
   $("#default-sidebar").addClass("-translate-x-full").addClass("sm:hidden");
 });
+
+if (localStorage.getItem("theme") === "dark") {
+  $("#theme-span").text("oscuro");
+} else {
+  $("#theme-span").text("claro");
+}
+
 $("#toggle-dark-mode").on("click", () => {
   const htmlElement = document.documentElement;
   const currentMode = htmlElement.getAttribute("data-mode");
   const newMode = currentMode === "light" ? "dark" : "light";
   htmlElement.setAttribute("data-mode", newMode);
   localStorage.setItem("theme", newMode); // Toggle icons
+
+  if (newMode === "dark") {
+    $("#theme-span").text("oscuro");
+  } else {
+    $("#theme-span").text("claro");
+  }
+
   $("#toggle-icon-moon").toggleClass("hidden");
   $("#toggle-icon-sun").toggleClass("hidden");
 });

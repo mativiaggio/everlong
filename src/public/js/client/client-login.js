@@ -62,6 +62,9 @@ loginForm.on("submit", function (event) {
     .then((res) => res.json())
     .then((data) => {
       if (data.status === "success") {
+        // Elimino por las dudas el userId.
+        localStorage.removeItem("userId");
+
         localStorage.setItem("userId", data.user._id);
         window.location.replace("/");
       } else {
@@ -75,7 +78,9 @@ loginForm.on("submit", function (event) {
             window.location.replace("/client/login-fail");
             break;
           default:
-            $("#warning_message").removeClass("opacity-0").addClass("opacity-100");
+            $("#warning_message")
+              .removeClass("opacity-0")
+              .addClass("opacity-100");
             $("#password").val("").addClass("input-tiene-error");
             break;
         }

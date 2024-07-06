@@ -8,23 +8,27 @@ if (localStorage.getItem("userId")) {
     .then((response) => response.json())
     .then((data) => {
       $("#total-container").html(cartTotal(data));
-      const productData = data.products;
 
-      if (productData.length > 0) {
-        productData.forEach(function (product) {
-          fetch(`/api/client/products/search?findBy=id&query=${product.id}`)
-            .then((response) => response.json())
-            .then((data) => {
-              const productData = data.product;
-              productData.quantity = product.quantity;
-              const card = cartItem(productData);
-              $("#cards-container").append(card);
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-              return "";
-            });
-        });
+      if (data) {
+        const productData = data.products;
+        if (productData.length > 0) {
+          productData.forEach(function (product) {
+            fetch(`/api/client/products/search?findBy=id&query=${product.id}`)
+              .then((response) => response.json())
+              .then((data) => {
+                const productData = data.product;
+                productData.quantity = product.quantity;
+                const card = cartItem(productData);
+                $("#cards-container").append(card);
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+                return "";
+              });
+          });
+        } else {
+          $("#cards-container").append(cartIsEmpty());
+        }
       } else {
         $("#cards-container").append(cartIsEmpty());
       }
@@ -116,7 +120,9 @@ if (localStorage.getItem("userId")) {
       if (localCart.products.length > 0) {
         const productPromises = localCart.products.map(async (product) => {
           try {
-            const response = await fetch(`/api/client/products/search?findBy=id&query=${product.id}`);
+            const response = await fetch(
+              `/api/client/products/search?findBy=id&query=${product.id}`
+            );
             const data = await response.json();
             const productData = data.product;
             productData.quantity = product.quantity;

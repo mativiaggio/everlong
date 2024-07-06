@@ -48,6 +48,7 @@ const hbs = exphbs.create({
       }).format(value);
     },
     index: function (array, index) {
+      console.log("image: " + array[index]);
       return array[index];
     },
     truncate: function (str, len) {
@@ -74,6 +75,10 @@ const hbs = exphbs.create({
       }
 
       return formattedPrice;
+    },
+    trim: function (str) {
+      console.log(str);
+      return str.trim();
     },
   },
   defaultLayout: "main",
