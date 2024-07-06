@@ -55,9 +55,7 @@ import { contextAction } from "./functions.js";
       var table_id = $table.attr("id");
 
       if (!table_id) {
-        console.error(
-          "ERROR: Table not found... \nPlease verify that the table exists and that the table has a valid id."
-        );
+        console.error("ERROR: Table not found... \nPlease verify that the table exists and that the table has a valid id.");
       } else {
         console.info("Contextmenu plugin loaded successfully");
         $table.on("click contextmenu", "tbody tr", function (e) {
@@ -88,9 +86,7 @@ import { contextAction } from "./functions.js";
             let url = contextAction(screen, action, id);
 
             if (!url) {
-              console.error(
-                "URL not found. \nCheck the contextAction function."
-              );
+              console.error("URL not found. \nCheck the contextAction function.");
             } else {
               window.location.replace(url);
             }
@@ -114,9 +110,7 @@ import { contextAction } from "./functions.js";
               let url = contextAction(screen, action, id);
 
               if (!url) {
-                throw new Error(
-                  "URL not found. \nCheck the contextAction function."
-                );
+                throw new Error("URL not found. \nCheck the contextAction function.");
               } else {
                 window.location.replace(url);
               }
@@ -139,11 +133,7 @@ import { contextAction } from "./functions.js";
       var $form = $(this);
 
       $form.find("input[required]").each(function () {
-        if (
-          ($(this).attr("type") === "text" && $(this).val() === "") ||
-          ($(this).attr("type") === "number" &&
-            ($(this).val() === "0" || $(this).val() === ""))
-        ) {
+        if (($(this).attr("type") === "text" && $(this).val() === "") || ($(this).attr("type") === "number" && ($(this).val() === "0" || $(this).val() === ""))) {
           if ($(this).attr("id") === "price") {
             $(this).closest("div").addClass("input-tiene-error");
             required_flag = true;
@@ -198,9 +188,7 @@ import { contextAction } from "./functions.js";
     );
 
     function generalConfig(dropdown, defaultSearch) {
-      dropdown.addClass(
-        "text-white bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-dark)] dark:text-[var(--main-text-light)] focus:ring-4 focus:outline-none focus:ring-[var(--main-dark-10)] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center   dark:focus:ring-[var(--main-light-10)] mr-2 !min-w-40 justify-between"
-      );
+      dropdown.addClass("text-white bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-dark)] dark:text-[var(--main-text-light)] focus:ring-4 focus:outline-none focus:ring-[var(--main-dark-10)] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center   dark:focus:ring-[var(--main-light-10)] mr-2 !min-w-40 justify-between");
       dropdown.attr("type", "button").attr("findBy", defaultSearch);
       dropdown.append(`<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
       fill="none" viewBox="0 0 10 6">
@@ -263,12 +251,9 @@ import { contextAction } from "./functions.js";
 
     return this.each(function () {
       var $panel_container = $(this);
-      $panel_container.addClass(
-        "border border-[var(--main-text-light)] dark:border-[var(--main-text-dark)] rounded-md overflow-hidden mb-2"
-      );
+      $panel_container.addClass("border border-[var(--main-text-light)]  rounded-md overflow-hidden mb-2");
       var $panel_title_container = document.createElement("div");
-      $panel_title_container.className =
-        "flex justify-between p-2 text-[var(--main-text-dark)] dark:text-[var(--main-text-light)] bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)]";
+      $panel_title_container.className = "flex justify-between p-2 text-[var(--main-text-dark)]  bg-[var(--main-bg-dark)] ";
       $panel_title_container.innerHTML = settings.title;
       $panel_title_container.innerHTML += `<svg class="cursor-pointer" id="${settings.button_id}" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-plus"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>`;
       $panel_container.prepend($panel_title_container);
@@ -296,37 +281,20 @@ import { contextAction } from "./functions.js";
       $this.addClass(settings.classes);
 
       // Create carousel structure
-      var carouselWrapper = $(
-        '<div class="relative h-full overflow-hidden"></div>'
-      );
-      var indicators = $(
-        '<div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse"></div>'
-      );
-      var prevButton = $(
-        '<button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev></button>'
-      );
-      var nextButton = $(
-        '<button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next></button>'
-      );
+      var carouselWrapper = $('<div class="relative h-full overflow-hidden"></div>');
+      var indicators = $('<div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse"></div>');
+      var prevButton = $('<button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev></button>');
+      var nextButton = $('<button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next></button>');
 
       // Create carousel items
       settings.items.forEach(function (item, index) {
-        var carouselItem = $(
-          '<div class="duration-700 ease-in-out"></div>'
-        ).attr("data-carousel-item", index === 0 ? "active" : "");
-        var img = $("<img>")
-          .attr("src", item)
-          .addClass(
-            "absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-          )
-          .attr("alt", "...");
+        var carouselItem = $('<div class="duration-700 ease-in-out"></div>').attr("data-carousel-item", index === 0 ? "active" : "");
+        var img = $("<img>").attr("src", item).addClass("absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2").attr("alt", "...");
         carouselItem.append(img);
         carouselWrapper.append(carouselItem);
 
         // Create indicator buttons
-        var indicator = $(
-          '<button type="button" class="w-3 h-3 rounded-full"></button>'
-        )
+        var indicator = $('<button type="button" class="w-3 h-3 rounded-full"></button>')
           .attr("aria-current", index === 0 ? "true" : "false")
           .attr("aria-label", "Slide " + (index + 1))
           .attr("data-carousel-slide-to", index);
@@ -334,34 +302,19 @@ import { contextAction } from "./functions.js";
       });
 
       // Append controls
-      prevButton.html(
-        '<span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none"><svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/></svg><span class="sr-only">Previous</span></span>'
-      );
-      nextButton.html(
-        '<span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none"><svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/></svg><span class="sr-only">Next</span></span>'
-      );
+      prevButton.html('<span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none"><svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/></svg><span class="sr-only">Previous</span></span>');
+      nextButton.html('<span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none"><svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/></svg><span class="sr-only">Next</span></span>');
 
       // Append elements to main container
-      $this
-        .append(carouselWrapper)
-        .append(indicators)
-        .append(prevButton)
-        .append(nextButton);
+      $this.append(carouselWrapper).append(indicators).append(prevButton).append(nextButton);
 
       // Carousel functionality
       var currentIndex = 0;
       var itemsCount = settings.items.length;
 
       function goToSlide(index) {
-        carouselWrapper
-          .children("div")
-          .removeClass("active")
-          .addClass("hidden");
-        carouselWrapper
-          .children("div")
-          .eq(index)
-          .removeClass("hidden")
-          .addClass("active");
+        carouselWrapper.children("div").removeClass("active").addClass("hidden");
+        carouselWrapper.children("div").eq(index).removeClass("hidden").addClass("active");
         indicators.children("button").attr("aria-current", "false");
         indicators.children("button").eq(index).attr("aria-current", "true");
       }

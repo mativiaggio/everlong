@@ -1633,10 +1633,6 @@ video {
   border-color: var(--main-dark-8);
 }
 
-.dark\:border-\[var\(--main-text-dark\)\]:is([data-mode="dark"] *) {
-  border-color: var(--main-text-dark);
-}
-
 .dark\:border-gray-300:is([data-mode="dark"] *) {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
