@@ -17,7 +17,7 @@ export function cartTotal(cart) {
   const disabled = flag ? "cursor-not-allowed" : "cursor-pointer";
 
   return `
-        <div class="mb-2 border border-[var(--main-light-2)] dark:border-[var(--main-dark-8)] rounded-lg overflow-hidden shadow relative bg-[var(--main-bg-light)] dark:bg-[var(--main-dark-3)]">
+        <div>
             <div class="p-6 border-b border-[var(--main-light-2)] dark:border-[var(--main-dark-8)]">
                 <h1 class="font-bold">Resumen de compra</h1>
             </div>
@@ -40,9 +40,7 @@ export function cartTotal(cart) {
                 </div>
             </div>
             <div class="w-full px-6 pb-6">
-                <button class="w-full rounded-lg  p-2 bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-dark)] dark:text-[var(--main-text-light)] ${disabled}" disabled="${flag}">
-                    Continuar compra
-                </button>
+                
             </div>
         </div>
     `;

@@ -130,9 +130,7 @@ export function addToCart(productId) {
       total: 0,
     };
 
-    const existingProductIndex = cart.products.findIndex(
-      (product) => product.id === _id
-    );
+    const existingProductIndex = cart.products.findIndex((product) => product.id === _id);
 
     if (existingProductIndex !== -1) {
       cart.products[existingProductIndex].quantity++;
@@ -179,12 +177,7 @@ export function addToCart(productId) {
 }
 
 export function toast(options = {}) {
-  const {
-    status = "success",
-    message = "Operación realizada con éxito.",
-    position = "bottom-end",
-    timer = 3000,
-  } = options;
+  const { status = "success", message = "Operación realizada con éxito.", position = "bottom-end", timer = 3000 } = options;
 
   const Toast = Swal.mixin({
     toast: true,
@@ -231,9 +224,7 @@ export function localCartHandler(productId, action) {
     case "update":
       let updateIndex = findProductIndex(productId);
       if (updateIndex !== -1) {
-        cart.products[updateIndex].quantity = $(
-          `#quantity-${productId}`
-        ).text();
+        cart.products[updateIndex].quantity = $(`#quantity-${productId}`).text();
         updateCartTotal();
         console.log("Updated cart:", cart);
       } else {
@@ -251,4 +242,28 @@ export function localCartHandler(productId, action) {
       }
       break;
   }
+}
+
+export function createCheckoutButton(preferenceId) {
+  const mp = new MercadoPago("TEST-fcac8a22-0e63-490d-9ac5-7692b874331c", {
+    locale: "es-AR",
+  });
+  const bricksBuilder = mp.bricks();
+
+  async function renderComponent() {
+    // if (window.checkoutButton) window.checkoutButton.unmount();
+
+    bricksBuilder.create("wallet", "wallet_container", {
+      initialization: {
+        preferenceId: preferenceId,
+      },
+      customization: {
+        texts: {
+          valueProp: "smart_option",
+        },
+      },
+    });
+  }
+
+  renderComponent();
 }

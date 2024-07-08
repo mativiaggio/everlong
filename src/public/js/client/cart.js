@@ -1,7 +1,7 @@
 import { cartIsEmpty } from "../components/cart/cartIsEmpty.js";
 import { cartItem } from "../components/cart/cartItem.js";
 import { cartTotal } from "../components/cart/cartTotal.js";
-import { localCartHandler, toast } from "../functions.js";
+import { createCheckoutButton, localCartHandler, toast } from "../functions.js";
 
 if (localStorage.getItem("userId")) {
   fetch(`/api/client/carts/${localStorage.getItem("userId")}`)
@@ -120,9 +120,7 @@ if (localStorage.getItem("userId")) {
       if (localCart.products.length > 0) {
         const productPromises = localCart.products.map(async (product) => {
           try {
-            const response = await fetch(
-              `/api/client/products/search?findBy=id&query=${product.id}`
-            );
+            const response = await fetch(`/api/client/products/search?findBy=id&query=${product.id}`);
             const data = await response.json();
             const productData = data.product;
             productData.quantity = product.quantity;
@@ -175,3 +173,28 @@ if (localStorage.getItem("userId")) {
     });
   });
 }
+
+// Mercado Pago:
+$("#checkout").on("click", async function () {
+  try {
+    const orderData = {
+      title: "Producto Prueba",
+      quantity: 1,
+      price: 100,
+    };
+
+    const response = await fetch("/api/client/payments/create_preference", {
+      method: "POST",
+      body: JSON.stringify(orderData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const preference = await response.json();
+
+    createCheckoutButton(preference.id);
+  } catch (err) {
+    console.log("Error procesando el pago: " + err);
+  }
+});
