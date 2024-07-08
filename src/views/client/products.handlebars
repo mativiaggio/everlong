@@ -71,16 +71,6 @@
           />
         </div>
       </form>
-
-      {{#each categories}}
-        <ul>
-          <li>
-            <a href="/productos/categoria/{{slug}}">{{name}}</a>
-          </li>
-        </ul>
-      {{/each}}
-
-      <p>Render:</p>
       {{{productsCategoriesComponent}}}
     </div>
   </aside>
@@ -89,7 +79,7 @@
     id="body-container"
   >
     <div
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mt-2"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-3 mt-2"
     >
 
       {{#each products}}

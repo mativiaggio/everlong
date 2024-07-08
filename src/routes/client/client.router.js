@@ -76,9 +76,7 @@ clientRouter.get("/productos", userMiddleware, async (req, res) => {
     );
     const products = response.ResultSet;
     const categories = await categoriesController.getAll();
-
     const productsCategoriesComponent = productsCategories(categories);
-
     const totalProducts = await productsController.countProducts();
     const productsPerPage = 10;
     const totalPages = Math.ceil(totalProducts / productsPerPage);
@@ -93,7 +91,6 @@ clientRouter.get("/productos", userMiddleware, async (req, res) => {
       title,
       description,
       products,
-      categories,
       productsCategoriesComponent,
       pages,
     });
@@ -123,6 +120,7 @@ clientRouter.get(
       );
       const products = response.ResultSet;
       const categories = await categoriesController.getAll();
+      const productsCategoriesComponent = productsCategories(categories);
       const totalProducts = await productsController.countProducts();
       const productsPerPage = 10;
       const totalPages = Math.ceil(totalProducts / productsPerPage);
@@ -137,7 +135,7 @@ clientRouter.get(
         title,
         description,
         products,
-        categories,
+        productsCategoriesComponent,
         pages,
       });
     } catch (error) {
@@ -167,6 +165,7 @@ clientRouter.get(
       );
       const products = response.ResultSet;
       const categories = await categoriesController.getAll();
+      const productsCategoriesComponent = productsCategories(categories);
       const totalProducts = await productsController.countProducts();
       const productsPerPage = 10;
       const totalPages = Math.ceil(totalProducts / productsPerPage);
@@ -181,7 +180,7 @@ clientRouter.get(
         title,
         description,
         products,
-        categories,
+        productsCategoriesComponent,
         pages,
       });
     } catch (error) {

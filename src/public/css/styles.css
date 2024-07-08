@@ -1264,6 +1264,9 @@ video {
 .text-\[var\(--main-dark-10\)\] {
   color: var(--main-dark-10);
 }
+.text-\[var\(--main-light-10\)\] {
+  color: var(--main-light-10);
+}
 .text-\[var\(--main-light-5\)\] {
   color: var(--main-light-5);
 }
@@ -1692,6 +1695,10 @@ video {
   background-color: rgb(31 41 55 / 0.3);
 }
 
+.dark\:text-\[var\(--main-dark-10\)\]:is([data-mode="dark"] *) {
+  color: var(--main-dark-10);
+}
+
 .dark\:text-\[var\(--main-text-dark\)\]:is([data-mode="dark"] *) {
   color: var(--main-text-dark);
 }
@@ -2002,7 +2009,18 @@ video {
 
 @media (min-width: 1280px) {
 
+  .xl\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .xl\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1536px) {
+
+  .\32xl\:grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }

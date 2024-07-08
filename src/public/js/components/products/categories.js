@@ -1,9 +1,7 @@
 export function productsCategories(categories) {
-  console.log(categories);
   const parentCategories = [];
   const subCategories = [];
-
-  let html = "";
+  let html = "<ul>";
 
   categories.forEach((category) => {
     if (!category.parent || category.parent === "") {
@@ -17,19 +15,26 @@ export function productsCategories(categories) {
     let filteredSubCategories = [];
 
     subCategories.forEach((subCategory) => {
-      //   console.log("parent: " + subCategory.parent);
-      //   console.log("parent id: " + parentCategory._id);
-
-      if (subCategory.parent == parentCategory._id) {
-        console.log("sub category: " + subCategory);
+      if (subCategory.parent.toString() === parentCategory._id.toString()) {
         filteredSubCategories.push(subCategory);
       }
     });
 
-    console.log(
-      "Categorias filtradas: " + JSON.stringify(filteredSubCategories)
-    );
+    function categoryItem(category) {
+      return `<li><a class="hover:underline" href="/productos/categoria/${category.slug}">${category.name}</a></li>`;
+    }
+
+    html += `
+        <a class="font-bold hover:underline" href="/productos/categoria/${
+          parentCategory.slug
+        }">${parentCategory.name}</a>
+        <ul class="mb-4 text-[var(--main-light-10)] dark:text-[var(--main-dark-10)]">
+          ${filteredSubCategories.map(categoryItem).join("")}
+        </ul>
+    `;
   });
+
+  html += "</ul>";
 
   return html;
 }
