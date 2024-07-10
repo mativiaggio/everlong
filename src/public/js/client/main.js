@@ -1,4 +1,4 @@
-import { loadScripts } from "../functions.js";
+import { checkUserLoggedIn, loadScripts } from "../functions.js";
 loadScripts("client");
 
 $("#open-sidebar").on("click", () => {
@@ -57,3 +57,6 @@ $("#logout").click(function () {
 $("#user_dropdown_button").on("click", function () {
   $("#user_dropdown").toggleClass("hidden");
 });
+
+checkUserLoggedIn();
+setInterval(checkUserLoggedIn, 300000);

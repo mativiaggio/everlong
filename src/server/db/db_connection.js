@@ -8,15 +8,13 @@ const connect = async () => {
     mongoose
       .connect(MONGO_URI)
       .then(() => {
-        logger.info(chalk.bgBlue.bold("Mongoose conectado \n"));
+        logger.info(chalk.blue("Mongoose conectado \n"));
       })
       .catch((err) => {
-        logger.error(
-          chalk.bgRed.bold(`Mongoose connection error: ${err.message}`)
-        );
+        logger.error(chalk.red(`Mongoose connection error: ${err.message}`));
       });
   } catch (err) {
-    logger.error(chalk.bgRed.bold(`Mongoose connection error: ${err.message}`));
+    logger.error(chalk.red(`Mongoose connection error: ${err.message}`));
     process.exit(1);
   }
 };

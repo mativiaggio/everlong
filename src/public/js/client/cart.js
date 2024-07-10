@@ -1,7 +1,7 @@
 import { cartIsEmpty } from "../components/cart/cartIsEmpty.js";
 import { cartItem } from "../components/cart/cartItem.js";
 import { cartTotal } from "../components/cart/cartTotal.js";
-import { createCheckoutButton, localCartHandler, toast } from "../functions.js";
+import { localCartHandler, toast } from "../functions.js";
 
 if (localStorage.getItem("userId")) {
   fetch(`/api/client/carts/${localStorage.getItem("userId")}`)
@@ -175,6 +175,7 @@ if (localStorage.getItem("userId")) {
 }
 
 // Mercado Pago:
+const mp = new MercadoPago("TEST-fcac8a22-0e63-490d-9ac5-7692b874331c", { locale: "es-AR" });
 $("#checkout").on("click", async function () {
   try {
     const orderData = {
@@ -183,7 +184,7 @@ $("#checkout").on("click", async function () {
       price: 100,
     };
 
-    const response = await fetch("/api/client/payments/create_preference", {
+    const response = await fetch("/api/client/payments/generate_payment", {
       method: "POST",
       body: JSON.stringify(orderData),
       headers: {
@@ -192,9 +193,24 @@ $("#checkout").on("click", async function () {
     });
 
     const preference = await response.json();
-
     createCheckoutButton(preference.id);
   } catch (err) {
     console.log("Error procesando el pago: " + err);
   }
 });
+
+function createCheckoutButton(preferenceId) {
+  const bricksBiulder = mp.bricks();
+
+  const renderComponent = async () => {
+    if (window.checkoutButton) window.checkoutButton.unmount();
+
+    await bricksBiulder.create("wallet", "wallet_container", {
+      initialization: {
+        preferenceId: preferenceId,
+      },
+    });
+  };
+
+  renderComponent();
+}

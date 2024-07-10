@@ -11,22 +11,20 @@ export const addLogger = (req, res, next) => {
 
   const getColorForStatusCode = (statusCode, message) => {
     if (statusCode >= 500) {
-      return chalk.bgRed.bold(message);
+      return chalk.red(message);
     } else if (statusCode >= 400) {
-      return chalk.bgRed.bold(message);
+      return chalk.red(message);
     } else if (statusCode >= 300) {
-      return chalk.bgCyan.bold(message);
+      return chalk.green(message);
     } else if (statusCode >= 200) {
-      return chalk.bgGreen.bold(message);
+      return chalk.green(message);
     } else {
-      return chalk.bgWhite.bold(message);
+      return chalk.white(message);
     }
   };
 
   const logRequest = () => {
-    const message = `${req.method} (${res.statusCode}) to ${
-      req.url
-    } - ${new Date().toLocaleDateString()} `;
+    const message = `${req.method} (${res.statusCode}) to ${req.url} - ${new Date().toLocaleDateString()} `;
     const coloredMessage = getColorForStatusCode(res.statusCode, message);
     req.logger.http(coloredMessage);
   };

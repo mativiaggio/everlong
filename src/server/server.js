@@ -45,7 +45,7 @@ const app = express();
 connect();
 
 // Session middleware
-// app.use(cors());
+app.use(cors());
 app.use(cookieParser());
 app.use(
   session({
@@ -99,5 +99,5 @@ app.use("/admin", adminRouter);
 app.use("/", clientRouter);
 
 app.listen(PORT, () => {
-  logger.info(chalk.bgBlue.bold(`Server running http://localhost:${PORT}/`));
+  logger.info(chalk.blue(`Server running http://localhost:${PORT}/`));
 });

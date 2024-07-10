@@ -244,26 +244,27 @@ export function localCartHandler(productId, action) {
   }
 }
 
-export function createCheckoutButton(preferenceId) {
-  const mp = new MercadoPago("TEST-fcac8a22-0e63-490d-9ac5-7692b874331c", {
-    locale: "es-AR",
-  });
-  const bricksBuilder = mp.bricks();
-
-  async function renderComponent() {
-    // if (window.checkoutButton) window.checkoutButton.unmount();
-
-    bricksBuilder.create("wallet", "wallet_container", {
-      initialization: {
-        preferenceId: preferenceId,
-      },
-      customization: {
-        texts: {
-          valueProp: "smart_option",
-        },
-      },
-    });
+export function checkUserLoggedIn() {
+  const userId = localStorage.getItem("userId");
+  if (!userId) {
+    console.warn("Usuario no logueado.");
+    localStorage.removeItem("userId");
+    return;
   }
 
-  renderComponent();
+  fetch("/api/client/sessions/current")
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("No user logged in");
+      }
+    })
+    .then((data) => {
+      console.log("Usuario logueado:", data.user);
+    })
+    .catch((error) => {
+      console.error(error);
+      localStorage.removeItem("userId");
+    });
 }
