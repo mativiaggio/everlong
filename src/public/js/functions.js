@@ -40,6 +40,9 @@ export function loadScripts(level) {
     case "/carrito":
       script.src = "/js/client/cart.js";
       break;
+    case "/checkout":
+      script.src = "/js/client/checkout.js";
+      break;
     case "/ingresar":
       script.src = "/js/client/client-login.js";
       break;
@@ -84,7 +87,7 @@ export function loadScripts(level) {
       break;
     default:
       // Handle cases where the page path doesn't match any of the expected admin paths
-      console.error("Unknown admin page:", page);
+      console.error("Unknown page:", page);
       return;
   }
 

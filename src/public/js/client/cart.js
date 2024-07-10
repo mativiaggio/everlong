@@ -174,43 +174,43 @@ if (localStorage.getItem("userId")) {
   });
 }
 
-// Mercado Pago:
-const mp = new MercadoPago("TEST-fcac8a22-0e63-490d-9ac5-7692b874331c", { locale: "es-AR" });
-$("#checkout").on("click", async function () {
-  try {
-    const orderData = {
-      title: "Producto Prueba",
-      quantity: 1,
-      price: 100,
-    };
+// // Mercado Pago:
+// const mp = new MercadoPago("TEST-fcac8a22-0e63-490d-9ac5-7692b874331c", { locale: "es-AR" });
+// $("#checkout").on("click", async function () {
+//   try {
+//     const orderData = {
+//       title: "Producto Prueba",
+//       quantity: 1,
+//       price: 100,
+//     };
 
-    const response = await fetch("/api/client/payments/generate_payment", {
-      method: "POST",
-      body: JSON.stringify(orderData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+//     const response = await fetch("/api/client/payments/generate_payment", {
+//       method: "POST",
+//       body: JSON.stringify(orderData),
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//     });
 
-    const preference = await response.json();
-    createCheckoutButton(preference.id);
-  } catch (err) {
-    console.log("Error procesando el pago: " + err);
-  }
-});
+//     const preference = await response.json();
+//     createCheckoutButton(preference.id);
+//   } catch (err) {
+//     console.log("Error procesando el pago: " + err);
+//   }
+// });
 
-function createCheckoutButton(preferenceId) {
-  const bricksBiulder = mp.bricks();
+// function createCheckoutButton(preferenceId) {
+//   const bricksBiulder = mp.bricks();
 
-  const renderComponent = async () => {
-    if (window.checkoutButton) window.checkoutButton.unmount();
+//   const renderComponent = async () => {
+//     if (window.checkoutButton) window.checkoutButton.unmount();
 
-    await bricksBiulder.create("wallet", "wallet_container", {
-      initialization: {
-        preferenceId: preferenceId,
-      },
-    });
-  };
+//     await bricksBiulder.create("wallet", "wallet_container", {
+//       initialization: {
+//         preferenceId: preferenceId,
+//       },
+//     });
+//   };
 
-  renderComponent();
-}
+//   renderComponent();
+// }
