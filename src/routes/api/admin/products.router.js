@@ -3,6 +3,13 @@ import ProductsController from "../../../controllers/products.controller.js";
 import UserController from "../../../controllers/user.controller.js";
 import { logger } from "../../../utils/logger.js";
 import upload from "../../../config/multer.config.js";
+import path from "path";
+import fs from "fs";
+
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const adminProductsRouter = Router();
 const productController = new ProductsController();
@@ -29,13 +36,6 @@ const privateAccess = async (req, res, next) => {
   next();
 };
 
-// adminProductsRouter.post("/", privateAccess, async (req, res) => {
-//   try {
-//     await productController.addProduct(req, res);
-//   } catch (error) {
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// });
 adminProductsRouter.post("/", privateAccess, upload.array("productImages", 5), async (req, res) => {
   try {
     await productController.addProduct(req, res);
@@ -88,6 +88,18 @@ adminProductsRouter.get("/search", privateAccess, async (req, res) => {
     logger.error("Error al buscar productos:", error);
     res.status(500).send("Error al buscar productos");
   }
+});
+
+adminProductsRouter.delete("/image/delete", (req, res) => {
+  const { imagePath } = req.body;
+  const fullPath = path.join(__dirname, "../../../public", imagePath);
+
+  fs.unlink(fullPath, (err) => {
+    if (err) {
+      return res.status(500).json({ message: "Error eliminando imagen", error: err });
+    }
+    res.status(200).json({ message: "Imagen eliminada con éxito" });
+  });
 });
 
 export default adminProductsRouter;

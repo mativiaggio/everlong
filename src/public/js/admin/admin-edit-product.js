@@ -4,6 +4,32 @@ $("#slug").on("input", function () {
   });
 });
 
+$(".delete-image-button").on("click", async function (event) {
+  debugger;
+  const imagePath = $(this).data("imagePath");
+
+  try {
+    const response = await fetch("/api/admin/products/image/delete", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ imagePath }),
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      $(this).closest(".relative").remove();
+      console.log(result.message);
+    } else {
+      console.error(result.message);
+    }
+  } catch (error) {
+    console.error("Error deleting image:", error);
+  }
+});
+
 $("#product-form").on("submit", function (e) {
   e.preventDefault();
 
