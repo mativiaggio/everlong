@@ -39,7 +39,11 @@ const hbs = exphbs.create({
       return JSON.parse(jsonString);
     },
     join: function (array, delimiter) {
-      return array.join(delimiter);
+      if (Array.isArray(array)) {
+        return array.join(delimiter);
+      } else {
+        return;
+      }
     },
     formatCurrency: function (value) {
       return new Intl.NumberFormat("es-AR", {
@@ -48,7 +52,6 @@ const hbs = exphbs.create({
       }).format(value);
     },
     index: function (array, index) {
-      console.log("image: " + array[index]);
       return array[index];
     },
     truncate: function (str, len) {

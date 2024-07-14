@@ -15,6 +15,8 @@ import { setLayout } from "../middlewares/setLayout.middleware.js";
 import hbs from "../config/handlebars.config.js";
 import path from "path";
 import { fileURLToPath } from "url";
+import chalk from "chalk";
+import cors from "cors";
 
 // Admin routes
 import adminRouter from "../routes/admin/admin.router.js";
@@ -31,6 +33,7 @@ import clientSessionRouter from "../routes/api/client/session.router.js";
 import clientCartRouter from "../routes/api/client/carts.router.js";
 import clientProductsRouter from "../routes/api/client/products.router.js";
 import clientMailerRouter from "../routes/api/client/emails.router.js";
+import clientPaymentsRouter from "../routes/api/client/payments.router.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -42,6 +45,7 @@ const app = express();
 connect();
 
 // Session middleware
+app.use(cors());
 app.use(cookieParser());
 app.use(
   session({
@@ -90,9 +94,10 @@ app.use("/api/client/sessions", clientSessionRouter);
 app.use("/api/client/products", clientProductsRouter);
 app.use("/api/client/carts", clientCartRouter);
 app.use("/api/client/mailer", clientMailerRouter);
+app.use("/api/client/payments", clientPaymentsRouter);
 app.use("/admin", adminRouter);
 app.use("/", clientRouter);
 
 app.listen(PORT, () => {
-  logger.info(`Server running http://localhost:${PORT}/`);
+  logger.info(chalk.blue(`Server running http://localhost:${PORT}/`));
 });

@@ -40,6 +40,9 @@ export function loadScripts(level) {
     case "/carrito":
       script.src = "/js/client/cart.js";
       break;
+    case "/checkout":
+      script.src = "/js/client/checkout.js";
+      break;
     case "/ingresar":
       script.src = "/js/client/client-login.js";
       break;
@@ -84,7 +87,7 @@ export function loadScripts(level) {
       break;
     default:
       // Handle cases where the page path doesn't match any of the expected admin paths
-      console.error("Unknown admin page:", page);
+      console.error("Unknown page:", page);
       return;
   }
 
@@ -130,9 +133,7 @@ export function addToCart(productId) {
       total: 0,
     };
 
-    const existingProductIndex = cart.products.findIndex(
-      (product) => product.id === _id
-    );
+    const existingProductIndex = cart.products.findIndex((product) => product.id === _id);
 
     if (existingProductIndex !== -1) {
       cart.products[existingProductIndex].quantity++;
@@ -179,12 +180,7 @@ export function addToCart(productId) {
 }
 
 export function toast(options = {}) {
-  const {
-    status = "success",
-    message = "Operación realizada con éxito.",
-    position = "bottom-end",
-    timer = 3000,
-  } = options;
+  const { status = "success", message = "Operación realizada con éxito.", position = "bottom-end", timer = 3000 } = options;
 
   const Toast = Swal.mixin({
     toast: true,
@@ -231,9 +227,7 @@ export function localCartHandler(productId, action) {
     case "update":
       let updateIndex = findProductIndex(productId);
       if (updateIndex !== -1) {
-        cart.products[updateIndex].quantity = $(
-          `#quantity-${productId}`
-        ).text();
+        cart.products[updateIndex].quantity = $(`#quantity-${productId}`).text();
         updateCartTotal();
         console.log("Updated cart:", cart);
       } else {
@@ -251,4 +245,29 @@ export function localCartHandler(productId, action) {
       }
       break;
   }
+}
+
+export function checkUserLoggedIn() {
+  const userId = localStorage.getItem("userId");
+  if (!userId) {
+    console.warn("Usuario no logueado.");
+    localStorage.removeItem("userId");
+    return;
+  }
+
+  fetch("/api/client/sessions/current")
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("No user logged in");
+      }
+    })
+    .then((data) => {
+      console.log("Usuario logueado:", data.user);
+    })
+    .catch((error) => {
+      console.error(error);
+      localStorage.removeItem("userId");
+    });
 }

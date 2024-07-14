@@ -9,12 +9,7 @@ import ReceiptsController from "../../controllers/receipts.controller.js";
 import EnterpriseController from "../../controllers/enterprise.controller.js";
 
 // Constantes
-import {
-  adminSidebarItems,
-  user_context,
-  categories_context,
-  basic_print_edit_delete,
-} from "../../utils/constants.js";
+import { adminSidebarItems, user_context, categories_context, basic_print_edit_delete } from "../../utils/constants.js";
 
 const adminRouter = Router();
 const userController = new UserController();
@@ -68,8 +63,7 @@ adminRouter.get("/register", publicAccess, async (req, res) => {
 
 adminRouter.get("/login", publicAccess, (req, res) => {
   const title = "Login";
-  const description =
-    "Inicia sesion en el panel administrador de Everlong para comenzar a manejar tu negocio";
+  const description = "Inicia sesion en el panel administrador de Everlong para comenzar a manejar tu negocio";
   res.render("admin/login", { isLoggedIn: false, title, description });
 });
 
@@ -82,19 +76,12 @@ adminRouter.get("/login-fail", publicAccess, (req, res) => {
 adminRouter.get("/productos", privateAccess, async (req, res) => {
   try {
     const title = "Productos";
-    const description =
-      "Visualiza, actualiza o elimina cualquiera de los productos cargados";
+    const description = "Visualiza, actualiza o elimina cualquiera de los productos cargados";
     const screen = "products";
     const query = req.query.query || "";
     const limit = req.query.limit || 10;
     const page = req.query.page || 1;
-    const response = await productsController.getProducts(
-      req,
-      res,
-      query,
-      limit,
-      page
-    );
+    const response = await productsController.getProducts(req, res, query, limit, page);
     const products = response.ResultSet;
 
     const totalProducts = await productsController.countProducts();
@@ -119,28 +106,25 @@ adminRouter.get("/productos", privateAccess, async (req, res) => {
   }
 });
 
-adminRouter.get(
-  "/productos/agregar-producto",
-  privateAccess,
-  async (req, res) => {
-    const title = "Agregar Producto";
-    const description = "Agrega un producto nuevo a la base de datos";
-    const categories = await categoriesController.getAll();
-    res.render("admin/add-product", {
-      isLoggedIn: true,
-      adminSidebarItems,
-      title,
-      description,
-      categories,
-    });
-  }
-);
+adminRouter.get("/productos/agregar-producto", privateAccess, async (req, res) => {
+  const title = "Agregar Producto";
+  const description = "Agrega un producto nuevo a la base de datos";
+  const categories = await categoriesController.getAll();
+  res.render("admin/add-product", {
+    isLoggedIn: true,
+    adminSidebarItems,
+    title,
+    description,
+    categories,
+  });
+});
 
 adminRouter.get("/productos/editar/:pslug", privateAccess, async (req, res) => {
   const title = "Editar Producto";
   const description = "Edita un producto de la base de datos";
 
   const productData = await productsController.findBySlug(req.params.pslug);
+  console.log(JSON.stringify(productData));
   const categories = await categoriesController.getAll();
 
   console.log("productos: " + productData.description);
@@ -157,19 +141,12 @@ adminRouter.get("/productos/editar/:pslug", privateAccess, async (req, res) => {
 adminRouter.get("/categorias", privateAccess, async (req, res) => {
   try {
     const title = "Categorias";
-    const description =
-      "Visualiza, actualiza o elimina cualquiera de las categorias cargadas";
+    const description = "Visualiza, actualiza o elimina cualquiera de las categorias cargadas";
     const screen = "categories";
     const query = req.query.query || "";
     const limit = req.query.limit || 10;
     const page = req.query.page || 1;
-    const response = await categoriesController.getCategories(
-      req,
-      res,
-      query,
-      limit,
-      page
-    );
+    const response = await categoriesController.getCategories(req, res, query, limit, page);
     const categories = response.ResultSet;
 
     const totalCategories = await categoriesController.countCategories();
@@ -193,53 +170,43 @@ adminRouter.get("/categorias", privateAccess, async (req, res) => {
   }
 });
 
-adminRouter.get(
-  "/categorias/agregar-categoria",
-  privateAccess,
-  async (req, res) => {
-    const title = "Agregar Categoría";
-    const description = "Agrega una categoría nueva a la base de datos";
+adminRouter.get("/categorias/agregar-categoria", privateAccess, async (req, res) => {
+  const title = "Agregar Categoría";
+  const description = "Agrega una categoría nueva a la base de datos";
+  const categories = await categoriesController.getAll();
+  res.render("admin/add-category", {
+    isLoggedIn: true,
+    adminSidebarItems,
+    title,
+    description,
+    categories,
+  });
+});
+
+adminRouter.get("/categorias/editar/:pslug", privateAccess, async (req, res) => {
+  try {
+    const title = "Editar Categoría";
+    const description = "Edita una categoría de la base de datos";
+
+    const categoryData = await categoriesController.findBySlug(req.params.pslug);
+
+    const properties = categoryData.properties;
+
     const categories = await categoriesController.getAll();
-    res.render("admin/add-category", {
+    res.render("admin/edit-category", {
       isLoggedIn: true,
       adminSidebarItems,
       title,
       description,
+      categoryData,
+      properties,
       categories,
     });
+  } catch (error) {
+    logger.error("Error al obtener categoria:", error);
+    res.status(500).send("Error al obtener categorias");
   }
-);
-
-adminRouter.get(
-  "/categorias/editar/:pslug",
-  privateAccess,
-  async (req, res) => {
-    try {
-      const title = "Editar Categoría";
-      const description = "Edita una categoría de la base de datos";
-
-      const categoryData = await categoriesController.findBySlug(
-        req.params.pslug
-      );
-
-      const properties = categoryData.properties;
-
-      const categories = await categoriesController.getAll();
-      res.render("admin/edit-category", {
-        isLoggedIn: true,
-        adminSidebarItems,
-        title,
-        description,
-        categoryData,
-        properties,
-        categories,
-      });
-    } catch (error) {
-      logger.error("Error al obtener categoria:", error);
-      res.status(500).send("Error al obtener categorias");
-    }
-  }
-);
+});
 
 adminRouter.get("/usuarios", privateAccess, async (req, res) => {
   try {
@@ -272,14 +239,9 @@ adminRouter.get("/usuarios", privateAccess, async (req, res) => {
 adminRouter.get("/ordenes-compra", privateAccess, async (req, res) => {
   try {
     const title = "Ordenes de Compra";
-    const description =
-      "Visualiza, actualiza o elimina las ordenes de compra cargadas";
+    const description = "Visualiza, actualiza o elimina las ordenes de compra cargadas";
     const limit = req.query.limit || 10;
-    const response = await buyingOrdersController.getAllBuyingOrders(
-      req,
-      res,
-      limit
-    );
+    const response = await buyingOrdersController.getAllBuyingOrders(req, res, limit);
     const buyingOrders = response.ResultSet;
     const totalBuyingOrders = await buyingOrdersController.countBuyingOrders();
     const buyingOrdersPerPage = 10;
@@ -305,8 +267,7 @@ adminRouter.get("/ordenes-compra", privateAccess, async (req, res) => {
 adminRouter.get("/ingresos", privateAccess, async (req, res) => {
   try {
     const title = "Ingresos";
-    const description =
-      "Visualiza, actualiza o elimina las facturas de compra cargadas";
+    const description = "Visualiza, actualiza o elimina las facturas de compra cargadas";
     const screen = "invoices";
     const limit = req.query.limit || 10;
     const response = await invoicesController.getAllInvoices(req, res, limit);
@@ -357,8 +318,7 @@ adminRouter.get("/ingresos/imprimir/:id", privateAccess, async (req, res) => {
 adminRouter.get("/egresos", privateAccess, async (req, res) => {
   try {
     const title = "Egresos";
-    const description =
-      "Visualiza, actualiza o elimina las facturas de venta cargadas";
+    const description = "Visualiza, actualiza o elimina las facturas de venta cargadas";
     const limit = req.query.limit || 10;
     const response = await receiptsController.getAllReceipts(req, res, limit);
     const receipts = response.ResultSet;

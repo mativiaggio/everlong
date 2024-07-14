@@ -10,6 +10,7 @@ const categoriesController = new CategoriesController();
 
 // Constantes
 import { clientSidebarItems } from "../../utils/constants.js";
+import { productsCategories } from "../../public/js/components/products/categories.js";
 
 const clientRouter = Router();
 
@@ -75,6 +76,7 @@ clientRouter.get("/productos", userMiddleware, async (req, res) => {
     );
     const products = response.ResultSet;
     const categories = await categoriesController.getAll();
+    const productsCategoriesComponent = productsCategories(categories);
     const totalProducts = await productsController.countProducts();
     const productsPerPage = 10;
     const totalPages = Math.ceil(totalProducts / productsPerPage);
@@ -89,7 +91,7 @@ clientRouter.get("/productos", userMiddleware, async (req, res) => {
       title,
       description,
       products,
-      categories,
+      productsCategoriesComponent,
       pages,
     });
   } catch (error) {
@@ -118,6 +120,7 @@ clientRouter.get(
       );
       const products = response.ResultSet;
       const categories = await categoriesController.getAll();
+      const productsCategoriesComponent = productsCategories(categories);
       const totalProducts = await productsController.countProducts();
       const productsPerPage = 10;
       const totalPages = Math.ceil(totalProducts / productsPerPage);
@@ -132,7 +135,7 @@ clientRouter.get(
         title,
         description,
         products,
-        categories,
+        productsCategoriesComponent,
         pages,
       });
     } catch (error) {
@@ -162,6 +165,7 @@ clientRouter.get(
       );
       const products = response.ResultSet;
       const categories = await categoriesController.getAll();
+      const productsCategoriesComponent = productsCategories(categories);
       const totalProducts = await productsController.countProducts();
       const productsPerPage = 10;
       const totalPages = Math.ceil(totalProducts / productsPerPage);
@@ -176,7 +180,7 @@ clientRouter.get(
         title,
         description,
         products,
-        categories,
+        productsCategoriesComponent,
         pages,
       });
     } catch (error) {
@@ -203,12 +207,34 @@ clientRouter.get("/ingresar", (req, res) => {
   const title = "Iniciar sesión";
   const description =
     "Inicia sesión en tu cuenta para poder manejar tu carrito y finalizar la compra..";
-  const customClasses = "overflow-hidden";
   res.render("client/login", {
     title,
     description,
-    customClasses,
     clientSidebarItems,
+  });
+});
+
+clientRouter.get("/recuperar-cuenta", (req, res) => {
+  const title = "Recuperar Cuenta";
+  const description =
+    "Recibe un código de recuperación en tu correo electrónico.";
+  res.render("client/account-recovery", {
+    title,
+    description,
+    clientSidebarItems,
+  });
+});
+
+clientRouter.get("/recuperar-cuenta/:token", (req, res) => {
+  const title = "Recuperar Cuenta";
+  const description =
+    "Recibe un código de recuperación en tu correo electrónico.";
+  const token = req.params.token;
+  res.render("client/new-password", {
+    title,
+    description,
+    clientSidebarItems,
+    token,
   });
 });
 
@@ -220,6 +246,21 @@ clientRouter.get("/carrito", async (req, res) => {
     user = await userController.findById(req.user._id);
   }
   res.render("client/cart", {
+    user: user ? user.user : null,
+    clientSidebarItems,
+    title,
+    description,
+  });
+});
+
+clientRouter.get("/checkout", async (req, res) => {
+  const title = "Checkout";
+  const description = "Finaliza tu compra de manera segura..";
+  let user;
+  if (req.user) {
+    user = await userController.findById(req.user._id);
+  }
+  res.render("client/checkout", {
     user: user ? user.user : null,
     clientSidebarItems,
     title,
