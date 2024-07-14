@@ -1,17 +1,11 @@
 import path from "path";
+import crypto from "crypto";
+import bcrypt from "bcrypt";
+
 export const getPath = (folderName) => {
   return path.join(process.cwd(), "src", folderName);
 };
 
-/**
- * Sorts an array of user objects based on their roles and creation date.
- *
- * @param {Array} users - An array of user objects. Each user object should have properties:
- *                         roles: an array of user roles (strings),
- *                         createdAt: a timestamp indicating when the user was created.
- *
- * @returns {Array} - The sorted array of user objects.
- */
 export const sortUsers = (users) => {
   const roleOrder = {
     admin: 1,
@@ -61,4 +55,13 @@ export const sortUsers = (users) => {
   });
 
   return users;
+};
+
+export const generateToken = () => {
+  return crypto.randomBytes(32).toString("hex");
+};
+
+export const isValidPassword = (user, password) => {
+  const isValid = bcrypt.compareSync(password, user.password);
+  return isValid;
 };

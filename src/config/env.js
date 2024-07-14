@@ -1,6 +1,7 @@
 import { config } from "dotenv";
 config();
 
+const HOST = process.env.HOST;
 const PORT = process.env.PORT;
 const MONGO_PASSWORD = process.env.MONGO_PASSWORD;
 const MONGO_URI = process.env.MONGO_URI;
@@ -22,4 +23,16 @@ const JWT_SK = process.env.JWT_SECRET;
 // const MP_PUBLIC_KEY = process.env.MP_PUBLIC_KEY;
 const MP_ACCESS_TOKEN = process.env.MP_ACCESS_TOKEN;
 
-export { PORT, MONGO_PASSWORD, MONGO_URI, CLIENT_ID, CALLBACK_URL, CLIENT_SECRET, mailing, JWT_SK, NODE_ENV, MP_ACCESS_TOKEN };
+export {
+  HOST,
+  PORT,
+  MONGO_PASSWORD,
+  MONGO_URI,
+  CLIENT_ID,
+  CALLBACK_URL,
+  CLIENT_SECRET,
+  mailing,
+  JWT_SK,
+  NODE_ENV,
+  MP_ACCESS_TOKEN,
+};

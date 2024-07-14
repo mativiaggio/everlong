@@ -67,7 +67,13 @@ clientRouter.get("/productos", userMiddleware, async (req, res) => {
     const query = req.query.query || "";
     const limit = req.query.limit || 10;
     const page = req.query.page || 1;
-    const response = await productsController.getProducts(req, res, query, limit, page);
+    const response = await productsController.getProducts(
+      req,
+      res,
+      query,
+      limit,
+      page
+    );
     const products = response.ResultSet;
     const categories = await categoriesController.getAll();
     const productsCategoriesComponent = productsCategories(categories);
@@ -94,79 +100,100 @@ clientRouter.get("/productos", userMiddleware, async (req, res) => {
   }
 });
 
-clientRouter.get("/productos/buscar/:keywords", userMiddleware, async (req, res) => {
-  try {
-    const title = "Productos";
-    const description = "Listado de todos nuestros productos.";
-    const screen = "products";
-    const keywords = req.params.keywords || "";
-    const limit = req.query.limit || 10;
-    const page = req.query.page || 1;
-    const response = await productsController.findByKeywords(req, res, keywords, limit, page);
-    const products = response.ResultSet;
-    const categories = await categoriesController.getAll();
-    const productsCategoriesComponent = productsCategories(categories);
-    const totalProducts = await productsController.countProducts();
-    const productsPerPage = 10;
-    const totalPages = Math.ceil(totalProducts / productsPerPage);
-    const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-    let user = null;
-    if (req.user) {
-      user = await userController.findById(req.user._id);
+clientRouter.get(
+  "/productos/buscar/:keywords",
+  userMiddleware,
+  async (req, res) => {
+    try {
+      const title = "Productos";
+      const description = "Listado de todos nuestros productos.";
+      const screen = "products";
+      const keywords = req.params.keywords || "";
+      const limit = req.query.limit || 10;
+      const page = req.query.page || 1;
+      const response = await productsController.findByKeywords(
+        req,
+        res,
+        keywords,
+        limit,
+        page
+      );
+      const products = response.ResultSet;
+      const categories = await categoriesController.getAll();
+      const productsCategoriesComponent = productsCategories(categories);
+      const totalProducts = await productsController.countProducts();
+      const productsPerPage = 10;
+      const totalPages = Math.ceil(totalProducts / productsPerPage);
+      const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+      let user = null;
+      if (req.user) {
+        user = await userController.findById(req.user._id);
+      }
+      res.render("client/products", {
+        user: user ? user.user : null,
+        clientSidebarItems,
+        title,
+        description,
+        products,
+        productsCategoriesComponent,
+        pages,
+      });
+    } catch (error) {
+      logger.error("Error al obtener productos:", error);
+      res.status(500).send("Error al obtener productos");
     }
-    res.render("client/products", {
-      user: user ? user.user : null,
-      clientSidebarItems,
-      title,
-      description,
-      products,
-      productsCategoriesComponent,
-      pages,
-    });
-  } catch (error) {
-    logger.error("Error al obtener productos:", error);
-    res.status(500).send("Error al obtener productos");
   }
-});
+);
 
-clientRouter.get("/productos/categoria/:slug", userMiddleware, async (req, res) => {
-  try {
-    const title = "Productos";
-    const description = "Listado de todos nuestros productos.";
-    const screen = "products";
-    const slug = req.params.slug || "";
-    const limit = req.query.limit || 10;
-    const page = req.query.page || 1;
-    const response = await productsController.findByCategory(req, res, slug, limit, page);
-    const products = response.ResultSet;
-    const categories = await categoriesController.getAll();
-    const productsCategoriesComponent = productsCategories(categories);
-    const totalProducts = await productsController.countProducts();
-    const productsPerPage = 10;
-    const totalPages = Math.ceil(totalProducts / productsPerPage);
-    const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-    let user = null;
-    if (req.user) {
-      user = await userController.findById(req.user._id);
+clientRouter.get(
+  "/productos/categoria/:slug",
+  userMiddleware,
+  async (req, res) => {
+    try {
+      const title = "Productos";
+      const description = "Listado de todos nuestros productos.";
+      const screen = "products";
+      const slug = req.params.slug || "";
+      const limit = req.query.limit || 10;
+      const page = req.query.page || 1;
+      const response = await productsController.findByCategory(
+        req,
+        res,
+        slug,
+        limit,
+        page
+      );
+      const products = response.ResultSet;
+      const categories = await categoriesController.getAll();
+      const productsCategoriesComponent = productsCategories(categories);
+      const totalProducts = await productsController.countProducts();
+      const productsPerPage = 10;
+      const totalPages = Math.ceil(totalProducts / productsPerPage);
+      const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+      let user = null;
+      if (req.user) {
+        user = await userController.findById(req.user._id);
+      }
+      res.render("client/products", {
+        user: user ? user.user : null,
+        clientSidebarItems,
+        title,
+        description,
+        products,
+        productsCategoriesComponent,
+        pages,
+      });
+    } catch (error) {
+      logger.error("Error al obtener productos:", error);
+      res.status(500).send("Error al obtener productos");
     }
-    res.render("client/products", {
-      user: user ? user.user : null,
-      clientSidebarItems,
-      title,
-      description,
-      products,
-      productsCategoriesComponent,
-      pages,
-    });
-  } catch (error) {
-    logger.error("Error al obtener productos:", error);
-    res.status(500).send("Error al obtener productos");
   }
-});
+);
 
 clientRouter.get("/registro", (req, res) => {
   const title = "Registro";
-  const description = "Registrate en nuestra tienda para pasar a ser parte de esta gran familia.";
+  const description =
+    "Registrate en nuestra tienda para pasar a ser parte de esta gran familia.";
   const customClasses = "overflow-hidden";
   res.render("client/register", {
     title,
@@ -178,13 +205,36 @@ clientRouter.get("/registro", (req, res) => {
 
 clientRouter.get("/ingresar", (req, res) => {
   const title = "Iniciar sesión";
-  const description = "Inicia sesión en tu cuenta para poder manejar tu carrito y finalizar la compra..";
-  const customClasses = "overflow-hidden";
+  const description =
+    "Inicia sesión en tu cuenta para poder manejar tu carrito y finalizar la compra..";
   res.render("client/login", {
     title,
     description,
-    customClasses,
     clientSidebarItems,
+  });
+});
+
+clientRouter.get("/recuperar-cuenta", (req, res) => {
+  const title = "Recuperar Cuenta";
+  const description =
+    "Recibe un código de recuperación en tu correo electrónico.";
+  res.render("client/account-recovery", {
+    title,
+    description,
+    clientSidebarItems,
+  });
+});
+
+clientRouter.get("/recuperar-cuenta/:token", (req, res) => {
+  const title = "Recuperar Cuenta";
+  const description =
+    "Recibe un código de recuperación en tu correo electrónico.";
+  const token = req.params.token;
+  res.render("client/new-password", {
+    title,
+    description,
+    clientSidebarItems,
+    token,
   });
 });
 
