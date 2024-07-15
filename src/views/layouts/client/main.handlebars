@@ -40,6 +40,11 @@
           <span
             class="self-center text-2xl font-semibold whitespace-nowrap"
           >Everlong</span>
+          {{! <img
+            class="w-[200px]"
+            src="/images/sevenmates-dashboard-navbar.png"
+            alt=""
+          /> }}
         </a>
         <div class="hidden">
           <div
@@ -154,6 +159,12 @@
           </button>
 
           {{#if user}}
+            {{#isAdmin user.roles}}
+              <a
+                href="/admin"
+                class="px-4 py-2 hidden md:flex text-sm hover:underline"
+              >Admin Panel</a>
+            {{/isAdmin}}
             <div class="relative">
               <button
                 class="flex justify-center items-center dark:hover:underline"
@@ -344,6 +355,36 @@
           {{/each}}
 
           {{#if user}}
+            {{#isAdmin user.roles}}
+              <li>
+                <a
+                  href="/admin"
+                  id="logout"
+                  class="flex w-full items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group hover:!text-red-600"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-layout-panel-left"
+                  ><rect width="7" height="18" x="3" y="3" rx="1" /><rect
+                      width="7"
+                      height="7"
+                      x="14"
+                      y="3"
+                      rx="1"
+                    /><rect width="7" height="7" x="14" y="14" rx="1" /></svg>
+                  <span class="ms-3 font-bold">Panel Administrador</span>
+                </a>
+              </li>
+            {{/isAdmin}}
+
             <li>
               <button
                 id="logout"
@@ -460,8 +501,8 @@
       {{{body}}}
     </div>
 
-    <footer class="bg-white dark:bg-[var(--main-dark-10)]">
-      <div class="mx-auto w-full max-w-screen-xl">
+    <footer class="bg-white dark:bg-[var(--main-dark-10)] mt-20">
+      <div class="mx-auto w-full">
         <div class="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-4">
           <div>
             <h2

@@ -28,7 +28,7 @@ export function productsCategories(categories) {
         <a class="font-bold hover:underline" href="/productos/categoria/${
           parentCategory.slug
         }">${parentCategory.name}</a>
-        <ul class="mb-4 text-[var(--main-light-10)] dark:text-[var(--main-dark-10)]">
+        <ul class="mb-4 text-[var(--main-light-10)] dark:text-gray-400">
           ${filteredSubCategories.map(categoryItem).join("")}
         </ul>
     `;

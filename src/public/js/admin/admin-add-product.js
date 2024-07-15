@@ -29,7 +29,6 @@ function displayImages(files) {
 }
 
 $("#add-product-button").on("click", function (e) {
-  debugger;
   e.preventDefault();
   let required_flag = $("#product-form").validateForm();
 
