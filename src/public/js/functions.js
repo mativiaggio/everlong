@@ -12,8 +12,6 @@ export function loadScripts(level) {
   script = document.createElement("script");
   script.type = "module";
 
-  // const adminIndex = pagePath.indexOf("/admin");
-
   let index;
   if (level == "admin") {
     index = pagePath.indexOf("/admin");
@@ -28,6 +26,8 @@ export function loadScripts(level) {
   } else if (page.includes("/admin/productos/editar")) {
     page = "/admin/productos/editar";
   } else if (page.includes("/productos/buscar/")) {
+    page = "/productos";
+  } else if (page.includes("/productos/categoria/")) {
     page = "/productos";
   }
 
@@ -88,7 +88,6 @@ export function loadScripts(level) {
       script.src = "/js/admin/enterprise.js";
       break;
     default:
-      // Handle cases where the page path doesn't match any of the expected admin paths
       console.error("Unknown page:", page);
       return;
   }

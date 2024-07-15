@@ -9,8 +9,8 @@ $("#product-close-aside-button").on("click", () => {
 });
 
 $("#productSearchForm").on("submit", function (event) {
-  event.preventDefault();
   debugger;
+  event.preventDefault();
   const keywords = $("#productsSearchInput").val().trim();
 
   if (keywords) {

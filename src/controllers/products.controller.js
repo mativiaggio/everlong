@@ -294,6 +294,14 @@ export default class ProductsController {
   async updateProduct(req, res) {
     try {
       const productData = req.body;
+
+      if (req.files) {
+        productData.images = req.files.map((file) =>
+          path.relative(path.join(__dirname, "../public"), file.path)
+        );
+      }
+
+      console.log("Product data: " + JSON.stringify(productData));
       const result = await productsDAO.updateProduct(productData);
 
       if (result.status === "error") {
@@ -309,8 +317,8 @@ export default class ProductsController {
 
   async deleteProduct(req, res) {
     try {
-      const productId = req.params.pid; // Corrected to access params.pid
-      const user = req.session.user; // Assuming user information is stored in the session
+      const productId = req.params.pid;
+      const user = req.session.user;
       const result = await productsDAO.deleteProduct(productId, user);
       if (result.error) {
         return res.status(403).json({ error: result.error });

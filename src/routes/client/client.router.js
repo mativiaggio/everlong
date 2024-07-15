@@ -50,6 +50,8 @@ clientRouter.get("/", userMiddleware, async (req, res) => {
   if (req.user) {
     user = await userController.findById(req.user._id);
   }
+
+  console.log(JSON.stringify(user));
   res.render("client/home", {
     user: user ? user.user : null,
     clientSidebarItems,

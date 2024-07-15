@@ -153,7 +153,6 @@ if (localStorage.getItem("userId")) {
   $(document).ready(async function () {
     await refreshCards();
     $(`.addOne, .removeOne, .deleteButton`).on("click", async function () {
-      debugger;
       const dataId = $(this).attr("data-button");
       const actualQ = parseInt($(`#quantity-${dataId}`).text(), 10);
       if ($(this).hasClass("addOne")) {

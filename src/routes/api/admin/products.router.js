@@ -36,23 +36,34 @@ const privateAccess = async (req, res, next) => {
   next();
 };
 
-adminProductsRouter.post("/", privateAccess, upload.array("productImages", 5), async (req, res) => {
-  try {
-    await productController.addProduct(req, res);
-  } catch (error) {
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
-
-adminProductsRouter.put("/", privateAccess, async (req, res) => {
-  try {
-    if (req.body.id) {
-      await productController.updateProduct(req, res);
+adminProductsRouter.post(
+  "/",
+  privateAccess,
+  upload.array("productImages", 5),
+  async (req, res) => {
+    try {
+      await productController.addProduct(req, res);
+    } catch (error) {
+      res.status(500).json({ error: "Internal server error" });
     }
-  } catch (error) {
-    res.status(500).json({ error: "Internal server error" });
   }
-});
+);
+
+adminProductsRouter.put(
+  "/",
+  privateAccess,
+  upload.array("productImages", 5),
+  async (req, res) => {
+    try {
+      if (req.body.id) {
+        console.log("Body: " + JSON.stringify(req.body));
+        await productController.updateProduct(req, res);
+      }
+    } catch (error) {
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
+);
 
 adminProductsRouter.delete("/:pid", async (req, res) => {
   try {
@@ -76,7 +87,13 @@ adminProductsRouter.get("/search", privateAccess, async (req, res) => {
     const query = req.query.query || "";
     const limit = req.query.limit || 10;
     const page = req.query.page || 1;
-    const response = await productController.getProducts(req, res, query, limit, page);
+    const response = await productController.getProducts(
+      req,
+      res,
+      query,
+      limit,
+      page
+    );
     const products = response.ResultSet;
     const totalProducts = await productController.countProducts(query);
     const productsPerPage = 10;
@@ -96,7 +113,9 @@ adminProductsRouter.delete("/image/delete", (req, res) => {
 
   fs.unlink(fullPath, (err) => {
     if (err) {
-      return res.status(500).json({ message: "Error eliminando imagen", error: err });
+      return res
+        .status(500)
+        .json({ message: "Error eliminando imagen", error: err });
     }
     res.status(200).json({ message: "Imagen eliminada con éxito" });
   });

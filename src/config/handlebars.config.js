@@ -83,6 +83,12 @@ const hbs = exphbs.create({
       console.log(str);
       return str.trim();
     },
+    isAdmin: function (roles, options) {
+      if (roles.includes("admin")) {
+        return options.fn(this);
+      }
+      return options.inverse(this);
+    },
   },
   defaultLayout: "main",
   layoutsDir: getPath("views/layouts"),
