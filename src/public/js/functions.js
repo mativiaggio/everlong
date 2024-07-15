@@ -1,3 +1,5 @@
+import { cartTotal } from "./components/cart/cartTotal.js";
+
 export function isValidEmail(email) {
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   return emailPattern.test(email);
@@ -133,7 +135,9 @@ export function addToCart(productId) {
       total: 0,
     };
 
-    const existingProductIndex = cart.products.findIndex((product) => product.id === _id);
+    const existingProductIndex = cart.products.findIndex(
+      (product) => product.id === _id
+    );
 
     if (existingProductIndex !== -1) {
       cart.products[existingProductIndex].quantity++;
@@ -180,7 +184,12 @@ export function addToCart(productId) {
 }
 
 export function toast(options = {}) {
-  const { status = "success", message = "Operación realizada con éxito.", position = "bottom-end", timer = 3000 } = options;
+  const {
+    status = "success",
+    message = "Operación realizada con éxito.",
+    position = "bottom-end",
+    timer = 3000,
+  } = options;
 
   const Toast = Swal.mixin({
     toast: true,
@@ -227,8 +236,11 @@ export function localCartHandler(productId, action) {
     case "update":
       let updateIndex = findProductIndex(productId);
       if (updateIndex !== -1) {
-        cart.products[updateIndex].quantity = $(`#quantity-${productId}`).text();
+        cart.products[updateIndex].quantity = $(
+          `#quantity-${productId}`
+        ).text();
         updateCartTotal();
+        $("#total-container").html(cartTotal(cart));
         console.log("Updated cart:", cart);
       } else {
         console.log("Product not found");
@@ -239,6 +251,7 @@ export function localCartHandler(productId, action) {
       if (deleteIndex !== -1) {
         cart.products.splice(deleteIndex, 1);
         updateCartTotal();
+        $("#total-container").html(cartTotal(cart));
         console.log("Updated cart:", cart);
       } else {
         console.log("Product not found");
