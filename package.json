@@ -1,6 +1,6 @@
 {
   "name": "everlong",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Everlong es el proyecto final del curso de backend de CoderHouse, Everlong es un ecommerce.",
   "main": "server.js",
   "type": "module",
