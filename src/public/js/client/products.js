@@ -8,8 +8,11 @@ $("#product-close-aside-button").on("click", () => {
   $("#product-default-sidebar").addClass("-translate-x-full");
 });
 
-$("#productSearchForm").on("submit", function (event) {
-  debugger;
+$("#categories-select-button").on("click", function () {
+  $("#categories-select-container").toggleClass("hidden");
+});
+
+$("#buttonSearchForm").on("click", function (event) {
   event.preventDefault();
   const keywords = $("#productsSearchInput").val().trim();
 

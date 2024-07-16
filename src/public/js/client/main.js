@@ -9,15 +9,10 @@ loadScripts("client");
 // });
 
 $("#burger-button").on("click", function () {
-  // $("#mobile-navbar").removeClass("hidden");
-  // $("#mobile-navbar").fadeIn();
-
   $("#mobile-navbar").removeClass("-translate-x-full");
 });
 
 $("#close-mobile-navbar").on("click", function () {
-  // $("#mobile-navbar").addClass("hidden");
-  // $("#mobile-navbar").fadeOut();
   $("#mobile-navbar").addClass("-translate-x-full");
 });
 
