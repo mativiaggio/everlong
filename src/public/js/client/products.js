@@ -19,7 +19,9 @@ $("#productSearchForm").on("submit", function (event) {
   }
 });
 
-$("button").click(function () {
+$("button").click(function (e) {
+  e.preventDefault();
+  e.stopPropagation();
   const productId = $(this).attr("data-product-id");
   if (productId) {
     addToCart(productId);

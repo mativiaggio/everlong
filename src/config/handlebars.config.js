@@ -89,6 +89,9 @@ const hbs = exphbs.create({
       }
       return options.inverse(this);
     },
+    isChecked: function (value) {
+      return value ? "checked" : "";
+    },
   },
   defaultLayout: "main",
   layoutsDir: getPath("views/layouts"),

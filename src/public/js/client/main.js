@@ -1,11 +1,24 @@
 import { checkUserLoggedIn, loadScripts } from "../functions.js";
 loadScripts("client");
 
-$("#open-sidebar").on("click", () => {
-  $("#default-sidebar").removeClass("-translate-x-full");
+// $("#open-sidebar").on("click", () => {
+//   $("#default-sidebar").removeClass("-translate-y-full");
+// });
+// $("#close-aside-button").on("click", () => {
+//   $("#default-sidebar").addClass("-translate-y-full");
+// });
+
+$("#burger-button").on("click", function () {
+  // $("#mobile-navbar").removeClass("hidden");
+  // $("#mobile-navbar").fadeIn();
+
+  $("#mobile-navbar").removeClass("-translate-x-full");
 });
-$("#close-aside-button").on("click", () => {
-  $("#default-sidebar").addClass("-translate-x-full");
+
+$("#close-mobile-navbar").on("click", function () {
+  // $("#mobile-navbar").addClass("hidden");
+  // $("#mobile-navbar").fadeOut();
+  $("#mobile-navbar").addClass("-translate-x-full");
 });
 
 $("#toggle-dark-mode, #aside-toggle-dark-mode").on("click", () => {

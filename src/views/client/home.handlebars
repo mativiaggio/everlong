@@ -1,44 +1,24 @@
-<div id="carousel-container"></div>
-<div class="h-fit flex justify-center py-20">
+{{!-- <div id="carousel-container"></div> --}}
+{{! <div class="h-fit flex justify-center py-20">
   <div class="w-screen grid grid-cols-3 gap-3">
     <div class="w-[1/3] flex flex-col items-center">
       <div class="flex justify-center mb-2">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="48"
-          height="48"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="lucide lucide-star"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="lucide lucide-star">
           <polygon
-            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
-          />
+            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
         </svg>
       </div>
       <p class="text-center font-extrabold">Los mejores productos...</p>
     </div>
     <div class="w-[1/3] flex flex-col items-center">
       <div class="flex justify-center mb-2">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="48"
-          height="48"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="lucide lucide-badge-dollar-sign"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="lucide lucide-badge-dollar-sign">
           <path
-            d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"
-          />
+            d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
           <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" />
           <path d="M12 18V6" />
         </svg>
@@ -47,89 +27,235 @@
     </div>
     <div class="w-[1/3] flex flex-col items-center">
       <div class="flex justify-center mb-2">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="48"
-          height="48"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="lucide lucide-thumbs-up"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="lucide lucide-thumbs-up">
           <path d="M7 10v12" />
           <path
-            d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"
-          />
+            d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z" />
         </svg>
       </div>
       <p class="text-center font-extrabold">Con la mejor atención.</p>
     </div>
   </div>
-</div>
+</div> }}
 
-<div class="w-full flex flex-col justify-center">
-  <h1 class="text-center text-4xl font-extrabold px-4 pb-20">Descubrí nuestros
-    productos favoritos.</h1>
+<section class=" pt-0  lg:px-8 h-full">
   <div
-    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-3"
-  >
-
-    {{#each products}}
-      <div class="flex justify-center items-center" id="{{_id}}">
-        <div
-          class="flex flex-col justify-between max-w-sm h-full w-full bg-[var(--main-bg-light)] border border-gray-200 rounded-lg shadow-md dark:shadow-slate-900 dark:bg-[var(--main-bg-dark)] dark:border-[var(--main-dark-10)] overflow-hidden"
-        >
-          <a href="#" class="bg-[var(--main-bg-light)] h-[300px]">
-            <img
-              class="rounded-t-lg object-contain h-full w-full"
-              src="{{index images 0}}"
-              alt=""
-            />
-          </a>
-          <div class="p-5">
-            <a href="#">
-              <h5
-                class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
-              >{{title}}</h5>
-            </a>
-            <p
-              class="max-h-[48px] font-normal text-[var(--main-dark-10)] dark:text-gray-400"
-            >
-              {{truncate description 70}}
-              <a
-                href="/productos/{{slug}}"
-                class="underline text-blue-600 dark:text-blue-500 hover:text-blue-500 dark:hover:text-blue-400"
-              >Ver mas</a>
-            </p>
+    class="rounded-2xl bg-indigo-50 py-10 overflow-hidden m-5 lg:m-0 2xl:py-16 xl:py-8  lg:rounded-tl-2xl lg:rounded-bl-2xl ">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 gap-14 items-center lg:grid-cols-12 lg:gap32">
+        <div class="w-full xl:col-span-5 lg:col-span-6 2xl:-mx-5 xl:-mx-0">
+          <div class="flex items-center text-sm font-medium text-gray-500 justify-center lg:justify-start">
+            <span class="bg-[var(--main-dark-1)] py-1 px-3 rounded-2xl text-xs font-medium text-white mr-3 ">#1</span>
+            Investment app
           </div>
-          <div class="p-5 flex justify-between items-center">
-            <p class="text-xl font-bold">{{currency price "arg"}}</p>
+          <h1 class="py-8 text-center text-gray-900 font-bold font-manrope text-5xl lg:text-left leading-[70px]">
+            The new standard for <span class="text-[var(--main-dark-1)]">Modern investor</span>
+          </h1>
+          <p class=" text-gray-500 text-lg text-center lg:text-left">
+            When you’re ready to invest, quickly execute your orders with Complex and outdated.
+          </p>
+          <div
+            class="relative p-1.5 my-10  flex  items-center gap-y-4 h-auto md:h-16 flex-col md:flex-row justify-between rounded-full md:shadow-[0px 15px 30px -4px rgba(16, 24, 40, 0.03)] border border-transparent md:bg-white transition-all duration-500 hover:border-[var(--main-dark-1)] focus-within:border-[var(--main-dark-1)]">
+            <input type="text" name="email" placeholder="Enter email to get started"
+              class="text-base rounded-full text-gray-900 flex-1 py-4 px-6 shadow-[0px 15px 30px -4px rgba(16, 24, 40, 0.03)] md:shadow-none bg-white md:bg-transparent shadow-none placeholder:text-gray-400 focus:outline-none md:w-fit w-full" />
             <button
-              class="addToCart inline-flex items-center px-3 py-2 text-sm font-medium text-center bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-dark)] dark:text-[var(--main-text-light)] rounded-md"
-              data-product-id="{{_id}}"
-            >
-
-              Agregar al carrito
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-plus ml-2"
-              ><path d="M5 12h14" /><path d="M12 5v14" /></svg>
-            </button>
+              class="bg-[var(--main-dark-1)] rounded-full py-3 px-7 text-base font-semibold text-white hover:bg-indigo-700 cursor-pointer transition-all duration-500 md:w-fit w-full">Get
+              Started</button>
+          </div>
+          <div class="flex items-center flex-col lg:flex-row">
+            <div class="flex items-center">
+              <img src="https://pagedone.io/asset/uploads/1694846673.png" alt="Rounded image"
+                class="border-2 border-solid border-indigo-50 rounded-full relative z-50" />
+              <img src="https://pagedone.io/asset/uploads/1694846691.png" alt="Rounded image"
+                class="border-2 border-solid border-indigo-50 rounded-full relative z-30 -ml-3" />
+              <img src="https://pagedone.io/asset/uploads/1694846704.png" alt="Rounded image"
+                class="border-2 border-solid border-indigo-50 rounded-full relative z-20 -ml-3" />
+            </div>
+            <span class="mt-3 text-base text-gray-600 font-medium lg:ml-3">People have joined</span>
+          </div>
+        </div>
+        <div class="w-full xl:col-span-7  lg:col-span-6 block">
+          <div class="w-full  sm:w-auto lg:w-[60.8125rem] xl:ml-16">
+            <img src="images/home/home-carrousel-3.png" alt="Dashboard image" class="w-full  lg:h-auto rounded-2xl">
           </div>
         </div>
       </div>
-    {{/each}}
+    </div>
   </div>
+</section>
+
+<section class="py-24 relative">
+  <div class="w-full max-w-7xl mx-auto px-4 md:px-8">
+    <div class="flex flex-col lg:flex-row gap-11 items-center p-11 border border-gray-300 rounded-xl">
+      <div class="box max-w-md w-full">
+        <div class="flex items-center justify-center gap-[5px]">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-hand-metal">
+            <path d="M18 12.5V10a2 2 0 0 0-2-2a2 2 0 0 0-2 2v1.4" />
+            <path d="M14 11V9a2 2 0 1 0-4 0v2" />
+            <path d="M10 10.5V5a2 2 0 1 0-4 0v9" />
+            <path
+              d="m7 15-1.76-1.76a2 2 0 0 0-2.83 2.82l3.6 3.6C7.5 21.14 9.2 22 12 22h2a8 8 0 0 0 8-8V7a2 2 0 1 0-4 0v5" />
+          </svg>
+          <span class="font-manrope font-bold text-xl leading-normal tracking-[-0.209px] text-gray-900">Everlong</span>
+        </div>
+        <p class="mt-3 text-center font-normal text-xl leading-8 text-black">Los precios más bajos, la mejor calidad</p>
+      </div>
+
+      <div class="grid grid-cols-2 min-[450px]:grid-cols-3 sm:grid-cols-5 gap-y-6 xl:gap-14 w-full max-lg:max-w-xl">
+        <div class="box flex flex-col items-center">
+          <button
+            class="p-5 rounded-full shadow-sm shadow-transparent bg-indigo-50 flex items-center justify-center transition-all duration-500 hover:bg-indigo-100 hover:shadow-indigo-200 focus-within:bg-indigo-100 focus-within:outline-0">
+            <svg width="37" height="36" viewBox="0 0 37 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M3.5 4.5H4.45C6.24134 4.5 7.13701 4.5 7.6935 5.0565C8.25 5.61299 8.25 6.50866 8.25 8.3C8.25 11.3667 8.25 14.4333 8.25 17.5C8.25 20.3284 8.25 21.7426 9.12868 22.6213C10.0074 23.5 11.4216 23.5 14.25 23.5C20.8 23.5 27.35 23.5 33.9 23.5M13.95 30.15C13.95 31.724 12.674 33 11.1 33C9.52599 33 8.25 31.724 8.25 30.15C8.25 28.576 9.52599 27.3 11.1 27.3C12.674 27.3 13.95 28.576 13.95 30.15ZM32.95 30.15C32.95 31.724 31.674 33 30.1 33C28.526 33 27.25 31.724 27.25 30.15C27.25 28.576 28.526 27.3 30.1 27.3C31.674 27.3 32.95 28.576 32.95 30.15ZM28.6 5.85C24.9 5.85 21.2 5.85 17.5 5.85C16.0858 5.85 15.3787 5.85 14.9393 6.28934C14.5 6.72868 14.5 7.43579 14.5 8.85C14.5 10.65 14.5 12.45 14.5 14.25C14.5 15.6642 14.5 16.3713 14.9393 16.8107C15.3787 17.25 16.0858 17.25 17.5 17.25C21.2 17.25 24.9 17.25 28.6 17.25C30.0142 17.25 30.7213 17.25 31.1607 16.8107C31.6 16.3713 31.6 15.6642 31.6 14.25C31.6 12.45 31.6 10.65 31.6 8.85C31.6 7.43579 31.6 6.72868 31.1607 6.28934C30.7213 5.85 30.0142 5.85 28.6 5.85Z"
+                stroke="#121212" stroke-width="2.5" stroke-linecap="round" />
+            </svg>
+          </button>
+          <p class="mt-2 font-medium text-sm leading-6 text-black w-[81px] text-center">
+            Free delivery
+          </p>
+        </div>
+
+        <div class="box flex flex-col items-center">
+          <button
+            class="p-5 rounded-full shadow-sm shadow-transparent bg-indigo-50 flex items-center justify-center transition-all duration-500 hover:bg-indigo-100 hover:shadow-indigo-200 focus-within:bg-indigo-100 focus-within:outline-0">
+            <svg width="37" height="36" viewBox="0 0 37 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M30.0714 13.7143C30.0714 17.2647 24.7948 20.1429 18.2857 20.1429C11.7766 20.1429 6.5 17.2647 6.5 13.7143M30.0714 20.1429C30.0714 23.6933 24.7948 26.5714 18.2857 26.5714C11.7766 26.5714 6.5 23.6933 6.5 20.1429M30.0714 26.5714C30.0714 30.1218 24.7948 33 18.2857 33C11.7766 33 6.5 30.1218 6.5 26.5714M30.0714 8.35714C30.0714 11.3158 24.7948 13.7143 18.2857 13.7143C11.7766 13.7143 6.5 11.3158 6.5 8.35714C6.5 5.39847 11.7766 3 18.2857 3C24.7948 3 30.0714 5.39847 30.0714 8.35714Z"
+                stroke="#121212" stroke-width="2.5" stroke-linecap="round" />
+            </svg>
+          </button>
+          <p class="mt-2 font-medium text-sm leading-6 text-black w-[81px] text-center">
+            Cash in delivery
+          </p>
+        </div>
+
+        <div class="box flex flex-col items-center">
+          <button
+            class="p-5 rounded-full shadow-sm shadow-transparent bg-indigo-50 flex items-center justify-center transition-all duration-500 hover:bg-indigo-100 hover:shadow-indigo-200 focus-within:bg-indigo-100 focus-within:outline-0">
+            <svg width="37" height="36" viewBox="0 0 37 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M18.5006 17.1458H7.30064C5.99424 17.1458 5.34104 17.1458 4.83915 16.8983C3.4278 16.2023 3.50064 14.7113 3.50064 13.3458C3.50064 11.9803 3.4278 10.4893 4.83915 9.79329C5.34104 9.54579 5.99424 9.54579 7.30064 9.54579H18.5006M18.5006 17.1458H29.7006C31.007 17.1458 31.6602 17.1458 32.1621 16.8983C33.5735 16.2023 33.5006 14.7113 33.5006 13.3458C33.5006 11.9803 33.5735 10.4893 32.1621 9.79329C31.6602 9.54579 31.007 9.54579 29.7006 9.54579H18.5006M18.5006 17.1458V9.54579M18.5006 17.1458V32.9458M18.5006 9.54579C18.0206 4.26579 15.4178 3.99037 14.3006 4.74579C12.7357 5.80395 12.901 8.3458 13.701 9.5458M23.5956 9.5458C24.3956 8.3458 24.7463 5.62092 22.9959 4.74579C21.7959 4.14579 19.2755 4.2658 18.7955 9.5458M7.10064 17.1458H29.9006C29.9006 20.4125 29.9006 23.6791 29.9006 26.9458C29.9006 29.7742 29.9006 31.1884 29.022 32.0671C28.1433 32.9458 26.7291 32.9458 23.9006 32.9458C20.3006 32.9458 16.7006 32.9458 13.1006 32.9458C10.2722 32.9458 8.858 32.9458 7.97932 32.0671C7.10064 31.1884 7.10064 29.7742 7.10064 26.9458C7.10064 23.6791 7.10064 20.4125 7.10064 17.1458Z"
+                stroke="#121212" stroke-width="2.5" />
+            </svg>
+          </button>
+          <p class="mt-2 font-medium text-sm leading-6 text-black w-[81px] text-center">
+            Free Gift Chance
+          </p>
+        </div>
+
+        <div class="box flex flex-col items-center">
+          <button
+            class="p-5 rounded-full shadow-sm shadow-transparent bg-indigo-50 flex items-center justify-center transition-all duration-500 hover:bg-indigo-100 hover:shadow-indigo-200 focus-within:bg-indigo-100 focus-within:outline-0">
+            <svg width="37" height="36" viewBox="0 0 37 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M7.56402 2.62012C9.52108 2.62012 13.3675 2.62012 15.9301 2.62012C17.184 2.62012 17.811 2.62012 18.3718 2.85767C18.9327 3.09521 19.3689 3.54542 20.2412 4.44582C23.3625 7.66777 29.8652 14.3648 33.5 17.9996M16.2427 15.0069C16.2427 16.6597 14.9028 17.9996 13.25 17.9996C11.5972 17.9996 10.2573 16.6597 10.2573 15.0069C10.2573 13.3541 11.5972 12.0143 13.25 12.0143C14.9028 12.0143 16.2427 13.3541 16.2427 15.0069ZM5.22827 15.7638L5.46523 10.3212C5.52201 9.01698 5.55041 8.36484 5.96295 7.9523C6.37549 7.53976 7.02763 7.51136 8.3319 7.45458L13.7502 7.21867C14.6212 7.18075 15.0568 7.16179 15.4509 7.31631C15.845 7.47082 16.1492 7.77839 16.7577 8.39352C19.2547 10.9177 25.0176 16.7552 29.3051 21.1899C30.5771 22.5055 31.2131 23.1633 31.2062 23.9818C31.1993 24.8004 30.548 25.4516 29.2456 26.754L24.4677 31.5319C23.0766 32.923 22.3811 33.6185 21.5357 33.6063C20.6904 33.594 20.0085 32.8714 18.6447 31.4263C14.4321 26.9623 8.81411 21.2286 6.37182 18.7454C5.77104 18.1345 5.47065 17.8291 5.32141 17.4406C5.17217 17.0522 5.19087 16.6227 5.22827 15.7638Z"
+                stroke="#121212" stroke-width="2.5" stroke-linecap="round" />
+            </svg>
+          </button>
+          <p class="mt-2 font-medium text-sm leading-6 text-black w-[81px] text-center">
+            Price Tag Available
+          </p>
+        </div>
+
+        <div class="box flex flex-col items-center max-[450px]:col-span-2">
+          <button
+            class="p-5 rounded-full shadow-sm shadow-transparent bg-indigo-50 flex items-center justify-center transition-all duration-500 hover:bg-indigo-100 hover:shadow-indigo-200 focus-within:bg-indigo-100 focus-within:outline-0">
+            <svg width="37" height="36" viewBox="0 0 37 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M29 5.33365L8 29.1663M15 9.40385C15 12.1122 12.7614 14.3077 10 14.3077C7.23858 14.3077 5 12.1122 5 9.40385C5 6.69553 7.23858 4.5 10 4.5C12.7614 4.5 15 6.69553 15 9.40385ZM32 25.0962C32 27.8045 29.7614 30 27 30C24.2386 30 22 27.8045 22 25.0962C22 22.3878 24.2386 20.1923 27 20.1923C29.7614 20.1923 32 22.3878 32 25.0962Z"
+                stroke="#121212" stroke-width="2.5" stroke-linecap="round" />
+            </svg>
+          </button>
+          <p class="mt-2 font-medium text-sm leading-6 text-black w-[81px] text-center">
+            Best discount
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="w-full flex flex-col justify-center">
+  {{!-- <h1 class="text-center text-4xl font-extrabold px-4 pb-20">Descubrí nuestros productos favoritos.</h1>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-3">
+
+    {{#each products}}
+    <div class="flex justify-center items-center" id="{{_id}}">
+      <div
+        class="flex flex-col justify-between max-w-sm h-full w-full bg-[var(--main-bg-light)] border border-gray-200 rounded-lg shadow-md dark:shadow-slate-900 dark:bg-[var(--main-bg-dark)] dark:border-[var(--main-dark-10)] overflow-hidden">
+        <a href="#" class="bg-[var(--main-bg-light)] h-[300px]">
+          <img class="rounded-t-lg object-contain h-full w-full" src="{{index images 0}}" alt="" />
+        </a>
+        <div class="p-5">
+          <a href="#">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{title}}</h5>
+          </a>
+          <p class="max-h-[48px] font-normal text-[var(--main-dark-10)] dark:text-gray-400">
+            {{truncate description 70}}
+            <a href="/productos/{{slug}}"
+              class="underline text-blue-600 dark:text-blue-500 hover:text-blue-500 dark:hover:text-blue-400">Ver
+              mas</a>
+          </p>
+        </div>
+        <div class="p-5 flex justify-between items-center">
+          <p class="text-xl font-bold">{{currency price "arg"}}</p>
+          <button
+            class="addToCart inline-flex items-center px-3 py-2 text-sm font-medium text-center bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-dark)] dark:text-[var(--main-text-light)] rounded-md"
+            data-product-id="{{_id}}">
+
+            Agregar al carrito
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-plus ml-2">
+              <path d="M5 12h14" />
+              <path d="M12 5v14" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div> --}}
+
+  <section class="pb-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <h2 class="font-manrope font-bold text-3xl min-[400px]:text-4xl text-black mb-8 max-lg:text-center">Available
+        Products</h2>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+        {{#each products}}
+        <div class="max-w-[384px] mx-auto" id="{{_id}}">
+          <div class="w-full max-w-sm aspect-square">
+            <a href="/producto/{{slug}}"><img src="/{{index images 0}}" alt="cream image"
+                class="w-full h-full rounded-xl object-cover border" /></a>
+          </div>
+          <div class="mt-5 flex items-center justify-between">
+            <div class="">
+              <h6 class="font-medium text-xl leading-8 text-black mb-2"><a class="hover:underline"
+                  href="/producto/{{slug}}">{{title}}</a></h6>
+              <h6 class="font-semibold text-xl leading-8 text-[var(--main-text-light)]">{{currency price "arg"}}</h6>
+            </div>
+            <button
+              class="addToCart p-2 min-[400px]:p-4 rounded-full bg-white border border-gray-300 flex items-center justify-center group shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-200 hover:border-gray-400 hover:bg-gray-50"
+              data-product-id="{{_id}}" type="button">
+              <svg class="stroke-gray-900 transition-all duration-500 group-hover:stroke-black"
+                xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
+                <path
+                  d="M12.6892 21.125C12.6892 22.0225 11.9409 22.75 11.0177 22.75C10.0946 22.75 9.34632 22.0225 9.34632 21.125M19.3749 21.125C19.3749 22.0225 18.6266 22.75 17.7035 22.75C16.7804 22.75 16.032 22.0225 16.032 21.125M4.88917 6.5L6.4566 14.88C6.77298 16.5715 6.93117 17.4173 7.53301 17.917C8.13484 18.4167 8.99525 18.4167 10.7161 18.4167H18.0056C19.7266 18.4167 20.587 18.4167 21.1889 17.9169C21.7907 17.4172 21.9489 16.5714 22.2652 14.8798L22.8728 11.6298C23.3172 9.25332 23.5394 8.06508 22.8896 7.28254C22.2398 6.5 21.031 6.5 18.6133 6.5H4.88917ZM4.88917 6.5L4.33203 3.25"
+                  stroke="" stroke-width="1.6" stroke-linecap="round" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        {{/each}}
+
+      </div>
+    </div>
+  </section>
 
 </div>
