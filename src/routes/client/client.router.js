@@ -69,10 +69,12 @@ clientRouter.get("/productos", userMiddleware, async (req, res) => {
     const query = req.query.query || "";
     const limit = req.query.limit || 10;
     const page = req.query.page || 1;
-    const response = await productsController.getProducts(req, res, query, limit, page);
+    const sort = req.query.sort || null;
+    const response = await productsController.getProducts(req, res, query, limit, page, sort);
     const products = response.ResultSet;
     const categories = await categoriesController.getAll();
     const productsCategoriesComponent = productsCategories(categories);
+    const categorySelectTitle = "Categoría";
     const totalProducts = await productsController.countProducts();
     const productsPerPage = 10;
     const totalPages = Math.ceil(totalProducts / productsPerPage);
@@ -88,7 +90,9 @@ clientRouter.get("/productos", userMiddleware, async (req, res) => {
       description,
       products,
       productsCategoriesComponent,
+      categorySelectTitle,
       pages,
+      sort,
     });
   } catch (error) {
     logger.error("Error al obtener productos:", error);
@@ -131,10 +135,12 @@ clientRouter.get("/productos/buscar/:keywords", userMiddleware, async (req, res)
     const keywords = req.params.keywords || "";
     const limit = req.query.limit || 10;
     const page = req.query.page || 1;
-    const response = await productsController.findByKeywords(req, res, keywords, limit, page);
+    const sort = req.query.sort || null;
+    const response = await productsController.findByKeywords(req, res, keywords, limit, page, sort);
     const products = response.ResultSet;
     const categories = await categoriesController.getAll();
     const productsCategoriesComponent = productsCategories(categories);
+    const categorySelectTitle = "Categoría";
     const totalProducts = await productsController.countProducts();
     const productsPerPage = 10;
     const totalPages = Math.ceil(totalProducts / productsPerPage);
@@ -150,7 +156,9 @@ clientRouter.get("/productos/buscar/:keywords", userMiddleware, async (req, res)
       description,
       products,
       productsCategoriesComponent,
+      categorySelectTitle,
       pages,
+      sort,
     });
   } catch (error) {
     logger.error("Error al obtener productos:", error);
@@ -170,6 +178,8 @@ clientRouter.get("/productos/categoria/:slug", userMiddleware, async (req, res) 
     const products = response.ResultSet;
     const categories = await categoriesController.getAll();
     const productsCategoriesComponent = productsCategories(categories);
+    const categoryBySlug = await categoriesController.findBySlug(slug);
+    const categorySelectTitle = categoryBySlug.name;
     const totalProducts = await productsController.countProducts();
     const productsPerPage = 10;
     const totalPages = Math.ceil(totalProducts / productsPerPage);
@@ -185,6 +195,8 @@ clientRouter.get("/productos/categoria/:slug", userMiddleware, async (req, res) 
       description,
       products,
       productsCategoriesComponent,
+      categoryBySlug,
+      categorySelectTitle,
       pages,
     });
   } catch (error) {

@@ -9,277 +9,14 @@
   </title>
   <meta name="description" content="{{description}}" />
   <link rel="stylesheet" href="/css/styles.css" />
-  {{!
-  <script src="https://sdk.mercadopago.com/js/v2"></script> }}
 </head>
 
 <body
   class="bg-[var(--main-bg-light)] dark:bg-[var(--main-bg-dark)] text-[var(--main-text-light)] dark:text-[var(--main-text-dark)] {{customClasses}}">
-
-  {{!-- <nav
-    class="flex items-center h-fit max-h-[15vh] bg-[var(--main-bg-light)] border-gray-200 dark:bg-[var(--main-bg-dark)] text-sm text-[var(--main-text-light)] dark:text-[var(--main-text-dark)]">
-    <div class="w-full flex flex-wrap justify-between items-center mx-auto max-w-screen p-4">
-      <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-          class="lucide lucide-hand-metal">
-          <path d="M18 12.5V10a2 2 0 0 0-2-2a2 2 0 0 0-2 2v1.4" />
-          <path d="M14 11V9a2 2 0 1 0-4 0v2" />
-          <path d="M10 10.5V5a2 2 0 1 0-4 0v9" />
-          <path
-            d="m7 15-1.76-1.76a2 2 0 0 0-2.83 2.82l3.6 3.6C7.5 21.14 9.2 22 12 22h2a8 8 0 0 0 8-8V7a2 2 0 1 0-4 0v5" />
-        </svg>
-        <span class="self-center text-2xl font-semibold whitespace-nowrap">Everlong</span>
-        {{! <img class="w-[200px]" src="/images/sevenmates-dashboard-navbar.png" alt="" /> }}
-      </a>
-      <div class="hidden">
-        <div
-          class="flex bg-[var(--main-light-1)] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full dark:bg-[var(--main-dark-7)] dark:border-[var(--main-dark-7)] dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-          <span class="pl-2.5 py-2.5"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-search text-[#9ca3af]">
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.3-4.3" />
-            </svg></span>
-          <input class="w-full bg-transparent border-none outline-none pr-2.5 py-2.5" type="text" name="search"
-            id="searchInput" placeholder="Escribi tu busqueda acá" />
-        </div>
-
-        <button id="searchButton"
-          class="bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-dark)] dark:text-[var(--main-text-light)] focus:ring-4 focus:outline-none focus:ring-[var(--main-dark-10)] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[var(--main-light-10)] ml-2">Buscar</button>
-      </div>
-      <div class="flex items-center space-x-6 rtl:space-x-reverse">
-        <a href="tel:5541251234" class="hidden md:flex items-center hover:underline">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="mr-2"
-            viewBox="0 0 16 16">
-            <path
-              d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232" />
-          </svg>
-          +54 9 (2323) 123456
-        </a>
-        <a href="/carrito" class="hidden md:flex items-center text-sm hover:underline"><svg
-            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="lucide lucide-shopping-basket">
-            <path d="m15 11-1 9" />
-            <path d="m19 11-4-7" />
-            <path d="M2 11h20" />
-            <path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4" />
-            <path d="M4.5 15.5h15" />
-            <path d="m5 11 4-7" />
-            <path d="m9 11 1 9" />
-          </svg></a>
-
-        <button id="toggle-dark-mode" type="button"
-          class="hidden md:flex items-center w-9 h-9 justify-center text-xs font-medium focus:z-10">
-          <svg id="toggle-icon-moon" {{! class="w-3.5 h-3.5" }} width="20" height="20" aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-            <path
-              d="M17.8 13.75a1 1 0 0 0-.859-.5A7.488 7.488 0 0 1 10.52 2a1 1 0 0 0 0-.969A1.035 1.035 0 0 0 9.687.5h-.113a9.5 9.5 0 1 0 8.222 14.247 1 1 0 0 0 .004-.997Z">
-            </path>
-          </svg>
-          <svg id="toggle-icon-sun" class="hidden" width="20" height="20" aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-            <path
-              d="M10 15a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0-11a1 1 0 0 0 1-1V1a1 1 0 0 0-2 0v2a1 1 0 0 0 1 1Zm0 12a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1ZM4.343 5.757a1 1 0 0 0 1.414-1.414L4.343 2.929a1 1 0 0 0-1.414 1.414l1.414 1.414Zm11.314 8.486a1 1 0 0 0-1.414 1.414l1.414 1.414a1 1 0 0 0 1.414-1.414l-1.414-1.414ZM4 10a1 1 0 0 0-1-1H1a1 1 0 0 0 0 2h2a1 1 0 0 0 1-1Zm15-1h-2a1 1 0 1 0 0 2h2a1 1 0 0 0 0-2ZM4.343 14.243l-1.414 1.414a1 1 0 1 0 1.414 1.414l1.414-1.414a1 1 0 0 0-1.414-1.414ZM14.95 6.05a1 1 0 0 0 .707-.293l1.414-1.414a1 1 0 1 0-1.414-1.414l-1.414 1.414a1 1 0 0 0 .707 1.707Z">
-            </path>
-          </svg>
-          <span class="sr-only">Toggle dark/light mode</span>
-        </button>
-
-        {{#if user}}
-        {{#isAdmin user.roles}}
-        <a href="/admin" class="px-4 py-2 hidden md:flex text-sm hover:underline">Admin Panel</a>
-        {{/isAdmin}}
-        <div class="relative">
-          <button class="flex justify-center items-center dark:hover:underline" id="user_dropdown_button">
-
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-circle-user-round mr-2">
-              <path d="M18 20a6 6 0 0 0-12 0" />
-              <circle cx="12" cy="10" r="4" />
-              <circle cx="12" cy="12" r="10" />
-            </svg>
-            {{user.full_name}}
-          </button>
-          <div id="user_dropdown"
-            class="z-10 hidden absolute right-0 top-[150%] bg-[var(--main-bg-light)] divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-[var(--main-dark-2)]">
-            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDelayButton">
-
-              <li>
-                <button id="logout" class="px-4 py-2 md:flex text-sm hover:underline">Cerrar Sesión</button>
-              </li>
-            </ul>
-          </div>
-        </div>
-        {{else}}
-        <a href="/ingresar" class="px-4 py-2 hidden md:flex text-sm hover:underline">Iniciar sesión</a>
-        <a href="/registro" class="px-4 py-2 hidden md:flex text-sm hover:underline">Registrarse</a>
-        {{/if}}
-        <div class="md:hidden">
-          <button id="open-sidebar" data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar"
-            aria-controls="default-sidebar" type="button"
-            class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-700 bg-[var(--main-bg-light)] rounded-lg hover:bg-[var(--main-light-4)] focus:z-10 dark:bg-[var(--main-bg-dark)] focus:outline-none dark:text-[var(--main-text-dark)] dark:hover:bg-[var(--main-dark-4)]">
-            <span class="sr-only">Open sidebar</span>
-            <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg">
-              <path clip-rule="evenodd" fill-rule="evenodd"
-                d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
-              </path>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </nav>
-  <nav
-    class="h-fit max-h-[10vh] hidden md:flex justify-start items-center bg-[var(--main-light-1)] dark:bg-[var(--main-dark-10)]">
-    <div class="max-w-screen px-4 py-3">
-      <div class="flex items-center">
-        <ul class="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
-          <li>
-            <a href="/" class="text-gray-900 dark:text-white hover:underline" aria-current="page">Inicio</a>
-          </li>
-          <li>
-            <a href="/productos" class="text-gray-900 dark:text-white hover:underline">Productos</a>
-          </li>
-          <li>
-            <a href="/nosotros" class="text-gray-900 dark:text-white hover:underline">Acerca de Nosotros</a>
-          </li>
-          <li>
-            <a href="/contacto" class="text-gray-900 dark:text-white hover:underline">Contacto</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <aside id="default-sidebar"
-    class="fixed md:hidden top-0 left-0 z-[100000] w-full h-screen transition-transform -translate-x-full md:translate-x-0"
-    aria-label="Sidebar">
-
-    <div class="flex flex-col h-full px-3 py-4 overflow-y-auto bg-[var(--main-light-2)] dark:bg-[var(--main-bg-dark)]"
-      id="sidebar-container">
-      <div class="w-full p-1">
-        <a href="/"
-          class="w-fit flex items-center space-x-3 rtl:space-x-reverse text-sm text-[var(--main-text-light)] dark:text-[var(--main-text-dark)]">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="lucide lucide-hand-metal">
-            <path d="M18 12.5V10a2 2 0 0 0-2-2a2 2 0 0 0-2 2v1.4" />
-            <path d="M14 11V9a2 2 0 1 0-4 0v2" />
-            <path d="M10 10.5V5a2 2 0 1 0-4 0v9" />
-            <path
-              d="m7 15-1.76-1.76a2 2 0 0 0-2.83 2.82l3.6 3.6C7.5 21.14 9.2 22 12 22h2a8 8 0 0 0 8-8V7a2 2 0 1 0-4 0v5" />
-          </svg>
-          <span class="self-center text-2xl font-semibold whitespace-nowrap">Everlong</span>
-        </a>
-        <button id="close-aside-button" class="text-red-500 float-right md:hidden absolute right-[20px] top-[16px]">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="lucide lucide-x">
-            <path d="M18 6 6 18" />
-            <path d="m6 6 12 12" />
-          </svg>
-        </button>
-      </div>
-      <ul class="space-y-2 font-medium">
-        {{#each clientSidebarItems}}
-        <li>
-          <a href="{{url}}"
-            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[var(--main-dark-10)] group {{classes}}">
-            {{{icon}}}
-            <span class="ms-3 font-bold">{{title}}</span>
-          </a>
-        </li>
-        {{/each}}
-
-        {{#if user}}
-        {{#isAdmin user.roles}}
-        <li>
-          <a href="/admin" id="logout"
-            class="flex w-full items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group hover:!text-red-600">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-layout-panel-left">
-              <rect width="7" height="18" x="3" y="3" rx="1" />
-              <rect width="7" height="7" x="14" y="3" rx="1" />
-              <rect width="7" height="7" x="14" y="14" rx="1" />
-            </svg>
-            <span class="ms-3 font-bold">Panel Administrador</span>
-          </a>
-        </li>
-        {{/isAdmin}}
-
-        <li>
-          <button id="logout"
-            class="flex w-full items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group hover:!text-red-600">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-log-out">
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-              <polyline points="16 17 21 12 16 7" />
-              <line x1="21" x2="9" y1="12" y2="12" />
-            </svg>
-            <span class="ms-3 font-bold">Cerrar Sesión</span>
-          </button>
-        </li>
-        {{else}}
-        <li>
-          <button id="login"
-            class="flex w-full items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-log-in">
-              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
-              <polyline points="10 17 15 12 10 7" />
-              <line x1="15" x2="3" y1="12" y2="12" />
-            </svg>
-            <span class="ms-3 font-bold">Iniciar Sesión</span>
-          </button>
-        </li>
-        <li>
-          <button id="register"
-            class="flex w-full items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-circle-user-round">
-              <path d="M18 20a6 6 0 0 0-12 0" />
-              <circle cx="12" cy="10" r="4" />
-              <circle cx="12" cy="12" r="10" />
-            </svg>
-            <span class="ms-3 font-bold">Registrarse</span>
-          </button>
-        </li>
-        {{/if}}
-
-        <li>
-          <button id="aside-toggle-dark-mode" type="button"
-            class="flex items-center w-9 h-9 justify-center text-xs font-medium focus:z-10">
-            <svg id="aside-toggle-icon-moon" class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor" viewBox="0 0 18 20">
-              <path
-                d="M17.8 13.75a1 1 0 0 0-.859-.5A7.488 7.488 0 0 1 10.52 2a1 1 0 0 0 0-.969A1.035 1.035 0 0 0 9.687.5h-.113a9.5 9.5 0 1 0 8.222 14.247 1 1 0 0 0 .004-.997Z">
-              </path>
-            </svg>
-            <svg id="aside-toggle-icon-sun" class="w-3.5 h-3.5 hidden" aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-              <path
-                d="M10 15a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0-11a1 1 0 0 0 1-1V1a1 1 0 0 0-2 0v2a1 1 0 0 0 1 1Zm0 12a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1ZM4.343 5.757a1 1 0 0 0 1.414-1.414L4.343 2.929a1 1 0 0 0-1.414 1.414l1.414 1.414Zm11.314 8.486a1 1 0 0 0-1.414 1.414l1.414 1.414a1 1 0 0 0 1.414-1.414l-1.414-1.414ZM4 10a1 1 0 0 0-1-1H1a1 1 0 0 0 0 2h2a1 1 0 0 0 1-1Zm15-1h-2a1 1 0 1 0 0 2h2a1 1 0 0 0 0-2ZM4.343 14.243l-1.414 1.414a1 1 0 1 0 1.414 1.414l1.414-1.414a1 1 0 0 0-1.414-1.414ZM14.95 6.05a1 1 0 0 0 .707-.293l1.414-1.414a1 1 0 1 0-1.414-1.414l-1.414 1.414a1 1 0 0 0 .707 1.707Z">
-              </path>
-            </svg>
-            <span class="sr-only">Toggle dark/light mode</span>
-          </button>
-        </li>
-      </ul>
-    </div>
-  </aside> --}}
-
   <header class="inset-x-0 top-0 z-50">
     <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
       <div class="flex lg:flex-1">
-        <a href="#" class="-m-1.5 p-1.5">
+        <a href="/" class="-m-1.5 p-1.5">
           <span class="sr-only">Everlong</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -303,10 +40,11 @@
         </button>
       </div>
       <div class="hidden lg:flex lg:gap-x-12 text-[#111827] justify-center items-center">
-        <a href="/" class="font-normal text-md tracking-[1px] leading-8 text-black">Inicio</a>
-        <a href="/productos" class="font-normal text-md tracking-[1px] leading-8 text-black">Productos</a>
-        <a href="/nosotros" class="font-normal text-md tracking-[1px] leading-8 text-black">Sobre Nosotros</a>
-        <a href="/contacto" class="font-normal text-md tracking-[1px] leading-8 text-black">Contactanos</a>
+        <a href="/" class="font-bold text-md tracking-[1px] leading-8 text-[var(--main-dark-5)]">Inicio</a>
+        <a href="/productos" class="font-bold text-md tracking-[1px] leading-8 text-[var(--main-dark-5)]">Productos</a>
+        <a href="/nosotros" class="font-bold text-md tracking-[1px] leading-8 text-[var(--main-dark-5)]">Sobre
+          Nosotros</a>
+        <a href="/contacto" class="font-bold text-md tracking-[1px] leading-8 text-[var(--main-dark-5)]">Contactanos</a>
         <button id="toggle-dark-mode" type="button"
           class="hidden md:flex items-center w-9 h-fit justify-center text-xs font-medium focus:z-10">
           <svg id="toggle-icon-moon" {{! class="w-3.5 h-3.5" }} width="16" height="16" aria-hidden="true"
@@ -325,12 +63,23 @@
         </button>
       </div>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end items-center">
+        <a href="/carrito"
+          class="addToCart p-2 min-[400px]:p-4 rounded-full bg-white flex items-center justify-center group  transition-all duration-500   "
+          data-product-id="{{_id}}" type="button">
+          <svg class="stroke-gray-900 transition-all duration-500 group-hover:stroke-black"
+            xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
+            <path
+              d="M12.6892 21.125C12.6892 22.0225 11.9409 22.75 11.0177 22.75C10.0946 22.75 9.34632 22.0225 9.34632 21.125M19.3749 21.125C19.3749 22.0225 18.6266 22.75 17.7035 22.75C16.7804 22.75 16.032 22.0225 16.032 21.125M4.88917 6.5L6.4566 14.88C6.77298 16.5715 6.93117 17.4173 7.53301 17.917C8.13484 18.4167 8.99525 18.4167 10.7161 18.4167H18.0056C19.7266 18.4167 20.587 18.4167 21.1889 17.9169C21.7907 17.4172 21.9489 16.5714 22.2652 14.8798L22.8728 11.6298C23.3172 9.25332 23.5394 8.06508 22.8896 7.28254C22.2398 6.5 21.031 6.5 18.6133 6.5H4.88917ZM4.88917 6.5L4.33203 3.25"
+              stroke="" stroke-width="1.6" stroke-linecap="round" />
+          </svg>
+        </a>
         {{#if user}}
         {{#isAdmin user.roles}}
-        <a href="/admin" class="px-4 py-2 hidden md:flex text-sm hover:underline">Admin Panel</a>
+        <a href="/admin" class="font-bold text-md tracking-[1px] leading-8 text-[var(--main-dark-5)]">Admin Panel</a>
         {{/isAdmin}}
         <div class="relative">
-          <button class="flex justify-center items-center dark:hover:underline" id="user_dropdown_button">
+          <button class="flex justify-center items-center dark:hover:underline text-[var(--main-dark-5)]"
+            id="user_dropdown_button">
 
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -343,21 +92,21 @@
           </button>
           <div id="user_dropdown"
             class="z-10 hidden absolute right-0 top-[150%] bg-[var(--main-bg-light)] divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-[var(--main-dark-2)]">
-            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDelayButton">
+            <ul class="py-2 text-sm text-[var(--main-dark-5)] dark:text-gray-200" aria-labelledby="dropdownDelayButton">
 
               <li>
-                <button id="logout" class="px-4 py-2 md:flex text-sm hover:underline">Cerrar Sesión</button>
+                <button id="logout" class="px-4 py-2 md:flex text-sm hover:underline lg:ml-5">Cerrar Sesión</button>
               </li>
             </ul>
           </div>
         </div>
         {{else}}
         <a href="/ingresar"
-          class="bg-indigo-50 text-[var(--main-text-light)] rounded-full cursor-pointer text-center shadow-xs transition-all duration-500 py-3 px-6 text-sm hover:bg-[var(--main-light-1)] font-normal text-md tracking-[1px]">
+          class="bg-indigo-50 text-[var(--main-dark-5)] rounded-full cursor-pointer text-center shadow-xs transition-all duration-500 py-3 px-6 text-sm hover:bg-[var(--main-light-1)] font-bold text-md tracking-[1px] lg:ml-5">
           Ingresar
         </a>
         <a href="/registro"
-          class="bg-[var(--main-text-light)] text-white rounded-full cursor-pointer text-center shadow-xs transition-all duration-500 py-3 px-6 text-sm lg:ml-5 hover:bg-[var(--main-dark-6)] font-normal text-md tracking-[1px]">
+          class="bg-[var(--main-text-light)] text-white rounded-full cursor-pointer text-center shadow-xs transition-all duration-500 py-3 px-6 text-sm lg:ml-5 hover:bg-[var(--main-dark-6)] font-bold text-md tracking-[1px]">
           Registrarme
         </a>
         {{/if}}
@@ -373,8 +122,16 @@
         class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
         <div class="flex items-center justify-between">
           <a href="#" class="-m-1.5 p-1.5">
-            <span class="sr-only">Your Company</span>
-            <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
+            <span class="sr-only">Everlong</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-hand-metal">
+              <path d="M18 12.5V10a2 2 0 0 0-2-2a2 2 0 0 0-2 2v1.4" />
+              <path d="M14 11V9a2 2 0 1 0-4 0v2" />
+              <path d="M10 10.5V5a2 2 0 1 0-4 0v9" />
+              <path
+                d="m7 15-1.76-1.76a2 2 0 0 0-2.83 2.82l3.6 3.6C7.5 21.14 9.2 22 12 22h2a8 8 0 0 0 8-8V7a2 2 0 1 0-4 0v5" />
+            </svg>
           </a>
           <button id="close-mobile-navbar" type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
             <span class="sr-only">Close menu</span>
@@ -396,18 +153,36 @@
                 Nosotros</a>
               <a href="/contacto"
                 class="-mx-3 block rounded-lg px-3 py-2 text-sm lg:text-base font-medium leading-7 text-gray-900 hover:bg-gray-50">Contactanos</a>
+              <a href="/carrito"
+                class="-mx-3 block rounded-lg px-3 py-2 text-sm lg:text-base font-medium leading-7 text-gray-900 hover:bg-gray-50">Carrito</a>
             </div>
-            <div class="py-6">
+            <div class="py-6 flex items-center space-x-2">
               {{! <a href="#"
                 class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log
                 in</a> }}
               <button
                 class="bg-indigo-50 text-[var(--main-text-light)] rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 py-3 px-6 text-sm hover:bg-indigo-100">
-                Login
+                Ingresar
               </button>
               <button
                 class="bg-[var(--main-text-light)] text-white rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 py-3 px-6 text-sm lg:ml-5 hover:bg-indigo-700">
-                Sign up
+                Registrarse
+              </button>
+              <button id="aside-toggle-dark-mode" type="button"
+                class="flex items-center w-9 h-9 justify-center text-xs font-medium focus:z-10">
+                <svg id="aside-toggle-icon-moon" class="w-3.5 h-3.5" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                  <path
+                    d="M17.8 13.75a1 1 0 0 0-.859-.5A7.488 7.488 0 0 1 10.52 2a1 1 0 0 0 0-.969A1.035 1.035 0 0 0 9.687.5h-.113a9.5 9.5 0 1 0 8.222 14.247 1 1 0 0 0 .004-.997Z">
+                  </path>
+                </svg>
+                <svg id="aside-toggle-icon-sun" class="w-3.5 h-3.5 hidden" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    d="M10 15a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0-11a1 1 0 0 0 1-1V1a1 1 0 0 0-2 0v2a1 1 0 0 0 1 1Zm0 12a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1ZM4.343 5.757a1 1 0 0 0 1.414-1.414L4.343 2.929a1 1 0 0 0-1.414 1.414l1.414 1.414Zm11.314 8.486a1 1 0 0 0-1.414 1.414l1.414 1.414a1 1 0 0 0 1.414-1.414l-1.414-1.414ZM4 10a1 1 0 0 0-1-1H1a1 1 0 0 0 0 2h2a1 1 0 0 0 1-1Zm15-1h-2a1 1 0 1 0 0 2h2a1 1 0 0 0 0-2ZM4.343 14.243l-1.414 1.414a1 1 0 1 0 1.414 1.414l1.414-1.414a1 1 0 0 0-1.414-1.414ZM14.95 6.05a1 1 0 0 0 .707-.293l1.414-1.414a1 1 0 1 0-1.414-1.414l-1.414 1.414a1 1 0 0 0 .707 1.707Z">
+                  </path>
+                </svg>
+                <span class="sr-only">Toggle dark/light mode</span>
               </button>
             </div>
           </div>
@@ -423,16 +198,15 @@
   <footer class="w-full py-14">
     <div class="mx-auto px-4 sm:px-6 lg:px-8 w-full">
       <div class="mx-auto">
-        <a href="https://pagedone.io/" class="flex justify-center text-2xl font-bold">
+        <a href="/" class="flex justify-center text-2xl font-bold">
           Everlong
         </a>
         <ul
           class="text-lg flex items-center justify-center flex-col gap-7 md:flex-row md:gap-12 transition-all duration-500 py-16 mb-10 border-b border-gray-200">
-          <li><a href="/" class="text-gray-800 hover:text-gray-900">Everlong</a></li>
-          <li><a href="/" class="text-gray-800 hover:text-gray-900">Inicio</a></li>
-          <li><a href="/productos" class="text-gray-800 hover:text-gray-900">Productos</a></li>
-          <li><a href="/nosotros" class="text-gray-800 hover:text-gray-900">Sobre Nosotros</a></li>
-          <li><a href="/contacto" class="text-gray-800 hover:text-gray-900">Contactanos</a></li>
+          <li><a href="/" class="text-gray-800 hover:text-gray-900 hover:underline">Inicio</a></li>
+          <li><a href="/productos" class="text-gray-800 hover:text-gray-900 hover:underline">Productos</a></li>
+          <li><a href="/nosotros" class="text-gray-800 hover:text-gray-900 hover:underline">Sobre Nosotros</a></li>
+          <li><a href="/contacto" class="text-gray-800 hover:text-gray-900 hover:underline">Contactanos</a></li>
         </ul>
         <div class="flex space-x-10 justify-center items-center mb-14">
           <a href="#" class="block text-gray-900 transition-all duration-500 hover:text-[var(--main-text-light)]">
@@ -467,7 +241,7 @@
 
           </a>
         </div>
-        <span class="text-lg text-gray-500 text-center block">©<a href="https://pagedone.io/">Everlong</a> 2024, All
+        <span class="text-lg text-gray-500 text-center block">©<a href="/">Everlong</a> 2024, All
           rights reserved.</span>
       </div>
     </div>
