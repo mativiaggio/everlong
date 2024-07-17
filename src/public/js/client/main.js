@@ -43,7 +43,7 @@ $(document).ready(() => {
   }
 });
 
-$("#logout").click(function () {
+$("#logout, #logout-sidebar").click(function () {
   fetch("/api/client/sessions/logout", {
     method: "GET",
     headers: {

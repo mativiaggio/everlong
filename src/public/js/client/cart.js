@@ -12,6 +12,7 @@ if (localStorage.getItem("userId")) {
       if (data) {
         const productData = data.products;
         if (productData.length > 0) {
+          $("#item-count").text(`${productData.length} Items`);
           productData.forEach(function (product) {
             fetch(`/api/client/products/search?findBy=id&query=${product.id}`)
               .then((response) => response.json())
@@ -45,7 +46,7 @@ if (localStorage.getItem("userId")) {
         e.preventDefault();
         e.stopPropagation();
         const productId = $(this).attr("data-button");
-        if (parseInt($(`#quantity-${productId}`).text()) > 1) {
+        if (parseInt($(`#quantity-${productId}`).val()) > 1) {
           decrement(productId);
         }
       });
@@ -58,8 +59,8 @@ if (localStorage.getItem("userId")) {
       });
 
       function increment(productId) {
-        let quantity = parseInt($(`#quantity-${productId}`).text()) + 1;
-        $(`#quantity-${productId}`).text(quantity);
+        let quantity = parseInt($(`#quantity-${productId}`).val()) + 1;
+        $(`#quantity-${productId}`).val(quantity);
 
         fetch(`/api/client/carts/update-quantity/${productId}`, {
           method: "PUT",
@@ -75,8 +76,8 @@ if (localStorage.getItem("userId")) {
       }
 
       function decrement(productId) {
-        let quantity = parseInt($(`#quantity-${productId}`).text()) - 1;
-        $(`#quantity-${productId}`).text(quantity);
+        let quantity = parseInt($(`#quantity-${productId}`).val()) - 1;
+        $(`#quantity-${productId}`).val(quantity);
 
         fetch(`/api/client/carts/update-quantity/${productId}`, {
           method: "PUT",
@@ -118,11 +119,10 @@ if (localStorage.getItem("userId")) {
   async function getProducts() {
     if (localCart) {
       if (localCart.products.length > 0) {
+        $("#item-count").text(`${localCart.products.length} Items`);
         const productPromises = localCart.products.map(async (product) => {
           try {
-            const response = await fetch(
-              `/api/client/products/search?findBy=id&query=${product.id}`
-            );
+            const response = await fetch(`/api/client/products/search?findBy=id&query=${product.id}`);
             const data = await response.json();
             const productData = data.product;
             productData.quantity = product.quantity;
@@ -154,12 +154,17 @@ if (localStorage.getItem("userId")) {
     await refreshCards();
     $(`.addOne, .removeOne, .deleteButton`).on("click", async function () {
       const dataId = $(this).attr("data-button");
-      const actualQ = parseInt($(`#quantity-${dataId}`).text(), 10);
+      const actualQ = parseInt($(`#quantity-${dataId}`).val(), 10);
+      debugger;
       if ($(this).hasClass("addOne")) {
-        $(`#quantity-${dataId}`).text(actualQ + 1);
+        $(`#quantity-${dataId}`).val(actualQ + 1);
+        $(`#parcialTotal-${dataId}`).text((actualQ + 1) * parseFloat($(`[data-price-unformatted-${dataId}]`).attr(`data-price-unformatted-${dataId}`)));
+        $(`#parcialTotal-${dataId}`).formatCurrency();
         localCartHandler(dataId, "update");
       } else if ($(this).hasClass("removeOne") && actualQ > 1) {
-        $(`#quantity-${dataId}`).text(actualQ - 1);
+        $(`#quantity-${dataId}`).val(actualQ - 1);
+        $(`#parcialTotal-${dataId}`).text((actualQ - 1) * parseFloat($(`[data-price-unformatted-${dataId}]`).attr(`data-price-unformatted-${dataId}`)));
+        $(`#parcialTotal-${dataId}`).formatCurrency();
         localCartHandler(dataId, "update");
       } else if ($(this).hasClass("deleteButton")) {
         $(`#product-card-${dataId}`).remove();

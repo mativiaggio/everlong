@@ -160,14 +160,24 @@
               {{! <a href="#"
                 class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log
                 in</a> }}
-              <button
-                class="bg-indigo-50 text-[var(--main-text-light)] rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 py-3 px-6 text-sm hover:bg-indigo-100">
-                Ingresar
-              </button>
-              <button
-                class="bg-[var(--main-text-light)] text-white rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 py-3 px-6 text-sm lg:ml-5 hover:bg-indigo-700">
-                Registrarse
-              </button>
+              {{#if user}}
+              <button id="logout-sidebar"
+                class="bg-[var(--main-text-light)] text-white rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 py-3 px-6 text-sm lg:ml-5 hover:bg-[var(--main-dark-5)]">Cerrar
+                Sesión</button>
+              {{else}}
+              <a href="/ingresar">
+                <button
+                  class="bg-indigo-50 text-[var(--main-text-light)] rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 py-3 px-6 text-sm hover:bg-indigo-100">
+                  Ingresar
+                </button>
+              </a>
+              <a href="/registro">
+                <button
+                  class="bg-[var(--main-text-light)] text-white rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 py-3 px-6 text-sm lg:ml-5 hover:bg-[var(--main-dark-5)]">
+                  Registrarse
+                </button>
+              </a>
+              {{/if}}
               <button id="aside-toggle-dark-mode" type="button"
                 class="flex items-center w-9 h-9 justify-center text-xs font-medium focus:z-10">
                 <svg id="aside-toggle-icon-moon" class="w-3.5 h-3.5" aria-hidden="true"
