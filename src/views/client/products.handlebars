@@ -1,140 +1,199 @@
-<div class="flex flex-col md:flex-row">
-  <div class="bg-[var(--main-bg-light)] dark:bg-[var(--main-dark-2)]">
-    <button
-      id="product-open-sidebar"
-      data-drawer-target="default-sidebar"
-      data-drawer-toggle="default-sidebar"
-      aria-controls="default-sidebar"
-      type="button"
-      class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-    >
-      <span class="sr-only">Open sidebar</span>
-      <svg
-        class="w-6 h-6"
-        aria-hidden="true"
-        fill="currentColor"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          clip-rule="evenodd"
-          fill-rule="evenodd"
-          d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
-        >
-        </path>
-      </svg>
-    </button>
-  </div>
-
-  <aside
-    id="product-default-sidebar"
-    class="fixed md:static top-0 left-0 z-40 h-full md:h-auto w-64 transition-transform -translate-x-full sm:translate-x-0"
-    aria-label="Sidebar"
-  >
-
-    <div
-      class="flex flex-col h-full px-3 py-4 overflow-y-auto bg-[var(--main-light-2)] dark:bg-[var(--main-bg-dark)]"
-      id="sidebar-container"
-    >
-      <form
-        action=""
-        method=""
-        class="flex items-center"
-        id="productSearchForm"
-      >
-        <div
-          class="flex bg-[var(--main-light-1)] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full dark:bg-[var(--main-dark-7)] dark:border-[var(--main-dark-7)] dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-        >
-          <span class="pl-2.5 py-2.5">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-search text-[#9ca3af]"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.3-4.3" />
-            </svg>
-          </span>
-          <input
-            class="w-full bg-transparent border-none outline-none pr-2.5 py-2.5"
-            type="text"
-            name="search"
-            id="productsSearchInput"
-            placeholder="Escribi tu búsqueda acá"
-          />
-        </div>
-      </form>
-      {{{productsCategoriesComponent}}}
+<section class="pb-24 relative">
+  <div class="w-full mx-auto px-4 md:px-8">
+    <div class="flex flex-col lg:flex-row lg:items-center max-lg:gap-4 justify-between w-full">
+      <div class="relative w-full max-w-sm">
+        <svg class="absolute top-1/2 -translate-y-1/2 left-4 z-50" width="20" height="20" viewBox="0 0 20 20"
+          fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M16.5555 3.33203H3.44463C2.46273 3.33203 1.66675 4.12802 1.66675 5.10991C1.66675 5.56785 1.84345 6.00813 2.16004 6.33901L6.83697 11.2271C6.97021 11.3664 7.03684 11.436 7.0974 11.5068C7.57207 12.062 7.85127 12.7576 7.89207 13.4869C7.89728 13.5799 7.89728 13.6763 7.89728 13.869V16.251C7.89728 17.6854 9.30176 18.6988 10.663 18.2466C11.5227 17.961 12.1029 17.157 12.1029 16.251V14.2772C12.1029 13.6825 12.1029 13.3852 12.1523 13.1015C12.2323 12.6415 12.4081 12.2035 12.6683 11.8158C12.8287 11.5767 13.0342 11.3619 13.4454 10.9322L17.8401 6.33901C18.1567 6.00813 18.3334 5.56785 18.3334 5.10991C18.3334 4.12802 17.5374 3.33203 16.5555 3.33203Z"
+            stroke="black" stroke-width="1.6" stroke-linecap="round" />
+        </svg>
+        <select id="Offer"
+          class="h-12 border border-gray-300 text-gray-900 pl-11 text-base font-normal leading-7 rounded-full block w-full py-2.5 px-4 appearance-none relative focus:outline-none bg-white transition-all duration-500 hover:border-gray-400 hover:bg-gray-50 focus-within:bg-gray-50">
+          <option value="" {{#if (eq sort "" )}}selected{{/if}}>Más Relevante</option>
+          <option value="asc" {{#if (eq sort "asc" )}}selected{{/if}}>Menor Precio</option>
+          <option value="desc" {{#if (eq sort "desc" )}}selected{{/if}}>Mayor Precio</option>
+        </select>
+        <svg class="absolute top-1/2 -translate-y-1/2 right-4 z-50" width="16" height="16" viewBox="0 0 16 16"
+          fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12.0002 5.99845L8.00008 9.99862L3.99756 5.99609" stroke="#111827" stroke-width="1.6"
+            stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
     </div>
-  </aside>
-  <div
-    class="w-full p-4 bg-[var(--main-bg-light)] dark:bg-[var(--main-dark-2)] min-h-screen"
-    id="body-container"
-  >
-    <div
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-3 mt-2"
-    >
-
-      {{#each products}}
-        <div class="flex justify-center items-center" id="{{_id}}">
-          <div
-            class="flex flex-col justify-between max-w-sm w-full bg-[var(--main-bg-light)] border border-gray-200 rounded-lg shadow-md dark:shadow-slate-900 dark:bg-[var(--main-bg-dark)] dark:border-[var(--main-dark-10)] overflow-hidden h-full"
-          >
-            <a href="#" class="bg-[var(--main-bg-light)] h-[300px]">
-              <img
-                class="rounded-t-lg object-contain h-full w-full"
-                src="/{{index images 0}}"
-                alt=""
-              />
-            </a>
-            <div class="p-5">
-              <a href="#">
-                <h5
-                  class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
-                >{{title}}</h5>
-              </a>
-              <p
-                class="max-h-[48px] font-normal text-[var(--main-dark-10)] dark:text-gray-400"
-              >
-                {{truncate description 70}}
-                <a
-                  href="/productos/{{slug}}"
-                  class="underline text-blue-600 dark:text-blue-500 hover:text-blue-500 dark:hover:text-blue-400"
-                >Ver mas</a>
-              </p>
+    <svg class="my-7 w-full" xmlns="http://www.w3.org/2000/svg" width="1216" height="2" viewBox="0 0 1216 2"
+      fill="none">
+      <path d="M0 1H1216" stroke="#E5E7EB" />
+    </svg>
+    <div class="grid grid-cols-12">
+      <div class="col-span-12 md:col-span-3 w-full max-md:max-w-md max-md:mx-auto">
+        <div class="box rounded-xl border border-gray-300 bg-white p-6 w-full md:max-w-sm">
+          <h6 class="font-medium text-base leading-7 text-black mb-5">¿Ya sabes lo que estas buscando?</h6>
+          {{!-- <div class="flex items-center mb-5 gap-1">
+            <div class="relative w-full">
+              <select id="FROM"
+                class="h-12 border border-gray-300 text-gray-900 text-xs font-medium rounded-full block w-full py-2.5 px-4 appearance-none relative focus:outline-none bg-white">
+                <option selected>Min</option>
+                <option value="option 1">option 1</option>
+                <option value="option 2">option 2</option>
+                <option value="option 3">option 3</option>
+                <option value="option 4">option 4</option>
+              </select>
+              <svg class="absolute top-1/2 -translate-y-1/2 right-4 z-50" width="16" height="16" viewBox="0 0 16 16"
+                fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.0002 5.99845L8.00008 9.99862L3.99756 5.99609" stroke="#111827" stroke-width="1.6"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
             </div>
-            <div class="p-5 flex justify-between items-center">
-              <p class="text-xl font-bold">{{currency price "arg"}}</p>
-              <button
-                class="addToCart inline-flex items-center px-3 py-2 text-sm font-medium text-center bg-[var(--main-bg-dark)] dark:bg-[var(--main-bg-light)] text-[var(--main-text-dark)] dark:text-[var(--main-text-light)] rounded-md"
-                data-product-id="{{_id}}"
-              >
+            <p class="px-1 font-normal text-sm leading-6 text-gray-600">to</p>
+            <div class="relative w-full">
+              <select id="FROM"
+                class="h-12 border border-gray-300 text-gray-900 text-xs font-medium rounded-full block w-full py-2.5 px-4 appearance-none relative focus:outline-none bg-white">
+                <option selected>Max</option>
+                <option value="option 1">option 1</option>
+                <option value="option 2">option 2</option>
+                <option value="option 3">option 3</option>
+                <option value="option 4">option 4</option>
+              </select>
+              <svg class="absolute top-1/2 -translate-y-1/2 right-4 z-50" width="16" height="16" viewBox="0 0 16 16"
+                fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.0002 5.99845L8.00008 9.99862L3.99756 5.99609" stroke="#111827" stroke-width="1.6"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+          </div> --}}
+          <form action="" method="GET" class="flex flex-col items-center" id="productSearchForm">
+            <label for="busqueda" class="block mb-2 text-sm font-medium text-gray-600 w-full sr-only">Busqueda</label>
+            <div class="relative w-full mb-8">
+              <input type="text" name="busqueda" placeholder="Escriba su busqueda aquí"
+                class="text-base rounded-full text-gray-900 flex-1 py-4 px-6 shadow-[0px 15px 30px -4px rgba(16, 24, 40, 0.03)] md:shadow-none bg-white md:bg-transparent shadow-none placeholder:text-gray-400 focus:outline-none w-full border focus:border-[var(--main-dark-1)]"
+                id="productsSearchInput" />
+            </div>
+            <button
+              class="w-full py-2.5 flex items-center justify-center gap-2 rounded-full bg-[var(--main-dark-1)] text-white font-semibold text-xs shadow-sm shadow-transparent transition-all duration-500 hover:bg-[var(--main-dark-5)] hover:shadow-indigo-200"
+              type="submit" id="buttonSearchForm">
+              <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M14.4987 13.9997L13.1654 12.6663M13.832 7.33301C13.832 10.6467 11.1457 13.333 7.83203 13.333C4.51832 13.333 1.83203 10.6467 1.83203 7.33301C1.83203 4.0193 4.51832 1.33301 7.83203 1.33301C11.1457 1.33301 13.832 4.0193 13.832 7.33301Z"
+                  stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              Buscar
+            </button>
+          </form>
+        </div>
 
-                Agregar al carrito
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-plus ml-2"
-                ><path d="M5 12h14" /><path d="M12 5v14" /></svg>
+        <div class="mt-7 box rounded-xl border border-gray-300 bg-white p-6 w-full md:max-w-sm">
+          <div class="flex items-center justify-between w-full pb-3 border-b border-gray-200 mb-7">
+            <p class="font-medium text-base leading-7 text-black">Filtro</p>
+            <a href="/productos"
+              class="font-medium text-xs text-gray-500 cursor-pointer transition-all duration-500 hover:text-[var(--main-dark-1)]">
+              RESET</a>
+          </div>
+          <div>
+            <label id="listbox-label" class="block text-sm font-medium leading-6 text-gray-900">Filtra por
+              Categorías</label>
+            <div class="relative mt-2">
+              <button type="button"
+                class="relative w-full rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--main-dark-10)] sm:text-sm sm:leading-6 cursor-pointer"
+                aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label"
+                category-selected-slug="{{categoryBySlug.slug}}" id="categories-select-button">
+                <span class="flex items-center">
+                  <span class="ml-3 block truncate">{{categorySelectTitle}}</span>
+                </span>
+                <span class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
+                  <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd"
+                      d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z"
+                      clip-rule="evenodd" />
+                  </svg>
+                </span>
               </button>
+              <ul
+                class="hidden absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3"
+                id="categories-select-container">
+                {{{productsCategoriesComponent}}}
+              </ul>
             </div>
           </div>
+
+
+          {{!-- <label for="Offer" class="font-medium text-sm leading-6 text-gray-600 mb-1">Categorías</label>
+          <div class="relative w-full mb-7">
+            <select id="Offer"
+              class="h-12 border border-gray-300 text-gray-900 text-xs font-medium rounded-full block w-full py-2.5 px-4 appearance-none relative focus:outline-none bg-white">
+              <option selected>Todo</option>
+              {{{productsCategoriesComponent}}}
+            </select>
+            <svg class="absolute top-1/2 -translate-y-1/2 right-4 z-50" width="16" height="16" viewBox="0 0 16 16"
+              fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12.0002 5.99845L8.00008 9.99862L3.99756 5.99609" stroke="#111827" stroke-width="1.6"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <p class="font-medium text-sm leading-6 text-black mb-3">Discount</p>
+          <div class="box flex flex-col gap-2">
+            <div class="flex items-center">
+              <input id="checkbox-default-1" type="checkbox" value=""
+                class="w-5 h-5 appearance-none border border-gray-300 rounded-md mr-2 hover:border-[var(--main-dark-5)] hover:bg-indigo-100 checked:bg-no-repeat checked:bg-center checked:border-[var(--main-dark-5)] checked:bg-indigo-100 checked:bg-[url('https://pagedone.io/asset/uploads/1689406942.svg')]" />
+              <label for="checkbox-default-1" class="text-xs font-normal text-gray-600 leading-4 cursor-pointer">20% or
+                more</label>
+            </div>
+            <div class="flex items-center">
+              <input id="checkbox-default-2" type="checkbox" value=""
+                class="w-5 h-5 appearance-none border border-gray-300 rounded-md mr-2 hover:border-[var(--main-dark-5)] hover:bg-indigo-100 checked:bg-no-repeat checked:bg-center checked:border-[var(--main-dark-5)] checked:bg-indigo-100 checked:bg-[url('https://pagedone.io/asset/uploads/1689406942.svg')]" />
+              <label for="checkbox-default-2" class="text-xs font-normal text-gray-600 leading-4 cursor-pointer">30% or
+                more</label>
+            </div>
+            <div class="flex items-center">
+              <input id="checkbox-default-3" type="checkbox" value=""
+                class="w-5 h-5 appearance-none border border-gray-300 rounded-md mr-2 hover:border-[var(--main-dark-5)] hover:bg-indigo-100 checked:bg-no-repeat checked:bg-center checked:border-[var(--main-dark-5)] checked:bg-indigo-100 checked:bg-[url('https://pagedone.io/asset/uploads/1689406942.svg')]" />
+              <label for="checkbox-default-3" class="text-xs font-normal text-gray-600 leading-4 cursor-pointer">50% or
+                more</label>
+            </div>
+          </div>
+          --}}
         </div>
-      {{/each}}
+      </div>
+      <div class="col-span-12 md:col-span-9">
+        <div class="w-full p-4 xl:p-0 bg-[var(--main-bg-light)] dark:bg-[var(--main-dark-2)] min-h-screen"
+          id="body-container">
+          <section class="">
+            <div class="mx-auto px-4 sm:px-6 lg:px-8">
+
+              <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                {{#each products}}
+                <div class="max-w-[384px] mx-auto" id="{{_id}}">
+                  <div class="w-full max-w-sm aspect-square">
+                    <a href="/producto/{{slug}}"><img src="/{{index images 0}}" alt="cream image"
+                        class="w-full h-full rounded-xl object-cover border" /></a>
+                  </div>
+                  <div class="mt-5 flex items-center justify-between">
+                    <div class="">
+                      <h6 class="font-medium text-xl leading-8 text-black mb-2"><a class="hover:underline"
+                          href="/producto/{{slug}}">{{title}}</a></h6>
+                      <h6 class="font-semibold text-xl leading-8 text-[var(--main-dark-1)]">{{currency price "arg"}}
+                      </h6>
+                    </div>
+                    <button
+                      class="addToCart p-2 min-[400px]:p-4 rounded-full bg-white border border-gray-300 flex items-center justify-center group shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-200 hover:border-gray-400 hover:bg-gray-50"
+                      data-product-id="{{_id}}" type="button">
+                      <svg class="stroke-gray-900 transition-all duration-500 group-hover:stroke-black"
+                        xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
+                        <path
+                          d="M12.6892 21.125C12.6892 22.0225 11.9409 22.75 11.0177 22.75C10.0946 22.75 9.34632 22.0225 9.34632 21.125M19.3749 21.125C19.3749 22.0225 18.6266 22.75 17.7035 22.75C16.7804 22.75 16.032 22.0225 16.032 21.125M4.88917 6.5L6.4566 14.88C6.77298 16.5715 6.93117 17.4173 7.53301 17.917C8.13484 18.4167 8.99525 18.4167 10.7161 18.4167H18.0056C19.7266 18.4167 20.587 18.4167 21.1889 17.9169C21.7907 17.4172 21.9489 16.5714 22.2652 14.8798L22.8728 11.6298C23.3172 9.25332 23.5394 8.06508 22.8896 7.28254C22.2398 6.5 21.031 6.5 18.6133 6.5H4.88917ZM4.88917 6.5L4.33203 3.25"
+                          stroke="" stroke-width="1.6" stroke-linecap="round" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                {{/each}}
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
     </div>
+
   </div>
-</div>
+</section>

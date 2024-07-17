@@ -160,6 +160,23 @@
           >{{trim productData.description}}</textarea>
         </div>
 
+        <div class="sm:col-span-2">
+          <label
+            for="featured"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Producto Seleccionado</label>
+          <input
+            id="featured"
+            name="featured"
+            rows="8"
+            type="checkbox"
+            {{isChecked productData.featured}}
+            class="block p-2.5 w-fit text-sm text-gray-900 bg-[var(--main-light-1)] rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-[var(--main-dark-3)] dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+            placeholder="Descripción del producto"
+            required-field
+          />
+        </div>
+
         {{#each productData.images}}
           <div class="relative border h-fit">
             <button
