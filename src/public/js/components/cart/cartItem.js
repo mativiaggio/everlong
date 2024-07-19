@@ -38,29 +38,29 @@
 import { formatCurrency } from "../../functions.js";
 export function cartItem(product) {
   return `
-    <div id="product-card-${product._id}" class="flex flex-col min-[500px]:flex-row min-[500px]:items-center gap-5 py-6 border-b border-gray-200 group relative">
+    <div id="product-card-${product._id}" class="flex flex-col min-[500px]:flex-row min-[500px]:items-center gap-5 py-6 border-b border-[var(--main-dark-1)] dark:border-[var(--main-light-1)] group relative">
       <div class="w-full md:max-w-[126px]">
         <img src="${product.images[0]}" alt="${product.title}" class="mx-auto">
       </div>
       <div class="grid grid-cols-1 md:grid-cols-4 w-full">
         <div class="md:col-span-2">
           <div class="flex flex-col max-[500px]:items-center gap-3">
-            <h6 class="font-semibold text-base leading-7 text-black">${product.title}</h6>
-            <h6 class="font-normal text-base leading-7 text-gray-500">${product.brand || "Everlong"}</h6>
-            <h6 class="font-medium text-base leading-7 text-gray-600 transition-all duration-300 group-hover:text-[var(--main-dark-1)]" data-price-unformatted-${product._id}="${product.price}">
+            <h6 class="font-semibold text-base leading-7 text-[var(--main-text-light)] dark:text-[var(--main-text-dark)]">${product.title}</h6>
+            <h6 class="font-normal text-base leading-7 text-[var(--main-dark-5)] dark:text-[var(--main-light-5)]">${product.brand || "Everlong"}</h6>
+            <h6 class="font-medium text-base leading-7 text-[var(--main-dark-5)] dark:text-[var(--main-light-5)] transition-all duration-300 group-hover:text-[var(--main-dark-1)] group-hover:dark:text-[var(--main-light-1)]" data-price-unformatted-${product._id}="${product.price}">
               ${formatCurrency(product.price)}
             </h6>
           </div>
         </div>
         <div class="flex items-center max-[500px]:justify-center h-full max-md:mt-3">
           <div class="flex items-center h-full">
-            <button class="group rounded-l-xl px-5 py-[18px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300 removeOne" data-button="${product._id}">
+            <button class="group rounded-l-xl px-5 py-[18px] border border-[var(--main-dark-1)] dark:border-[var(--main-light-1)] flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300 removeOne" data-button="${product._id}">
               <svg class="stroke-gray-900 transition-all duration-500 group-hover:stroke-black" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
                 <path d="M16.5 11H5.5" stroke="" stroke-width="1.6" stroke-linecap="round" />
               </svg>
             </button>
-            <input type="text" class="border-y border-gray-200 outline-none text-gray-900 font-semibold text-lg w-full max-w-[73px] min-w-[60px] placeholder:text-gray-900 py-[15px] text-center bg-transparent" id="quantity-${product._id}" value="${product.quantity}">
-            <button class="group rounded-r-xl px-5 py-[18px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300 addOne" data-button="${product._id}">
+            <input type="text" class="border-y border-[var(--main-dark-1)] dark:border-[var(--main-light-1)] outline-none text-[var(--main-text-light)] font-semibold text-lg w-full max-w-[73px] min-w-[60px] placeholder:text-[var(--main-text-light)] py-[15px] text-center bg-transparent" id="quantity-${product._id}" value="${product.quantity}">
+            <button class="group rounded-r-xl px-5 py-[18px] border border-[var(--main-dark-1)] dark:border-[var(--main-light-1)] flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300 addOne" data-button="${product._id}">
               <svg class="stroke-gray-900 transition-all duration-500 group-hover:stroke-black" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
                 <path d="M11 5.5V16.5M16.5 11H5.5" stroke="" stroke-width="1.6" stroke-linecap="round" />
               </svg>
@@ -68,7 +68,7 @@ export function cartItem(product) {
           </div>
         </div>
         <div class="flex items-center max-[500px]:justify-center md:justify-end max-md:mt-3 h-full">
-          <p id="parcialTotal-${product._id}" class="font-bold text-lg leading-8 text-gray-600 text-center transition-all duration-300 group-hover:text-[var(--main-dark-1)]">
+          <p id="parcialTotal-${product._id}" class="font-bold text-lg leading-8 text-[var(--main-dark-5)] dark:text-[var(--main-light-5)] text-center transition-all duration-300 group-hover:text-[var(--main-dark-1)] group-hover:dark:text-[var(--main-light-1)]">
             ${formatCurrency(product.price * product.quantity)}
           </p>
         </div>

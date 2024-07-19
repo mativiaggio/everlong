@@ -8,16 +8,23 @@ $("#carousel-container").simpleCarousel({
   //     "https://images.unsplash.com/photo-1608547492806-7e6c70ffdea4?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   //   ],
   // });
-  items: [
-    "images/home/home-carrousel-1.jpg",
-    "images/home/home-carrousel-2.png",
-    "images/home/home-carrousel-3.png",
-  ],
+  items: ["images/home/home-carrousel-1.jpg", "images/home/home-carrousel-2.png", "images/home/home-carrousel-3.png"],
 });
 
 $("button.addToCart").click(function () {
   const productId = $(this).attr("data-product-id");
   if (productId) {
     addToCart(productId);
+  }
+});
+
+$("#buttonSearchForm").on("click", function (event) {
+  debugger;
+  event.preventDefault();
+  const keywords = $("#productsSearchInput").val().trim();
+
+  if (keywords) {
+    const encodedKeywords = encodeURIComponent(keywords);
+    window.location.href = `/productos/buscar/${encodedKeywords}`;
   }
 });

@@ -34,7 +34,8 @@
         <tr
           class="even:bg-[var(--main-light-1)] even:dark:bg-[var(--main-dark-7)] odd:bg-[var(--main-light-2)] odd:dark:bg-[var(--main-dark-3)] border-b dark:border-[var(--main-dark-10)] cursor-pointer"
           id="{{_id}}" slug="{{slug}}">
-          <td scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{number}}</td>
+          <td scope="row" class="px-2 py-2 font-medium text-[var(--main-text-light)] whitespace-nowrap dark:text-white">
+            {{number}}</td>
           <td class="px-2 py-2">{{formatDate issueDate}}</td>
           <td class="px-2 py-2">{{emitter.name}}</td>
           <td class="px-2 py-2">{{emitter.address}}</td>
