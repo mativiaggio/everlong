@@ -1,7 +1,7 @@
 <section class="pb-24 relative">
   <div class="w-full mx-auto px-4 md:px-8">
     <div class="flex flex-col lg:flex-row lg:items-center max-lg:gap-4 justify-between w-full">
-      <div class="relative w-full max-w-sm">
+      <div class="relative w-full md:max-w-sm">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
           class="lucide lucide-filter text-[var(--main-dark-5)] dark:text-[var(--main-light-5)] absolute top-1/2 -translate-y-1/2 left-4 z-50">
@@ -34,7 +34,7 @@
             <label for="busqueda" class="block mb-2 text-sm font-medium text-gray-600 w-full sr-only">Busqueda</label>
             <div class="relative w-full mb-8">
               <input type="text" name="busqueda" placeholder="Escriba su busqueda aquí"
-                class="text-base rounded-full text-[var(--main-text-light)] flex-1 py-4 px-6 shadow-[0px 15px 30px -4px rgba(16, 24, 40, 0.03)] md:shadow-none bg-white md:bg-transparent shadow-none placeholder:text-gray-400 focus:outline-none w-full border focus:border-[var(--main-dark-1)]"
+                class="text-base rounded-full text-[var(--main-text-light)] flex-1 py-4 px-6 shadow-[0px 15px 30px -4px rgba(16, 24, 40, 0.03)] md:shadow-none bg-white shadow-none placeholder:text-gray-400 focus:outline-none w-full border focus:border-[var(--main-dark-1)]"
                 id="productsSearchInput" />
             </div>
             <button
@@ -67,7 +67,7 @@
               Categorías</label>
             <div class="relative mt-2">
               <button type="button"
-                class="h-12 text-[var(--main-dark-5)] dark:text-[var(--main-light-5)] text-base font-normal leading-7 rounded-full block w-full py-2.5 px-4 appearance-none relative focus:outline-none bg-[var(--main-bg-light)] dark:bg-[var(--main-bg-dark)] transition-all duration-500 focus-within:bg-gray-50 shadow-sm shadow-transparent hover:bg-[var(--main-dark-5)] hover:shadow-[var(--main-light-accent)]"
+                class="h-12 text-[var(--main-dark-5)] dark:text-[var(--main-light-5)] text-base font-normal leading-7 rounded-full block w-full py-2.5 px-4 appearance-none relative focus:outline-none bg-[var(--main-bg-light)] dark:bg-[var(--main-bg-dark)] transition-all duration-500 focus-within:bg-gray-50 shadow-sm shadow-transparent hover:bg-[var(--main-light-2)] hover:dark:bg-[var(--main-dark-5)] hover:shadow-[var(--main-light-accent)]"
                 aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label"
                 category-selected-slug="{{categoryBySlug.slug}}" id="categories-select-button">
                 <span class="flex items-center">
@@ -129,7 +129,7 @@
         </div>
       </div>
       <div class="col-span-12 md:col-span-9">
-        <div class="w-full mt-7 pt-0 p-4 xl:p-0 min-h-screen" id="body-container">
+        <div class="w-full mt-7 lg:mt-0 pt-0 p-4 xl:p-0 min-h-screen" id="body-container">
           <section class="">
             <div class="mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -140,7 +140,7 @@
                     <a href="/producto/{{slug}}"><img src="/{{index images 0}}" alt="cream image"
                         class="w-full h-full object-cover border" /></a>
                   </div>
-                  <div class="mt-5 flex items-center justify-between">
+                  <div class="mt-5 flex items-start justify-between">
                     <div class="">
                       <h6
                         class="font-medium text-xl leading-8 text-[var(--main-text-light)] dark:text-[var(--main-text-dark)] mb-2">

@@ -29,6 +29,8 @@ export function loadScripts(level) {
     page = "/productos";
   } else if (page.includes("/productos/categoria/")) {
     page = "/productos";
+  } else if (page.includes("/producto/")) {
+    page = "/producto";
   }
 
   switch (page) {
@@ -38,6 +40,9 @@ export function loadScripts(level) {
       break;
     case "/productos":
       script.src = "/js/client/products.js";
+      break;
+    case "/producto":
+      script.src = "/js/client/product.js";
       break;
     case "/carrito":
       script.src = "/js/client/cart.js";

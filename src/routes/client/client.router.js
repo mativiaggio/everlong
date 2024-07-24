@@ -100,13 +100,33 @@ clientRouter.get("/productos", userMiddleware, async (req, res) => {
   }
 });
 
-clientRouter.get("/producto/:pid", (req, res) => {
-  const title = "Producto";
-  const description = "Detalle del producto.";
-  res.render("client/view-product", {
-    title,
-    description,
-  });
+// clientRouter.get("/producto/:pid", (req, res) => {
+//   const title = "Producto";
+//   const description = "Detalle del producto.";
+//   res.render("client/view-product", {
+//     title,
+//     description,
+//   });
+// });
+clientRouter.get("/producto/:slug", async (req, res) => {
+  try {
+    const { slug } = req.params;
+    const productController = new ProductsController();
+    const product = await productController.findBySlug(slug);
+
+    if (!product) {
+      return res.status(404).send("Producto no encontrado");
+    }
+
+    res.render("client/view-product", {
+      title: product.title,
+      description: product.description,
+      product,
+    });
+  } catch (error) {
+    console.error("Error al obtener el producto:", error);
+    res.status(500).send("Error interno del servidor");
+  }
 });
 
 clientRouter.get("/nosotros/", (req, res) => {
