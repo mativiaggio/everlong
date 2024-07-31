@@ -340,3 +340,27 @@ import { contextAction } from "./functions.js";
     });
   };
 })(jQuery);
+
+(function ($) {
+  $.fn.formatCurrency = function (options) {
+    var settings = $.extend(
+      {
+        locale: "es-AR",
+        currency: "ARS",
+      },
+      options
+    );
+
+    return this.each(function () {
+      var value = parseFloat($(this).text());
+      if (isNaN(value)) return;
+
+      var formattedValue = new Intl.NumberFormat(settings.locale, {
+        style: "currency",
+        currency: settings.currency,
+      }).format(value);
+
+      $(this).text(formattedValue);
+    });
+  };
+})(jQuery);

@@ -23,20 +23,7 @@ $(document).ready(function () {
     }
   };
 
-  const monthNames = [
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "Junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre",
-  ];
+  const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
   const mapMonthNumberToName = (monthNumber) => monthNames[monthNumber - 1];
   const renderChart = (ctx, type, labels, data, label) => {
@@ -48,34 +35,8 @@ $(document).ready(function () {
           {
             label: label,
             data: data,
-            backgroundColor: [
-              "rgba(255, 0, 0, 0.2)",
-              "rgba(255, 127, 0, 0.2)",
-              "rgba(255, 255, 0, 0.2)",
-              "rgba(127, 255, 0, 0.2)",
-              "rgba(0, 255, 0, 0.2)",
-              "rgba(0, 255, 127, 0.2)",
-              "rgba(0, 255, 255, 0.2)",
-              "rgba(0, 127, 255, 0.2)",
-              "rgba(0, 0, 255, 0.2)",
-              "rgba(127, 0, 255, 0.2)",
-              "rgba(255, 0, 255, 0.2)",
-              "rgba(255, 0, 127, 0.2)",
-            ],
-            borderColor: [
-              "rgba(255, 0, 0, 0.2)",
-              "rgba(255, 127, 0, 0.2)",
-              "rgba(255, 255, 0, 0.2)",
-              "rgba(127, 255, 0, 0.2)",
-              "rgba(0, 255, 0, 0.2)",
-              "rgba(0, 255, 127, 0.2)",
-              "rgba(0, 255, 255, 0.2)",
-              "rgba(0, 127, 255, 0.2)",
-              "rgba(0, 0, 255, 0.2)",
-              "rgba(127, 0, 255, 0.2)",
-              "rgba(255, 0, 255, 0.2)",
-              "rgba(255, 0, 127, 0.2)",
-            ],
+            backgroundColor: ["rgba(255, 0, 0, 0.2)", "rgba(255, 127, 0, 0.2)", "rgba(255, 255, 0, 0.2)", "rgba(127, 255, 0, 0.2)", "rgba(0, 255, 0, 0.2)", "rgba(0, 255, 127, 0.2)", "rgba(0, 255, 255, 0.2)", "rgba(0, 127, 255, 0.2)", "rgba(0, 0, 255, 0.2)", "rgba(127, 0, 255, 0.2)", "rgba(255, 0, 255, 0.2)", "rgba(255, 0, 127, 0.2)"],
+            borderColor: ["rgba(255, 0, 0, 0.2)", "rgba(255, 127, 0, 0.2)", "rgba(255, 255, 0, 0.2)", "rgba(127, 255, 0, 0.2)", "rgba(0, 255, 0, 0.2)", "rgba(0, 255, 127, 0.2)", "rgba(0, 255, 255, 0.2)", "rgba(0, 127, 255, 0.2)", "rgba(0, 0, 255, 0.2)", "rgba(127, 0, 255, 0.2)", "rgba(255, 0, 255, 0.2)", "rgba(255, 0, 127, 0.2)"],
             borderWidth: 1,
           },
         ],
@@ -91,9 +52,7 @@ $(document).ready(function () {
   };
 
   const loadInvoicesStats = async () => {
-    const response = await invoicesFetchData(
-      "/api/admin/invoices/total_invoices_by_month"
-    );
+    const response = await invoicesFetchData("/api/admin/invoices/total_invoices_by_month");
     const invoicesStats = response.total_invoices_by_month.data;
     const labels = invoicesStats.map((data) => mapMonthNumberToName(data._id));
     const data = invoicesStats.map((data) => data.count);
@@ -102,9 +61,7 @@ $(document).ready(function () {
   };
 
   const loadAmountStats = async () => {
-    const response = await invoicesFetchData(
-      "/api/admin/invoices/total_amount_by_month"
-    );
+    const response = await invoicesFetchData("/api/admin/invoices/total_amount_by_month");
     const amountStats = response.total_amount_by_month.data;
     const labels = amountStats.map((data) => mapMonthNumberToName(data._id));
     const data = amountStats.map((data) => data.totalAmount);
@@ -113,9 +70,7 @@ $(document).ready(function () {
   };
 
   const loadTypeStats = async () => {
-    const response = await invoicesFetchData(
-      "/api/admin/invoices/invoices_by_type"
-    );
+    const response = await invoicesFetchData("/api/admin/invoices/invoices_by_type");
     const typeStats = response.invoices_by_type.data;
     const labels = typeStats.map((data) => `Tipo ${data._id}`);
     const data = typeStats.map((data) => data.count);
@@ -140,21 +95,9 @@ $(document).ready(function () {
             datasets: [
               {
                 label: "Usuarios",
-                data: [
-                  response.data.totalUsers,
-                  response.data.adminUsers,
-                  response.data.customerUsers,
-                ],
-                backgroundColor: [
-                  "rgba(75, 192, 192, 0.2)",
-                  "rgba(54, 162, 235, 0.2)",
-                  "rgba(255, 206, 86, 0.2)",
-                ],
-                borderColor: [
-                  "rgba(75, 192, 192, 0.2)",
-                  "rgba(54, 162, 235, 0.2)",
-                  "rgba(255, 206, 86, 0.2)",
-                ],
+                data: [response.data.totalUsers, response.data.adminUsers, response.data.customerUsers],
+                backgroundColor: ["rgba(75, 192, 192, 0.2)", "rgba(54, 162, 235, 0.2)", "rgba(255, 206, 86, 0.2)"],
+                borderColor: ["rgba(75, 192, 192, 0.2)", "rgba(54, 162, 235, 0.2)", "rgba(255, 206, 86, 0.2)"],
                 borderWidth: 1,
               },
             ],
@@ -182,9 +125,7 @@ $(document).ready(function () {
     success: function (response) {
       if (response.status === "success") {
         const ctx = $("#productStatsChart")[0].getContext("2d");
-        const categories = response.data.productsByCategory.map(
-          (cat) => cat._id
-        );
+        const categories = response.data.productsByCategory.map((cat) => cat._id);
         const counts = response.data.productsByCategory.map((cat) => cat.count);
 
         new Chart(ctx, {
@@ -198,18 +139,8 @@ $(document).ready(function () {
                   response.data.totalProducts,
                   // response.data.lowStockProducts,
                 ].concat(counts),
-                backgroundColor: [
-                  "rgba(75, 192, 192, 0.2)",
-                  "rgba(255, 99, 132, 0.2)",
-                ].concat(
-                  Array(categories.length).fill("rgba(153, 102, 255, 0.2)")
-                ),
-                borderColor: [
-                  "rgba(75, 192, 192, 0.2)",
-                  "rgba(255, 99, 132, 0.2)",
-                ].concat(
-                  Array(categories.length).fill("rgba(153, 102, 255, 0.2)")
-                ),
+                backgroundColor: ["rgba(75, 192, 192, 0.2)", "rgba(255, 99, 132, 0.2)"].concat(Array(categories.length).fill("rgba(153, 102, 255, 0.2)")),
+                borderColor: ["rgba(75, 192, 192, 0.2)", "rgba(255, 99, 132, 0.2)"].concat(Array(categories.length).fill("rgba(153, 102, 255, 0.2)")),
                 borderWidth: 1,
               },
             ],
@@ -228,10 +159,10 @@ $(document).ready(function () {
         $(lowStockProducts).each(function () {
           $("#tbody-low-stock-products").append(`
             <tr class="even:bg-[var(--main-light-0.2)] even:dark:bg-[var(--main-dark-7)] odd:bg-[var(--main-light-2)] odd:dark:bg-[var(--main-dark-3)] border-b dark:border-[var(--main-dark-10)]">
-              <td class="px-6 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+              <td class="px-6 py-1 font-medium text-[var(--main-text-light)] whitespace-nowrap dark:text-white">
                 ${this.title}
               </td>
-              <td class="px-6 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+              <td class="px-6 py-1 font-medium text-[var(--main-text-light)] whitespace-nowrap dark:text-white">
                 ${this.stock}
               </td>
             </tr>

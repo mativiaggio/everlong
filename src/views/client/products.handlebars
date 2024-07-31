@@ -1,15 +1,14 @@
 <section class="pb-24 relative">
   <div class="w-full mx-auto px-4 md:px-8">
     <div class="flex flex-col lg:flex-row lg:items-center max-lg:gap-4 justify-between w-full">
-      <div class="relative w-full max-w-sm">
-        <svg class="absolute top-1/2 -translate-y-1/2 left-4 z-50" width="20" height="20" viewBox="0 0 20 20"
-          fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M16.5555 3.33203H3.44463C2.46273 3.33203 1.66675 4.12802 1.66675 5.10991C1.66675 5.56785 1.84345 6.00813 2.16004 6.33901L6.83697 11.2271C6.97021 11.3664 7.03684 11.436 7.0974 11.5068C7.57207 12.062 7.85127 12.7576 7.89207 13.4869C7.89728 13.5799 7.89728 13.6763 7.89728 13.869V16.251C7.89728 17.6854 9.30176 18.6988 10.663 18.2466C11.5227 17.961 12.1029 17.157 12.1029 16.251V14.2772C12.1029 13.6825 12.1029 13.3852 12.1523 13.1015C12.2323 12.6415 12.4081 12.2035 12.6683 11.8158C12.8287 11.5767 13.0342 11.3619 13.4454 10.9322L17.8401 6.33901C18.1567 6.00813 18.3334 5.56785 18.3334 5.10991C18.3334 4.12802 17.5374 3.33203 16.5555 3.33203Z"
-            stroke="black" stroke-width="1.6" stroke-linecap="round" />
+      <div class="relative w-full md:max-w-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="lucide lucide-filter text-[var(--main-dark-5)] dark:text-[var(--main-light-5)] absolute top-1/2 -translate-y-1/2 left-4 z-50">
+          <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
         </svg>
         <select id="Offer"
-          class="h-12 border border-gray-300 text-gray-900 pl-11 text-base font-normal leading-7 rounded-full block w-full py-2.5 px-4 appearance-none relative focus:outline-none bg-white transition-all duration-500 hover:border-gray-400 hover:bg-gray-50 focus-within:bg-gray-50">
+          class="h-12 text-[var(--main-dark-5)] dark:text-[var(--main-light-5)] pl-11 text-base font-normal leading-7 rounded-full block w-full py-2.5 px-4 appearance-none relative focus:outline-none bg-[var(--main-light-accent)] dark:bg-[var(--main-dark-accent)] transition-all duration-500focus-within:bg-gray-50">
           <option value="" {{#if (eq sort "" )}}selected{{/if}}>Más Relevante</option>
           <option value="asc" {{#if (eq sort "asc" )}}selected{{/if}}>Menor Precio</option>
           <option value="desc" {{#if (eq sort "desc" )}}selected{{/if}}>Mayor Precio</option>
@@ -27,50 +26,19 @@
     </svg>
     <div class="grid grid-cols-12">
       <div class="col-span-12 md:col-span-3 w-full max-md:max-w-md max-md:mx-auto">
-        <div class="box rounded-xl border border-gray-300 bg-white p-6 w-full md:max-w-sm">
-          <h6 class="font-medium text-base leading-7 text-black mb-5">¿Ya sabes lo que estas buscando?</h6>
-          {{!-- <div class="flex items-center mb-5 gap-1">
-            <div class="relative w-full">
-              <select id="FROM"
-                class="h-12 border border-gray-300 text-gray-900 text-xs font-medium rounded-full block w-full py-2.5 px-4 appearance-none relative focus:outline-none bg-white">
-                <option selected>Min</option>
-                <option value="option 1">option 1</option>
-                <option value="option 2">option 2</option>
-                <option value="option 3">option 3</option>
-                <option value="option 4">option 4</option>
-              </select>
-              <svg class="absolute top-1/2 -translate-y-1/2 right-4 z-50" width="16" height="16" viewBox="0 0 16 16"
-                fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12.0002 5.99845L8.00008 9.99862L3.99756 5.99609" stroke="#111827" stroke-width="1.6"
-                  stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </div>
-            <p class="px-1 font-normal text-sm leading-6 text-gray-600">to</p>
-            <div class="relative w-full">
-              <select id="FROM"
-                class="h-12 border border-gray-300 text-gray-900 text-xs font-medium rounded-full block w-full py-2.5 px-4 appearance-none relative focus:outline-none bg-white">
-                <option selected>Max</option>
-                <option value="option 1">option 1</option>
-                <option value="option 2">option 2</option>
-                <option value="option 3">option 3</option>
-                <option value="option 4">option 4</option>
-              </select>
-              <svg class="absolute top-1/2 -translate-y-1/2 right-4 z-50" width="16" height="16" viewBox="0 0 16 16"
-                fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12.0002 5.99845L8.00008 9.99862L3.99756 5.99609" stroke="#111827" stroke-width="1.6"
-                  stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </div>
-          </div> --}}
+        <div
+          class="box rounded-xl bg-[var(--main-light-accent)] dark:bg-[var(--main-dark-accent)] p-6 w-full md:max-w-sm">
+          <h6 class="font-medium text-base leading-7 text-[var(--main-dark-5)] dark:text-[var(--main-light-5)] mb-5">
+            ¿Ya sabes lo que estas buscando?</h6>
           <form action="" method="GET" class="flex flex-col items-center" id="productSearchForm">
             <label for="busqueda" class="block mb-2 text-sm font-medium text-gray-600 w-full sr-only">Busqueda</label>
             <div class="relative w-full mb-8">
               <input type="text" name="busqueda" placeholder="Escriba su busqueda aquí"
-                class="text-base rounded-full text-gray-900 flex-1 py-4 px-6 shadow-[0px 15px 30px -4px rgba(16, 24, 40, 0.03)] md:shadow-none bg-white md:bg-transparent shadow-none placeholder:text-gray-400 focus:outline-none w-full border focus:border-[var(--main-dark-1)]"
+                class="text-base rounded-full text-[var(--main-text-light)] flex-1 py-4 px-6 shadow-[0px 15px 30px -4px rgba(16, 24, 40, 0.03)] md:shadow-none bg-white shadow-none placeholder:text-gray-400 focus:outline-none w-full border focus:border-[var(--main-dark-1)]"
                 id="productsSearchInput" />
             </div>
             <button
-              class="w-full py-2.5 flex items-center justify-center gap-2 rounded-full bg-[var(--main-dark-1)] text-white font-semibold text-xs shadow-sm shadow-transparent transition-all duration-500 hover:bg-[var(--main-dark-5)] hover:shadow-indigo-200"
+              class="w-full py-2.5 flex items-center justify-center gap-2 rounded-full bg-[var(--main-dark-1)] text-[var(--main-text-dark)] font-semibold text-xs shadow-sm shadow-transparent transition-all duration-500 hover:bg-[var(--main-dark-3)] hover:shadow-[var(--main-light-accent)]"
               type="submit" id="buttonSearchForm">
               <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -82,23 +50,28 @@
           </form>
         </div>
 
-        <div class="mt-7 box rounded-xl border border-gray-300 bg-white p-6 w-full md:max-w-sm">
-          <div class="flex items-center justify-between w-full pb-3 border-b border-gray-200 mb-7">
-            <p class="font-medium text-base leading-7 text-black">Filtro</p>
+        <div
+          class="mt-7 box rounded-xl bg-[var(--main-light-accent)] dark:bg-[var(--main-dark-accent)] p-6 w-full md:max-w-sm">
+          <div
+            class="flex items-center justify-between w-full pb-3 border-b border-[var(--main-dark-5)] dark:border-[var(--main-light-5)] mb-7">
+            <p class="font-medium text-base leading-7 text-[var(--main-dark-5)] dark:text-[var(--main-light-5)]">
+              Filtro</p>
             <a href="/productos"
               class="font-medium text-xs text-gray-500 cursor-pointer transition-all duration-500 hover:text-[var(--main-dark-1)]">
               RESET</a>
           </div>
           <div>
-            <label id="listbox-label" class="block text-sm font-medium leading-6 text-gray-900">Filtra por
+            <label id="listbox-label"
+              class="block text-sm font-medium leading-6 text-[var(--main-dark-5)] dark:text-[var(--main-light-5)]">Filtra
+              por
               Categorías</label>
             <div class="relative mt-2">
               <button type="button"
-                class="relative w-full rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--main-dark-10)] sm:text-sm sm:leading-6 cursor-pointer"
+                class="h-12 text-[var(--main-dark-5)] dark:text-[var(--main-light-5)] text-base font-normal leading-7 rounded-full block w-full py-2.5 px-4 appearance-none relative focus:outline-none bg-[var(--main-bg-light)] dark:bg-[var(--main-bg-dark)] transition-all duration-500 focus-within:bg-gray-50 shadow-sm shadow-transparent hover:bg-[var(--main-light-2)] hover:dark:bg-[var(--main-dark-5)] hover:shadow-[var(--main-light-accent)]"
                 aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label"
                 category-selected-slug="{{categoryBySlug.slug}}" id="categories-select-button">
                 <span class="flex items-center">
-                  <span class="ml-3 block truncate">{{categorySelectTitle}}</span>
+                  <span class="block truncate">{{categorySelectTitle}}</span>
                 </span>
                 <span class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
                   <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -121,7 +94,7 @@
           {{!-- <label for="Offer" class="font-medium text-sm leading-6 text-gray-600 mb-1">Categorías</label>
           <div class="relative w-full mb-7">
             <select id="Offer"
-              class="h-12 border border-gray-300 text-gray-900 text-xs font-medium rounded-full block w-full py-2.5 px-4 appearance-none relative focus:outline-none bg-white">
+              class="h-12 border border-gray-300 text-[var(--main-text-light)] text-xs font-medium rounded-full block w-full py-2.5 px-4 appearance-none relative focus:outline-none bg-white">
               <option selected>Todo</option>
               {{{productsCategoriesComponent}}}
             </select>
@@ -156,23 +129,26 @@
         </div>
       </div>
       <div class="col-span-12 md:col-span-9">
-        <div class="w-full p-4 xl:p-0 bg-[var(--main-bg-light)] dark:bg-[var(--main-dark-2)] min-h-screen"
-          id="body-container">
+        <div class="w-full mt-7 lg:mt-0 pt-0 p-4 xl:p-0 min-h-screen" id="body-container">
           <section class="">
             <div class="mx-auto px-4 sm:px-6 lg:px-8">
 
               <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {{#each products}}
                 <div class="max-w-[384px] mx-auto" id="{{_id}}">
-                  <div class="w-full max-w-sm aspect-square">
+                  <div class="w-full max-w-sm bg-white rounded-xl overflow-hidden aspect-square">
                     <a href="/producto/{{slug}}"><img src="/{{index images 0}}" alt="cream image"
-                        class="w-full h-full rounded-xl object-cover border" /></a>
+                        class="w-full h-full object-cover border" /></a>
                   </div>
-                  <div class="mt-5 flex items-center justify-between">
+                  <div class="mt-5 flex items-start justify-between">
                     <div class="">
-                      <h6 class="font-medium text-xl leading-8 text-black mb-2"><a class="hover:underline"
-                          href="/producto/{{slug}}">{{title}}</a></h6>
-                      <h6 class="font-semibold text-xl leading-8 text-[var(--main-dark-1)]">{{currency price "arg"}}
+                      <h6
+                        class="font-medium text-xl leading-8 text-[var(--main-text-light)] dark:text-[var(--main-text-dark)] mb-2">
+                        <a class="hover:underline" href="/producto/{{slug}}">{{title}}</a>
+                      </h6>
+                      <h6
+                        class="font-semibold text-xl leading-8 text-[var(--main-dark-5)] dark:text-[var(--main-light-5)]">
+                        {{currency price "arg"}}
                       </h6>
                     </div>
                     <button

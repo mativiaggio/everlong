@@ -20,7 +20,7 @@ const hbs = exphbs.create({
         .map((role) => {
           const user_role = role.toUpperCase();
           const bgColorClass = roleBgColors[role] || "bg-gray-300";
-          const colorClass = roleColors[role] || "text-gray-900";
+          const colorClass = roleColors[role] || "text-[var(--main-text-light)]";
           return `<span class="${bgColorClass} ${colorClass} text-xs font-semibold me-2 px-2.5 py-0.5 rounded-full">${user_role}</span>`;
         })
         .join("");
@@ -36,6 +36,7 @@ const hbs = exphbs.create({
       return arg1 == arg2 ? options.fn(this) : options.inverse(this);
     },
     parseJSON: function (jsonString) {
+      debugger
       return JSON.parse(jsonString);
     },
     join: function (array, delimiter) {

@@ -34,19 +34,28 @@ export default class ProductsDAO {
     }
   }
 
+  // async getProductBySlug(productSlug) {
+  //   logger.info("id " + productSlug);
+  //   try {
+  //     const product = await Product.findOne({ slug: productSlug }).lean();
+  //     if (product) {
+  //       return product;
+  //     } else {
+  //       logger.error("Producto no encontrado");
+  //       return null;
+  //     }
+  //   } catch (error) {
+  //     logger.error("[DAO] Error retrieving product:", error);
+  //     return null;
+  //   }
+  // }
   async getProductBySlug(productSlug) {
-    logger.info("id " + productSlug);
     try {
-      const product = await Product.findOne({ slug: productSlug }).lean();
-      if (product) {
-        return product;
-      } else {
-        logger.error("Producto no encontrado");
-        return null;
-      }
+      const product = await Product.findOne({ slug: productSlug }).populate("category", "name").populate("relatedProducts", "title slug").lean();
+      return product;
     } catch (error) {
       logger.error("[DAO] Error retrieving product:", error);
-      return null;
+      throw error;
     }
   }
 
@@ -123,11 +132,7 @@ export default class ProductsDAO {
 
       console.log("product: " + JSON.stringify(productData));
 
-      const updatedProduct = await Product.findByIdAndUpdate(
-        productId,
-        productData,
-        { new: true, runValidators: true }
-      );
+      const updatedProduct = await Product.findByIdAndUpdate(productId, productData, { new: true, runValidators: true });
 
       if (!updatedProduct) {
         return {

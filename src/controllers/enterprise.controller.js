@@ -4,7 +4,7 @@ import { logger } from "../utils/logger.js";
 
 const enterpriseDAO = new EnterpriseDAO();
 
-export default class ProductsController {
+export default class EnterpriseController {
   async getEnterpriseData() {
     try {
       const enterprise = await enterpriseDAO.getEnterpriseData();
@@ -17,28 +17,7 @@ export default class ProductsController {
 
   async addEnterprise(req, res) {
     try {
-      const {
-        _id,
-        name,
-        legalName,
-        taxId,
-        address,
-        city,
-        province,
-        country,
-        phone,
-        email,
-        website,
-        logoUrl,
-        foundedYear,
-        businessType,
-        industry,
-        employees,
-        revenue,
-        isVATPayer,
-        vatCategory,
-        description,
-      } = req.body;
+      const { _id, name, legalName, taxId, address, city, province, country, phone, email, website, logoUrl, foundedYear, businessType, industry, employees, revenue, isVATPayer, vatCategory, description } = req.body;
 
       const newEnterprise = new Enterprise({
         _id,
@@ -75,28 +54,7 @@ export default class ProductsController {
 
   async updateEnterprise(req, res) {
     try {
-      const {
-        _id,
-        name,
-        legalName,
-        taxId,
-        address,
-        city,
-        province,
-        country,
-        phone,
-        email,
-        website,
-        logoUrl,
-        foundedYear,
-        businessType,
-        industry,
-        employees,
-        revenue,
-        isVATPayer,
-        vatCategory,
-        description,
-      } = req.body;
+      const { _id, name, legalName, taxId, address, city, province, country, phone, email, website, logoUrl, foundedYear, businessType, industry, employees, revenue, isVATPayer, vatCategory, description } = req.body;
 
       const updatedEnterprise = await enterpriseDAO.updateEnterprise(_id, {
         name,

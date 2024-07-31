@@ -17,6 +17,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import chalk from "chalk";
 import cors from "cors";
+import compression from "compression";
 
 // Admin routes
 import adminRouter from "../routes/admin/admin.router.js";
@@ -34,6 +35,7 @@ import clientCartRouter from "../routes/api/client/carts.router.js";
 import clientProductsRouter from "../routes/api/client/products.router.js";
 import clientMailerRouter from "../routes/api/client/emails.router.js";
 import clientPaymentsRouter from "../routes/api/client/payments.router.js";
+import clientEnterpriseRouter from "../routes/api/client/enterprise.router.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -58,6 +60,8 @@ app.use(
   })
 );
 app.use(flash());
+
+app.use(compression());
 
 app.use((req, res, next) => {
   res.locals.messages = req.flash();
@@ -95,6 +99,7 @@ app.use("/api/client/products", clientProductsRouter);
 app.use("/api/client/carts", clientCartRouter);
 app.use("/api/client/mailer", clientMailerRouter);
 app.use("/api/client/payments", clientPaymentsRouter);
+app.use("/api/client/enterprise", clientEnterpriseRouter);
 app.use("/admin", adminRouter);
 app.use("/", clientRouter);
 

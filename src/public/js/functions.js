@@ -29,6 +29,8 @@ export function loadScripts(level) {
     page = "/productos";
   } else if (page.includes("/productos/categoria/")) {
     page = "/productos";
+  } else if (page.includes("/producto/")) {
+    page = "/producto";
   }
 
   switch (page) {
@@ -38,6 +40,9 @@ export function loadScripts(level) {
       break;
     case "/productos":
       script.src = "/js/client/products.js";
+      break;
+    case "/producto":
+      script.src = "/js/client/product.js";
       break;
     case "/carrito":
       script.src = "/js/client/cart.js";
@@ -134,9 +139,7 @@ export function addToCart(productId) {
       total: 0,
     };
 
-    const existingProductIndex = cart.products.findIndex(
-      (product) => product.id === _id
-    );
+    const existingProductIndex = cart.products.findIndex((product) => product.id === _id);
 
     if (existingProductIndex !== -1) {
       cart.products[existingProductIndex].quantity++;
@@ -183,12 +186,7 @@ export function addToCart(productId) {
 }
 
 export function toast(options = {}) {
-  const {
-    status = "success",
-    message = "Operación realizada con éxito.",
-    position = "bottom-end",
-    timer = 3000,
-  } = options;
+  const { status = "success", message = "Operación realizada con éxito.", position = "bottom-end", timer = 3000 } = options;
 
   const Toast = Swal.mixin({
     toast: true,
@@ -235,9 +233,7 @@ export function localCartHandler(productId, action) {
     case "update":
       let updateIndex = findProductIndex(productId);
       if (updateIndex !== -1) {
-        cart.products[updateIndex].quantity = $(
-          `#quantity-${productId}`
-        ).text();
+        cart.products[updateIndex].quantity = $(`#quantity-${productId}`).val();
         updateCartTotal();
         $("#total-container").html(cartTotal(cart));
         console.log("Updated cart:", cart);

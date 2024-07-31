@@ -21,13 +21,10 @@ function searchCategory() {
 
       data.categories.forEach((category) => {
         const row = document.createElement("tr");
-        row.className =
-          "even:bg-[var(--main-light-1)] even:dark:bg-[var(--main-dark-7)] odd:bg-[var(--main-light-2)] odd:dark:bg-[var(--main-dark-3)] border-b dark:border-[var(--main-dark-10)] cursor-pointer";
+        row.className = "even:bg-[var(--main-light-1)] even:dark:bg-[var(--main-dark-7)] odd:bg-[var(--main-light-2)] odd:dark:bg-[var(--main-dark-3)] border-b dark:border-[var(--main-dark-10)] cursor-pointer";
         row.id = category.slug;
         row.innerHTML = `
-          <td scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">${
-            category.name
-          }</td>
+          <td scope="row" class="px-2 py-2 font-medium text-[var(--main-text-light)] whitespace-nowrap dark:text-white">${category.name}</td>
           <td class="px-2 py-2">${category.category || ""}</td>
         `;
         tbody.appendChild(row);
