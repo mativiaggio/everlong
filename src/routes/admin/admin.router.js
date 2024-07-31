@@ -41,14 +41,19 @@ const privateAccess = async (req, res, next) => {
   next();
 };
 
-adminRouter.get("/", privateAccess, (req, res) => {
+adminRouter.get("/", privateAccess, async (req, res) => {
+  const raw_enterprise = await enterpriseController.getEnterpriseData();
+  const enterprise = raw_enterprise[0].toJSON();
+
   const title = "Inicio";
-  const description = "Este es el admin panel de Everlong";
+  const description = `Este es el admin panel de ${enterprise.name}`;
+
   res.render("admin/home", {
     isLoggedIn: true,
     adminSidebarItems,
     title,
     description,
+    enterprise,
   });
 });
 

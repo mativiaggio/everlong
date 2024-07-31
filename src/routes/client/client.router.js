@@ -3,10 +3,12 @@ import { logger } from "../../utils/logger.js";
 import ProductsController from "../../controllers/products.controller.js";
 import UserController from "../../controllers/user.controller.js";
 import CategoriesController from "../../controllers/categories.controller.js";
+import EnterpriseController from "../../controllers/enterprise.controller.js";
 
 const productsController = new ProductsController();
 const userController = new UserController();
 const categoriesController = new CategoriesController();
+const enterpriseController = new EnterpriseController();
 
 // Constantes
 import { clientSidebarItems } from "../../utils/constants.js";
@@ -45,7 +47,10 @@ const userMiddleware = (req, res, next) => {
 clientRouter.get("/", userMiddleware, async (req, res) => {
   const title = "Inicio";
   const description = "Bienvenido a everlong, tu comercio de confianza";
+  const raw_enterprise = await enterpriseController.getEnterpriseData();
+  const enterprise = raw_enterprise[0].toJSON();
   const products = await productsController.findByFeatured();
+  console.log(JSON.stringify(enterprise));
   let user = null;
   if (req.user) {
     user = await userController.findById(req.user._id);
@@ -58,6 +63,7 @@ clientRouter.get("/", userMiddleware, async (req, res) => {
     title,
     description,
     products,
+    enterprise,
   });
 });
 

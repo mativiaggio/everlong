@@ -27,7 +27,7 @@
               </label>
               <input type="text" id="your_name"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-[var(--main-text-light)] dark:border-[var(--main-dark-8)] dark:bg-[var(--main-dark-7)] dark:text-white dark:placeholder:text-gray-400"
-                placeholder="Bonnie Green" required />
+                placeholder="Juan Perez" required />
             </div>
 
             <div>
@@ -70,12 +70,12 @@
             </div>
 
             <div>
-              <label for="your_email"
+              <label for="your_postal_code"
                 class="mb-2 block text-sm font-medium text-[var(--main-text-light)] dark:text-white"> Código Postal*
               </label>
-              <input type="email" id="your_email"
+              <input type="num" id="your_postal_code"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-[var(--main-text-light)] dark:border-[var(--main-dark-8)] dark:bg-[var(--main-dark-8)] dark:text-white dark:placeholder:text-gray-400 dark:"
-                placeholder="1111" required />
+                placeholder="6700" required />
             </div>
 
             <div>
@@ -298,29 +298,9 @@
                 <div class="relative w-full">
                   <input type="text" id="phone-input"
                     class="z-20 block w-full rounded-e-lg border border-s-0 border-gray-300 bg-gray-50 p-2.5 text-sm text-[var(--main-text-light)] dark:border-[var(--main-dark-8)] dark:border-s-[var(--main-dark-8)] dark:bg-[var(--main-dark-8)] dark:text-white dark:placeholder:text-gray-400 dark:"
-                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="123-456-7890" required />
+                    pattern="(?:\(?\d{1,4}\)?[-\s]?)?\d{6,8}" placeholder="123-456-7890" required />
                 </div>
               </div>
-            </div>
-
-            <div>
-              <label for="email" class="mb-2 block text-sm font-medium text-[var(--main-text-light)] dark:text-white">
-                Email </label>
-              <input type="email" id="email"
-                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-[var(--main-text-light)] dark:border-[var(--main-dark-8)] dark:bg-[var(--main-dark-8)] dark:text-white dark:placeholder:text-gray-400 dark:"
-                placeholder="ejemplo@ejemplo.com" required />
-            </div>
-
-            <div class="sm:col-span-2">
-              <button type="submit"
-                class="flex w-full items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-[var(--main-text-light)] hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none dark:border-[var(--main-dark-8)] dark:bg-[var(--main-dark-7)] dark:text-gray-400 dark:hover:bg-[var(--main-dark-8)] dark:hover:text-white">
-                <svg class="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                  fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M5 12h14m-7 7V5" />
-                </svg>
-                Add new address
-              </button>
             </div>
           </div>
         </div>
@@ -349,97 +329,8 @@
                 </div>
               </div>
             </div>
-
-            <div
-              class="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 dark:border-[var(--main-dark-8)] dark:bg-[var(--main-dark-7)]">
-              <div class="flex items-start">
-                <div class="flex h-5 items-center">
-                  <input id="mercado-pago" aria-describedby="pay-on-delivery-text" type="radio" name="payment-method"
-                    value=""
-                    class="h-4 w-4 border-gray-300 bg-white text-primary-600 dark:border-[var(--main-dark-8)] dark:bg-[var(--main-dark-8)] dark:" />
-                </div>
-
-                <div class="ms-4 text-sm">
-                  <label for="pay-on-delivery"
-                    class="font-medium leading-none text-[var(--main-text-light)] dark:text-white"> Mercado Pago
-                  </label>
-                  <p id="pay-on-delivery-text" class="mt-1 text-xs font-normal text-gray-500 dark:text-gray-400">Paga de
-                    forma segura y rápida con mercado pago</p>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
-
-        {{! <div class="space-y-4">
-          <h3 class="text-xl font-semibold text-[var(--main-text-light)] dark:text-white">Delivery Methods</h3>
-
-          <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-            <div
-              class="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 dark:border-[var(--main-dark-8)] dark:bg-[var(--main-dark-7)]">
-              <div class="flex items-start">
-                <div class="flex h-5 items-center">
-                  <input id="dhl" aria-describedby="dhl-text" type="radio" name="delivery-method" value=""
-                    class="h-4 w-4 border-gray-300 bg-white text-primary-600 dark:border-[var(--main-dark-8)] dark:bg-[var(--main-dark-8)] dark:"
-                    checked />
-                </div>
-
-                <div class="ms-4 text-sm">
-                  <label for="dhl" class="font-medium leading-none text-[var(--main-text-light)] dark:text-white"> $15 -
-                    DHL Fast Delivery </label>
-                  <p id="dhl-text" class="mt-1 text-xs font-normal text-gray-500 dark:text-gray-400">Get it by Tommorow
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 dark:border-[var(--main-dark-8)] dark:bg-[var(--main-dark-7)]">
-              <div class="flex items-start">
-                <div class="flex h-5 items-center">
-                  <input id="fedex" aria-describedby="fedex-text" type="radio" name="delivery-method" value=""
-                    class="h-4 w-4 border-gray-300 bg-white text-primary-600 dark:border-[var(--main-dark-8)] dark:bg-[var(--main-dark-8)] dark:" />
-                </div>
-
-                <div class="ms-4 text-sm">
-                  <label for="fedex" class="font-medium leading-none text-[var(--main-text-light)] dark:text-white">
-                    Free Delivery - FedEx </label>
-                  <p id="fedex-text" class="mt-1 text-xs font-normal text-gray-500 dark:text-gray-400">Get it by Friday,
-                    13 Dec 2023</p>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 dark:border-[var(--main-dark-8)] dark:bg-[var(--main-dark-7)]">
-              <div class="flex items-start">
-                <div class="flex h-5 items-center">
-                  <input id="express" aria-describedby="express-text" type="radio" name="delivery-method" value=""
-                    class="h-4 w-4 border-gray-300 bg-white text-primary-600 dark:border-[var(--main-dark-8)] dark:bg-[var(--main-dark-8)] dark:" />
-                </div>
-
-                <div class="ms-4 text-sm">
-                  <label for="express" class="font-medium leading-none text-[var(--main-text-light)] dark:text-white">
-                    $49 - Express Delivery </label>
-                  <p id="express-text" class="mt-1 text-xs font-normal text-gray-500 dark:text-gray-400">Get it today
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> }}
-
-        {{! <div>
-          <label for="voucher" class="mb-2 block text-sm font-medium text-[var(--main-text-light)] dark:text-white">
-            Enter a gift card, voucher or promotional code </label>
-          <div class="flex max-w-md items-center gap-4">
-            <input type="text" id="voucher"
-              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-[var(--main-text-light)] dark:border-[var(--main-dark-8)] dark:bg-[var(--main-dark-8)] dark:text-white dark:placeholder:text-gray-400 dark:"
-              placeholder="" required />
-            <button type="button"
-              class="flex items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 dark:bg-primary-600 dark:hover:bg-primary-700">Apply</button>
-          </div>
-        </div> }}
       </div>
 
       <div class="mt-6 w-full space-y-6 sm:mt-8 lg:mt-0 lg:max-w-xs xl:max-w-md">
@@ -447,27 +338,18 @@
           <div class="-my-3 divide-y divide-gray-200 dark:divide-[var(--main-dark-7)]">
             <dl class="flex items-center justify-between gap-4 py-3">
               <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Subtotal</dt>
-              <dd class="text-base font-medium text-[var(--main-text-light)] dark:text-white">$8,094.00</dd>
+              <dd class="text-base font-medium text-[var(--main-text-light)] dark:text-white"
+                id="checkout_parcial_total"></dd>
             </dl>
 
             <dl class="flex items-center justify-between gap-4 py-3">
-              <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Savings</dt>
+              <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Descuentos</dt>
               <dd class="text-base font-medium text-green-500">0</dd>
             </dl>
 
             <dl class="flex items-center justify-between gap-4 py-3">
-              <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Store Pickup</dt>
-              <dd class="text-base font-medium text-[var(--main-text-light)] dark:text-white">$99</dd>
-            </dl>
-
-            <dl class="flex items-center justify-between gap-4 py-3">
-              <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Tax</dt>
-              <dd class="text-base font-medium text-[var(--main-text-light)] dark:text-white">$199</dd>
-            </dl>
-
-            <dl class="flex items-center justify-between gap-4 py-3">
               <dt class="text-base font-bold text-[var(--main-text-light)] dark:text-white">Total</dt>
-              <dd class="text-base font-bold text-[var(--main-text-light)] dark:text-white">$8,392.00</dd>
+              <dd class="text-base font-bold text-[var(--main-text-light)] dark:text-white" id="checkout_total"></dd>
             </dl>
           </div>
         </div>
@@ -475,7 +357,8 @@
         <div class="space-y-3">
           <div id="whatsapp-payment" class="py-[16px]">
             <button type="submit"
-              class="flex w-full items-center justify-center rounded-lg bg-[var(--whatsapp-color)] p-3 text-sm font-medium text-[var(--main-text-dark)] hover:bg-primary-800 focus:outline-none focus:ring-4 dark:bg-[var(--whatsapp-color)] dark:hover:bg-primary-700">
+              class="flex w-full items-center justify-center rounded-lg bg-[var(--whatsapp-color)] p-3 text-sm font-medium text-[var(--main-text-dark)] hover:bg-primary-800 focus:outline-none focus:ring-4 dark:bg-[var(--whatsapp-color)] dark:hover:bg-primary-700"
+              id="checkout_button_whatsapp">
               <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                 fill="none" stroke="#ffffff">
 
@@ -496,31 +379,14 @@
               <span class="font-medium not-italic text-[16px]">Continuar a
                 WhatsApp</span>
             </button>
-            <div class="flex justify-center mt-[8px] px-[16px] py-[0]">
+            <div class="flex flex-col justify-center mt-[8px] px-[16px] py-[0]">
               <div class="[all:inherit] m-0 p-0 border-[none] bg-none rounded-[unset]">
-                <p class="text-[12px] font-semibold leading-[15px] m-0 flex justify-center items-center text-[#737373]">
-                  Coordina directamente con nostros</p>
+                <button id="copy_wpp_message" type="button"
+                  class="text-[12px] font-semibold leading-[15px] m-0 flex justify-center items-center text-[#737373] hover:text-[#1daa61] hover:underline">Tienes
+                  problemas generando el mensaje automático en WhatsApp? Has click para copiarlo.</button>
               </div>
             </div>
           </div>
-          <div id="mercado-pago-payment">
-            <div class="hidden w-full items-center justify-center" id="mercado-pago-spinner-container">
-              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"
-                id="mercado-pago-spinner">
-                <path fill="currentColor"
-                  d="M12,4a8,8,0,0,1,7.89,6.7A1.53,1.53,0,0,0,21.38,12h0a1.5,1.5,0,0,0,1.48-1.75,11,11,0,0,0-21.72,0A1.5,1.5,0,0,0,2.62,12h0a1.53,1.53,0,0,0,1.49-1.3A8,8,0,0,1,12,4Z">
-                  <animateTransform attributeName="transform" dur="0.75s" repeatCount="indefinite" type="rotate"
-                    values="0 12 12;360 12 12" />
-                </path>
-              </svg>
-            </div>
-            <div id="wallet_container"></div>
-          </div>
-
-          {{! <p class="text-sm font-normal text-gray-500 dark:text-gray-400">One or more items in your cart require an
-            account. <a href="#" title=""
-              class="font-medium text-primary-700 underline hover:no-underline dark:text-primary-500">Sign in or create
-              an account now.</a>.</p> }}
         </div>
       </div>
     </div>

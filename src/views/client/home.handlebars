@@ -4,7 +4,7 @@
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 gap-14 items-center lg:grid-cols-12 lg:gap32">
         <div class="w-full xl:col-span-5 lg:col-span-6 2xl:-mx-5 xl:-mx-0">
-          <div class="flex items-center text-sm font-medium text-gray-500 justify-center lg:justify-start">
+          <div class="flex items-center text-sm font-medium text-gray-800 justify-center lg:justify-start">
             <span
               class="bg-[var(--main-dark-1)] py-1 px-3 rounded-2xl text-xs font-medium text-[var(--main-light-1)] mr-3 ">#1</span>
             En algo especial
@@ -43,7 +43,7 @@
       </div>
       <div class="w-full xl:col-span-7  lg:col-span-6 block">
         <div class="w-full  sm:w-auto lg:w-[60.8125rem] xl:ml-16">
-          <img src="images/home/home-carrousel-3.png" alt="Dashboard image" class="w-full  lg:h-auto rounded-2xl">
+          <img src="images/home/home-carrousel-3.webp" alt="Dashboard image" class="w-full  lg:h-auto rounded-2xl">
         </div>
       </div>
     </div>
@@ -67,7 +67,8 @@
               d="m7 15-1.76-1.76a2 2 0 0 0-2.83 2.82l3.6 3.6C7.5 21.14 9.2 22 12 22h2a8 8 0 0 0 8-8V7a2 2 0 1 0-4 0v5" />
           </svg>
           <span
-            class="font-manrope font-bold text-xl leading-normal tracking-[-0.209px] text-[var(--main-text-light)] dark:text-[var(--main-text-dark)]">Everlong</span>
+            class="font-manrope font-bold text-xl leading-normal tracking-[-0.209px] text-[var(--main-text-light)] dark:text-[var(--main-text-dark)]">{{
+            enterprise.name }}</span>
         </div>
         <p
           class="mt-3 text-center font-normal text-xl leading-8 text-[var(--main-text-light)] dark:text-[var(--main-text-dark)]">
@@ -77,6 +78,7 @@
       <div class="grid grid-cols-2 min-[450px]:grid-cols-3 sm:grid-cols-3 gap-y-6 xl:gap-14 w-full max-lg:max-w-xl">
         <div class="box flex flex-col items-center">
           <button
+          aria-label="Envíos a todo el país"
             class="p-5 rounded-full shadow-sm shadow-transparent bg-[var(--main-light-accent)] dark:bg-[var(--main-dark-accent)] flex items-center justify-center transition-all duration-500 hover:bg-indigo-100 hover:shadow-indigo-200 focus-within:bg-indigo-100 focus-within:outline-0">
             <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -96,6 +98,7 @@
 
         <div class="box flex flex-col items-center">
           <button
+          aria-label="Calidad Asegurada"
             class="p-5 rounded-full shadow-sm shadow-transparent bg-[var(--main-light-accent)] dark:bg-[var(--main-dark-accent)] flex items-center justify-center transition-all duration-500 hover:bg-indigo-100 hover:shadow-indigo-200 focus-within:bg-indigo-100 focus-within:outline-0">
             <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -112,6 +115,7 @@
         </div>
         <div class="box flex flex-col items-center max-[450px]:col-span-2">
           <button
+            aria-label="Los Mejores Descuentos"
             class="p-5 rounded-full shadow-sm shadow-transparent bg-[var(--main-light-accent)] dark:bg-[var(--main-dark-accent)] flex items-center justify-center transition-all duration-500 hover:bg-indigo-100 hover:shadow-indigo-200 focus-within:bg-indigo-100 focus-within:outline-0">
             <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -144,7 +148,7 @@
         <div class="max-w-[384px] mx-auto" id="{{_id}}">
           <div class="w-full max-w-sm aspect-square bg-white rounded-xl overflow-hidden">
             <a href="/producto/{{slug}}"><img src="/{{index images 0}}" alt="cream image"
-                class="w-full h-full object-cover border" /></a>
+                class="w-full h-full object-contain border" /></a>
           </div>
           <div class="mt-5 flex items-start justify-between">
             <div class="">
@@ -156,6 +160,7 @@
                 {{currency price "arg"}}</h6>
             </div>
             <button
+            aria-label="Agregar al carrito"
               class="addToCart p-2 min-[400px]:p-4 rounded-full bg-white border border-gray-300 flex items-center justify-center group shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-200 hover:border-gray-400 hover:bg-gray-50"
               data-product-id="{{_id}}" type="button">
               <svg class="stroke-gray-900 transition-all duration-500 group-hover:stroke-black"
