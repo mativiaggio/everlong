@@ -46,7 +46,6 @@ adminProductsRouter.post("/", privateAccess, upload.array("productImages", 5), c
 adminProductsRouter.put("/", privateAccess, upload.array("productImages", 5), convertAndSave, async (req, res) => {
   try {
     if (req.body.id) {
-      console.log("Body: " + JSON.stringify(req.body));
       await productController.updateProduct(req, res);
     }
   } catch (error) {
@@ -54,7 +53,7 @@ adminProductsRouter.put("/", privateAccess, upload.array("productImages", 5), co
   }
 });
 
-adminProductsRouter.delete("/:pid", async (req, res) => {
+adminProductsRouter.delete("/delete-product/:pslug", async (req, res) => {
   try {
     await productController.deleteProduct(req, res);
   } catch (error) {

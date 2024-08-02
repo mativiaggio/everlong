@@ -1,3 +1,12 @@
+$("#title").on("change", function () {
+  let title = $(this).val();
+
+  let processedTitle = title.replace(/[^a-zA-Z0-9]+/g, "-");
+  processedTitle = processedTitle.replace(/^-+|-+$/g, "");
+
+  $("#slug").val(processedTitle.replace(/-+$/, ""));
+});
+
 const date = new Date();
 const formattedDate = date.toISOString().split("T")[0];
 $("#publishedOn").val(formattedDate);

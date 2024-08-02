@@ -69,4 +69,12 @@ adminCategoriesRouter.get("/search", privateAccess, async (req, res) => {
   }
 });
 
+adminCategoriesRouter.delete("/delete-category/:pslug", async (req, res) => {
+  try {
+    await categoriesController.deleteCategory(req, res);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 export default adminCategoriesRouter;

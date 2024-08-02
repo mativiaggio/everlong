@@ -112,7 +112,27 @@ import { contextAction } from "./functions.js";
               if (!url) {
                 throw new Error("URL not found. \nCheck the contextAction function.");
               } else {
-                window.location.replace(url);
+                if (action === "delete") {
+                  fetch(`/api${url}`, {
+                    method: "DELETE",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                  })
+                    .then((res) => {
+                      switch (res.status) {
+                        case 500:
+                          alert("Error: " + res.status);
+                          break;
+                        case 200:
+                          window.location.reload();
+                          break;
+                      }
+                    })
+                    .catch((error) => console.error("Error:", error));
+                } else {
+                  window.location.replace(url);
+                }
               }
             } catch (err) {
               console.error(err);

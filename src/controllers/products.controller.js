@@ -4,6 +4,7 @@ import CategoriesDAO from "../dao/categories.dao.js";
 import Product from "../models/product.js";
 import { logger } from "../utils/logger.js";
 import path from "path";
+import cloudinary from "../config/cloudinary.config.js";
 
 const productsDAO = new ProductsDAO();
 const categoriesDAO = new CategoriesDAO();
@@ -207,39 +208,13 @@ export default class ProductsController {
     }
   }
 
-  // async addProduct(req, res) {
-  //   try {
-  //     const productData = req.body;
-  //     productData.owner = req.session.user._id;
-
-  //     if (req.files) {
-  //       productData.images = req.files.map((file) =>
-  //         path.relative(path.join(__dirname, "../public"), file.path)
-  //       );
-  //     }
-
-  //     const result = await productsDAO.addProduct(productData);
-
-  //     if (result.status === "error") {
-  //       return res.status(500).json(result);
-  //     }
-
-  //     return res.json(result);
-  //   } catch (error) {
-  //     logger.error("[Controller] Error adding product:", error);
-  //     return res
-  //       .status(500)
-  //       .json({ error: "[Controller] Error adding product" });
-  //   }
-  // }
-
   async addProduct(req, res) {
     try {
       const productData = req.body;
       productData.owner = req.session.user._id;
 
       if (req.files) {
-        productData.images = req.files.map((file) => path.relative(path.join(__dirname, "../public"), file.path));
+        productData.images = req.files.map((file) => file.path);
       }
 
       const result = await productsDAO.addProduct(productData);
@@ -259,32 +234,69 @@ export default class ProductsController {
     try {
       const productData = req.body;
 
-      if (req.files) {
-        productData.images = req.files.map((file) => path.relative(path.join(__dirname, "../public"), file.path));
+      if (req.body.id) {
+        const productId = req.body.id;
+        const existingProduct = await productsDAO.getProductById(productId);
+
+        if (!existingProduct) {
+          return res.status(404).json({ error: "Producto no encontrado" });
+        }
+
+        if (req.files) {
+          const newImages = req.files.map((file) => file.path);
+          productData.images = [...existingProduct.images, ...newImages];
+        } else {
+          productData.images = existingProduct.images;
+        }
+
+        const result = await productsDAO.updateProduct(productData);
+
+        if (result.status === "error") {
+          return res.status(500).json(result);
+        }
+
+        return res.json(result);
+      } else {
+        return res.status(400).json({ error: "ID de producto es requerido" });
       }
-
-      console.log("Product data: " + JSON.stringify(productData));
-      const result = await productsDAO.updateProduct(productData);
-
-      if (result.status === "error") {
-        return res.status(500).json(result);
-      }
-
-      return res.json(result);
     } catch (error) {
       logger.error("[Controller] Error updating product:", error);
       return res.status(500).json({ error: "Error updating product" });
     }
   }
 
+  // async deleteProduct(req, res) {
+  //   try {
+  //     const productSlug = req.params.pslug;
+  //     const user = req.session.user;
+  //     const result = await productsDAO.deleteProduct(productSlug, user);
+  //     if (result.error) {
+  //       return res.status(403).json({ error: result.error });
+  //     }
+  //     return res.json(result);
+  //   } catch (error) {
+  //     logger.error("[Controller] Error deleting product:", error);
+  //     return res.status(500).json({ error: "Error deleting product" });
+  //   }
+  // }
   async deleteProduct(req, res) {
     try {
-      const productId = req.params.pid;
+      const productSlug = req.params.pslug;
       const user = req.session.user;
-      const result = await productsDAO.deleteProduct(productId, user);
+      const result = await productsDAO.deleteProduct(productSlug, user);
+
       if (result.error) {
         return res.status(403).json({ error: result.error });
       }
+
+      if (result.product && result.product.images) {
+        const deletePromises = result.product.images.map((imageUrl) => {
+          const publicId = imageUrl.split("/").pop().split(".")[0];
+          return cloudinary.uploader.destroy(`product_images/${publicId}`);
+        });
+        await Promise.all(deletePromises);
+      }
+
       return res.json(result);
     } catch (error) {
       logger.error("[Controller] Error deleting product:", error);

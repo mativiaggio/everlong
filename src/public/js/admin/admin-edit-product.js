@@ -1,4 +1,12 @@
-debugger
+$("#title").on("change", function () {
+  let title = $(this).val();
+
+  let processedTitle = title.replace(/[^a-zA-Z0-9]+/g, "-");
+  processedTitle = processedTitle.replace(/^-+|-+$/g, "");
+
+  $("#slug").val(processedTitle.replace(/-+$/, ""));
+});
+
 $("#slug").on("input", function () {
   $(this).val(function (index, value) {
     return value.replace(/\s+/g, "-");
@@ -57,70 +65,6 @@ $(".delete-image-button").on("click", async function (event) {
   }
 });
 
-// $("#product-form").on("submit", function (e) {
-//   e.preventDefault();
-
-//   let required_flag = false;
-//   required_flag = $("#product-form").validateForm();
-
-//   if (required_flag) {
-//     $("#required_message").removeClass("hidden").addClass("flex");
-//   } else {
-//     let productData = {
-//       id: $("#product-form").attr("reg_id"),
-//       title: $("#name").val(),
-//       slug: $("#slug").val(),
-//       publishedOn: $("#published_date").val(),
-//       brand: $("#brand").val(),
-//       price: $("#price").val(),
-//       category: $("#category").val() || null, // Asigna null si está vacío
-//       stock: $("#stock").val(),
-//       description: $("#description").val(),
-//       _status: "active",
-//     };
-
-//     const images = [];
-//     for (let i = 0; i < customFileList.length; i++) {
-//       images.push(customFileList[i]);
-//     }
-
-//     productData = {
-//       ...productData,
-//       productImages: images,
-//     };
-
-//     const formElement = $(this)[0];
-//     const formData = new FormData(formElement);
-//     const obj = {};
-//     formData.forEach((value, key) => {
-//       obj[key] = value;
-//     });
-
-//     debugger;
-//     fetch("/api/admin/products", {
-//       method: "PUT",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify(productData),
-//     })
-//       .then(async (response) => {
-//         if (!response.ok) {
-//           const data = await response.json();
-//           throw data;
-//         }
-//       })
-
-//       .then((data) => {
-//         window.location.href = "/admin/productos";
-//       })
-//       .catch((error) => {
-//         console.error("Error al agregar el producto:", error.message);
-//         alert(error.message);
-//       });
-//   }
-// });
-
 $("#product-form").on("submit", function (e) {
   e.preventDefault();
 
@@ -130,14 +74,6 @@ $("#product-form").on("submit", function (e) {
   if (required_flag) {
     $("#required_message").removeClass("hidden").addClass("flex");
   } else {
-    // const formElement = $(this)[0];
-    // const formData = new FormData(formElement);
-
-    // // Add custom files to formData
-    // for (let i = 0; i < customFileList.length; i++) {
-    //   formData.append("productImages", customFileList[i]);
-    // }
-
     const formData = new FormData();
     formData.append("id", $("#product-form").attr("reg_id"));
     formData.append("title", $("#title").val());

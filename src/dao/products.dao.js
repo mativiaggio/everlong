@@ -18,7 +18,6 @@ export default class ProductsDAO {
   }
 
   async getProductById(productId) {
-    logger.info("id " + productId);
     try {
       const product = await Product.findById(productId).lean();
 
@@ -34,21 +33,6 @@ export default class ProductsDAO {
     }
   }
 
-  // async getProductBySlug(productSlug) {
-  //   logger.info("id " + productSlug);
-  //   try {
-  //     const product = await Product.findOne({ slug: productSlug }).lean();
-  //     if (product) {
-  //       return product;
-  //     } else {
-  //       logger.error("Producto no encontrado");
-  //       return null;
-  //     }
-  //   } catch (error) {
-  //     logger.error("[DAO] Error retrieving product:", error);
-  //     return null;
-  //   }
-  // }
   async getProductBySlug(productSlug) {
     try {
       const product = await Product.findOne({ slug: productSlug }).populate("category", "name").populate("relatedProducts", "title slug").lean();
@@ -130,8 +114,6 @@ export default class ProductsDAO {
       const productId = productData.id;
       delete productData.id;
 
-      console.log("product: " + JSON.stringify(productData));
-
       const updatedProduct = await Product.findByIdAndUpdate(productId, productData, { new: true, runValidators: true });
 
       if (!updatedProduct) {
@@ -161,9 +143,31 @@ export default class ProductsDAO {
     }
   }
 
-  async deleteProduct(productId, user) {
+  // async deleteProduct(productSlug, user) {
+  //   try {
+  //     const product = await Product.findOne({ slug: productSlug });
+
+  //     if (!product) {
+  //       logger.error("Product not found");
+  //       return { error: "Product not found" };
+  //     }
+
+  //     if (!user.roles.includes("admin")) {
+  //       return { error: "No tiene permiso para eliminar este producto" };
+  //     }
+
+  //     await Product.deleteOne({ slug: productSlug });
+  //     logger.info("Product successfully deleted");
+  //     return { status: "Producto eliminado correctamente" };
+  //   } catch (error) {
+  //     logger.error("[DAO] Error deleting product:", error);
+  //     return { error: "Error deleting product" };
+  //   }
+  // }
+  async deleteProduct(productSlug, user) {
     try {
-      const product = await Product.findById(productId);
+      const product = await Product.findOne({ slug: productSlug });
+
       if (!product) {
         logger.error("Product not found");
         return { error: "Product not found" };
@@ -173,9 +177,9 @@ export default class ProductsDAO {
         return { error: "No tiene permiso para eliminar este producto" };
       }
 
-      await Product.deleteOne({ _id: productId });
+      await Product.deleteOne({ slug: productSlug });
       logger.info("Product successfully deleted");
-      return { status: "Producto eliminado correctamente" };
+      return { status: "Producto eliminado correctamente", product };
     } catch (error) {
       logger.error("[DAO] Error deleting product:", error);
       return { error: "Error deleting product" };
