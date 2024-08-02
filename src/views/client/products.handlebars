@@ -7,6 +7,7 @@
           class="lucide lucide-filter text-[var(--main-dark-5)] dark:text-[var(--main-light-5)] absolute top-1/2 -translate-y-1/2 left-4 z-50">
           <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
         </svg>
+        <label for="Offer" class="sr-only">Offer</label>
         <select id="Offer"
           class="h-12 text-[var(--main-dark-5)] dark:text-[var(--main-light-5)] pl-11 text-base font-normal leading-7 rounded-full block w-full py-2.5 px-4 appearance-none relative focus:outline-none bg-[var(--main-light-accent)] dark:bg-[var(--main-dark-accent)] transition-all duration-500focus-within:bg-gray-50">
           <option value="" {{#if (eq sort "" )}}selected{{/if}}>Más Relevante</option>
@@ -28,8 +29,8 @@
       <div class="col-span-12 md:col-span-3 w-full max-md:max-w-md max-md:mx-auto">
         <div
           class="box rounded-xl bg-[var(--main-light-accent)] dark:bg-[var(--main-dark-accent)] p-6 w-full md:max-w-sm">
-          <h6 class="font-medium text-base leading-7 text-[var(--main-dark-5)] dark:text-[var(--main-light-5)] mb-5">
-            ¿Ya sabes lo que estas buscando?</h6>
+          <p class="font-medium text-base leading-7 text-[var(--main-dark-5)] dark:text-[var(--main-light-5)] mb-5">
+            ¿Ya sabes lo que estas buscando?</p>
           <form action="" method="GET" class="flex flex-col items-center" id="productSearchForm">
             <label for="busqueda" class="block mb-2 text-sm font-medium text-gray-600 w-full sr-only">Busqueda</label>
             <div class="relative w-full mb-8">
@@ -57,7 +58,7 @@
             <p class="font-medium text-base leading-7 text-[var(--main-dark-5)] dark:text-[var(--main-light-5)]">
               Filtro</p>
             <a href="/productos"
-              class="font-medium text-xs text-gray-500 cursor-pointer transition-all duration-500 hover:text-[var(--main-dark-1)]">
+              class="font-medium text-xs text-[var(--main-dark-5)] dark:text-[var(--main-light-5)] cursor-pointer transition-all duration-500 hover:text-[var(--main-dark-1)]">
               RESET</a>
           </div>
           <div>
@@ -138,22 +139,22 @@
                 <div class="max-w-[384px] mx-auto" id="{{_id}}">
                   <div class="w-full max-w-sm bg-white rounded-xl overflow-hidden aspect-square">
                     <a href="/producto/{{slug}}"><img src="/{{index images 0}}" alt="cream image"
-                        class="w-full h-full object-cover border" /></a>
+                        class="w-full h-full object-contain border" /></a>
                   </div>
                   <div class="mt-5 flex items-start justify-between">
                     <div class="">
-                      <h6
+                      <p
                         class="font-medium text-xl leading-8 text-[var(--main-text-light)] dark:text-[var(--main-text-dark)] mb-2">
                         <a class="hover:underline" href="/producto/{{slug}}">{{title}}</a>
-                      </h6>
-                      <h6
+                      </p>
+                      <p
                         class="font-semibold text-xl leading-8 text-[var(--main-dark-5)] dark:text-[var(--main-light-5)]">
                         {{currency price "arg"}}
-                      </h6>
+                      </p>
                     </div>
                     <button
                       class="addToCart p-2 min-[400px]:p-4 rounded-full bg-white border border-gray-300 flex items-center justify-center group shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-200 hover:border-gray-400 hover:bg-gray-50"
-                      data-product-id="{{_id}}" type="button">
+                      data-product-id="{{_id}}" type="button" aria-label="Agregar al carrito">
                       <svg class="stroke-gray-900 transition-all duration-500 group-hover:stroke-black"
                         xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
                         <path
