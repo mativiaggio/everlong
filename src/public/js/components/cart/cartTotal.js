@@ -40,7 +40,7 @@ export function cartTotal(cart) {
       </div>
       <div class="flex items-center justify-between pb-6 border-b border-gray-200">
         <p class="font-medium text-xl leading-8 text-[var(--main-text-light)] dark:text-[var(--main-text-dark)]">Total</p>
-        <p class="font-semibold text-xl leading-8 text-[var(--main-dark-1)]">${formatCurrency(total)}</p>
+        <p class="font-semibold text-xl leading-8 text-[var(--main-text-light)] dark:text-[var(--main-text-dark)]">${formatCurrency(total)}</p>
       </div>
     </div>
     <a href="/checkout">
