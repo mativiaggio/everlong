@@ -9,7 +9,7 @@
           <div class="swiper-wrapper flex">
             {{#each product.images}}
               <div class="swiper-slide flex justify-center items-center w-full border border-[var(--main-bg-light)] dark:border-[var(--main-bg-dark)] rounded-lg overflow-hidden">
-                <img src="/{{this}}" alt="{{product.title}}" />
+                <img src="{{this}}" alt="{{product.title}}" />
               </div>
             {{/each}}
           </div>
@@ -18,7 +18,7 @@
           <div class="swiper-wrapper flex !w-fit">
             {{#each product.images}}
               <div class="swiper-slide thumbs-slide !w-fit">
-                <img src="/{{this}}" alt="{{product.title}}" class="cursor-pointer rounded-xl transition-all duration-500 min-[400px]:h-[100px]" />
+                <img src="{{this}}" alt="{{product.title}}" class="cursor-pointer rounded-xl transition-all duration-500 min-[400px]:h-[100px]" />
               </div>
             {{/each}}
           </div>

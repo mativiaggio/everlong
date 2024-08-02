@@ -115,4 +115,19 @@ export default class CategoriesController {
       throw error;
     }
   }
+
+  async deleteCategory(req, res) {
+    try {
+      const categorySlug = req.params.pslug;
+      const user = req.session.user;
+      const result = await categoriesDAO.deleteCategory(categorySlug, user);
+      if (result.error) {
+        return res.status(403).json({ error: result.error });
+      }
+      return res.json(result);
+    } catch (error) {
+      logger.error("[Controller] Error deleting category:", error);
+      return res.status(500).json({ error: "Error deleting category" });
+    }
+  }
 }

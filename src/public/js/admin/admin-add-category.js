@@ -1,3 +1,12 @@
+$("#name").on("change", function () {
+  let name = $(this).val();
+
+  let processedName = name.replace(/[^a-zA-Z0-9]+/g, "-");
+  processedName = processedName.replace(/^-+|-+$/g, "");
+
+  $("#slug").val(processedName.replace(/-+$/, ""));
+});
+
 $("#slug").noSpace({
   replaceWith: ", ",
 });

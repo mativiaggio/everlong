@@ -100,32 +100,32 @@ export function loadScripts(level) {
   document.body.appendChild(script);
 }
 
-export function contextAction(screen, action, reg_id) {
+export function contextAction(screen, action, slug) {
   switch (screen) {
     case "products":
       switch (action) {
         case "edit":
-          return `/admin/productos/editar/${reg_id}`;
+          return `/admin/productos/editar/${slug}`;
         case "delete":
-          return `/admin/productos/eliminar-categoria/${reg_id}`;
+          return `/admin/products/delete-product/${slug}`;
       }
       break;
     case "categories":
       switch (action) {
         case "edit":
-          return `/admin/categorias/editar/${reg_id}`;
+          return `/admin/categorias/editar/${slug}`;
         case "delete":
-          return `/admin/categorias/eliminar-categoria/${reg_id}`;
+          return `/admin/categories/delete-category/${slug}`;
       }
       break;
     case "invoices":
       switch (action) {
         case "print":
-          return `/admin/ingresos/imprimir/${reg_id}`;
+          return `/admin/ingresos/imprimir/${slug}`;
         case "edit":
-          return `/admin/ingresos/editar/${reg_id}`;
+          return `/admin/ingresos/editar/${slug}`;
         case "delete":
-          return `/admin/ingresos/eliminar-categoria/${reg_id}`;
+          return `/admin/ingresos/eliminar-categoria/${slug}`;
       }
       break;
   }

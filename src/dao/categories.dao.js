@@ -100,10 +100,7 @@ export default class CategoriesDAO {
         categoryData.parent = null;
       }
 
-      const updatedCategory = await Category.findByIdAndUpdate(
-        categoryId,
-        categoryData
-      );
+      const updatedCategory = await Category.findByIdAndUpdate(categoryId, categoryData);
 
       if (!updatedCategory) {
         return {
@@ -132,6 +129,28 @@ export default class CategoriesDAO {
     } catch (error) {
       logger.error("Error counting categories:", error);
       throw error;
+    }
+  }
+
+  async deleteCategory(categorySlug, user) {
+    try {
+      const category = await Category.findOne({ slug: categorySlug });
+
+      if (!category) {
+        logger.error("Category not found");
+        return { error: "Category not found" };
+      }
+
+      if (!user.roles.includes("admin")) {
+        return { error: "No tiene permiso para eliminar este categoría" };
+      }
+
+      await Category.deleteOne({ slug: categorySlug });
+      logger.info("Category successfully deleted");
+      return { status: "Categoría eliminada correctamente" };
+    } catch (error) {
+      logger.error("[DAO] Error deleting category:", error);
+      return { error: "Error deleting category" };
     }
   }
 }
