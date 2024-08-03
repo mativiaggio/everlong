@@ -16,10 +16,10 @@ if (localStorage.getItem("userId")) {
           productData.forEach(function (product) {
             fetch(`/api/client/products/search?findBy=id&query=${product.id}`)
               .then((response) => response.json())
-              .then((data) => {
+              .then(async (data) => {
                 const productData = data.product;
                 productData.quantity = product.quantity;
-                const card = cartItem(productData);
+                const card = await cartItem(productData);
                 $("#cards-container").append(card);
               })
               .catch((error) => {
@@ -119,14 +119,51 @@ if (localStorage.getItem("userId")) {
   async function getProducts() {
     if (localCart) {
       if (localCart.products.length > 0) {
-        $("#item-count").text(`${localCart.products.length} Items`);
+        async function cartValidation(products) {
+          const updatedProducts = [];
+
+          await Promise.all(
+            products.map(async (product) => {
+              const response = await fetch(`/api/client/products/search?findBy=id&query=${product.id}`);
+              const data = await response.json();
+
+              if (data.product == null) {
+                const cart = JSON.parse(localStorage.getItem("cart"));
+
+                if (cart && cart.products) {
+                  const filteredProducts = cart.products.filter((cartProduct) => cartProduct.id !== product.id);
+
+                  const newTotal = filteredProducts.reduce((total, item) => total + item.price * item.quantity, 0);
+                  toast({ status: "info", message: "Uno de los productos en tu carrito ya no está disponible, por lo que se ha eliminado." });
+
+                  cart.products = filteredProducts;
+                  cart.total = newTotal;
+                  localStorage.setItem("cart", JSON.stringify(cart));
+                }
+              } else {
+                updatedProducts.push(product);
+              }
+            })
+          );
+          return updatedProducts;
+        }
+
+        (async () => {
+          const updatedProducts = await cartValidation(localCart.products);
+          $("#item-count").text(`${updatedProducts.length} Items`);
+        })();
+
         const productPromises = localCart.products.map(async (product) => {
           try {
             const response = await fetch(`/api/client/products/search?findBy=id&query=${product.id}`);
             const data = await response.json();
+            if (data.product === null) {
+              return;
+            }
+
             const productData = data.product;
             productData.quantity = product.quantity;
-            return cartItem(productData);
+            return await cartItem(productData);
           } catch (error) {
             console.error("Error:", error);
             return "";
@@ -148,14 +185,14 @@ if (localStorage.getItem("userId")) {
     $("#cards-container").html(cards);
   }
 
-  $("#total-container").html(cartTotal(localCart));
-
   $(document).ready(async function () {
     await refreshCards();
+    const localCart = JSON.parse(localStorage.getItem("cart"));
+    $("#total-container").html(cartTotal(localCart));
+
     $(`.addOne, .removeOne, .deleteButton`).on("click", async function () {
       const dataId = $(this).attr("data-button");
       const actualQ = parseInt($(`#quantity-${dataId}`).val(), 10);
-      debugger;
       if ($(this).hasClass("addOne")) {
         $(`#quantity-${dataId}`).val(actualQ + 1);
         $(`#parcialTotal-${dataId}`).text((actualQ + 1) * parseFloat($(`[data-price-unformatted-${dataId}]`).attr(`data-price-unformatted-${dataId}`)));

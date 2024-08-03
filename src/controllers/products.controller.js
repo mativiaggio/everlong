@@ -265,20 +265,6 @@ export default class ProductsController {
     }
   }
 
-  // async deleteProduct(req, res) {
-  //   try {
-  //     const productSlug = req.params.pslug;
-  //     const user = req.session.user;
-  //     const result = await productsDAO.deleteProduct(productSlug, user);
-  //     if (result.error) {
-  //       return res.status(403).json({ error: result.error });
-  //     }
-  //     return res.json(result);
-  //   } catch (error) {
-  //     logger.error("[Controller] Error deleting product:", error);
-  //     return res.status(500).json({ error: "Error deleting product" });
-  //   }
-  // }
   async deleteProduct(req, res) {
     try {
       const productSlug = req.params.pslug;

@@ -36,7 +36,6 @@ const hbs = exphbs.create({
       return arg1 == arg2 ? options.fn(this) : options.inverse(this);
     },
     parseJSON: function (jsonString) {
-      debugger
       return JSON.parse(jsonString);
     },
     join: function (array, delimiter) {

@@ -1,4 +1,6 @@
 import Product from "../models/product.js";
+import Cart from "../models/cart.js";
+
 import { logger } from "../utils/logger.js";
 
 export default class ProductsDAO {
@@ -178,11 +180,31 @@ export default class ProductsDAO {
       }
 
       await Product.deleteOne({ slug: productSlug });
+
+      await this.removeProductFromCarts(product._id);
+
       logger.info("Product successfully deleted");
       return { status: "Producto eliminado correctamente", product };
     } catch (error) {
       logger.error("[DAO] Error deleting product:", error);
       return { error: "Error deleting product" };
+    }
+  }
+
+  async removeProductFromCarts(productId) {
+    try {
+      const carts = await Cart.find({ "products.id": productId });
+
+      for (const cart of carts) {
+        cart.products = cart.products.filter((product) => product.id.toString() !== productId.toString());
+        cart.total = cart.products.reduce((total, product) => total + product.price * product.quantity, 0);
+        await cart.save();
+      }
+
+      logger.info("Producto eliminado de todos los carritos");
+    } catch (error) {
+      logger.error("[DAO] Error removing product from carts:", error);
+      throw error;
     }
   }
 }

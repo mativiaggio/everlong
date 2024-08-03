@@ -18,7 +18,6 @@ $("#category").find(`option#${currentCategory}`).attr("selected", true);
 
 const customFileList = [];
 $("#dropzone-file").on("change", function () {
-  // debugger;
   const files = this.files;
   for (let i = 0; i < files.length; i++) {
     customFileList.push(files[i]);

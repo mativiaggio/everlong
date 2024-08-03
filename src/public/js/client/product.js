@@ -26,7 +26,6 @@ $("#removeOne").on("click", function () {
 });
 
 $("#addOne").on("click", function () {
-  debugger;
   let quantity = Number($("#quantity").val());
   $("#quantity").val(quantity + 1);
 });

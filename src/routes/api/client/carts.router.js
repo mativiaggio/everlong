@@ -24,7 +24,6 @@ clientCartRouter.post("/add-to-cart/:productId", async (req, res) => {
     let result;
 
     if (req.session.user) {
-      // Si cartId existe, agregar el producto al carrito en la base de datos
       result = await cartController.addProductToCart(req.session.user._id, productId);
       res.json({ result });
     } else {
