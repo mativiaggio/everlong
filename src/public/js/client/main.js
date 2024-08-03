@@ -1,13 +1,6 @@
 import { checkUserLoggedIn, loadScripts } from "../functions.js";
 loadScripts("client");
 
-// $("#open-sidebar").on("click", () => {
-//   $("#default-sidebar").removeClass("-translate-y-full");
-// });
-// $("#close-aside-button").on("click", () => {
-//   $("#default-sidebar").addClass("-translate-y-full");
-// });
-
 $("#burger-button").on("click", function () {
   $("#mobile-navbar").removeClass("-translate-x-full");
 });

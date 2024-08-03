@@ -5,14 +5,14 @@ import cloudinary from "./cloudinary.config.js";
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: "product_images", // Carpeta en Cloudinary donde se guardarán las imágenes
-    format: async (req, file) => "webp", // Formato de las imágenes
-    public_id: (req, file) => `${Date.now()}_${file.originalname.split(".")[0]}`, // Nombre del archivo
+    folder: "product_images",
+    format: async (req, file) => "webp",
+    public_id: (req, file) => `${Date.now()}_${file.originalname.split(".")[0]}`,
   },
 });
 
 const fileFilter = (req, file, cb) => {
-  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+  if (file.mimetype === "image/jpg" || file.mimetype === "image/jpeg" || file.mimetype === "image/png" || file.mimetype === "image/webp") {
     cb(null, true);
   } else {
     cb(null, false);

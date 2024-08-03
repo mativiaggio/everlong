@@ -19,7 +19,6 @@ $("button.addToCart").click(function () {
 });
 
 $("#buttonSearchForm").on("click", function (event) {
-  debugger;
   event.preventDefault();
   const keywords = $("#productsSearchInput").val().trim();
 
