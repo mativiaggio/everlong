@@ -20,7 +20,8 @@ clientCartRouter.get("/:uid", async (req, res) => {
 
 clientCartRouter.post("/add-to-cart/:productId", async (req, res) => {
   try {
-    const { cartId, productId } = req.params;
+    const { productId } = req.params;
+    const quantity = req.body.quantity;
     let result;
 
     if (req.session.user) {
@@ -28,12 +29,15 @@ clientCartRouter.post("/add-to-cart/:productId", async (req, res) => {
       res.json({ result });
     } else {
       const product = await productsController.findById(productId);
+      let data = product;
+      data.productQuantity = quantity;
+
       res.status(200).json({
         result: {
           status: "success",
           session: false,
           message: "User not logged in.",
-          data: product,
+          data: data,
         },
       });
     }

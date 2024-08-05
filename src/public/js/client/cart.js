@@ -8,6 +8,7 @@ if (localStorage.getItem("userId")) {
     .then((response) => response.json())
     .then((data) => {
       $("#total-container").html(cartTotal(data));
+      $("#cart-total-spinner-container").hide();
 
       if (data) {
         const productData = data.products;
@@ -21,6 +22,7 @@ if (localStorage.getItem("userId")) {
                 productData.quantity = product.quantity;
                 const card = await cartItem(productData);
                 $("#cards-container").append(card);
+                $("#cart-spinner-container").hide();
               })
               .catch((error) => {
                 console.error("Error:", error);
@@ -29,9 +31,11 @@ if (localStorage.getItem("userId")) {
           });
         } else {
           $("#cards-container").append(cartIsEmpty());
+          $("#cart-spinner-container").hide();
         }
       } else {
         $("#cards-container").append(cartIsEmpty());
+        $("#cart-spinner-container").hide();
       }
 
       // Use event delegation for dynamically added elements
@@ -72,6 +76,7 @@ if (localStorage.getItem("userId")) {
           .then((response) => response.json())
           .then((data) => {
             $("#total-container").html(cartTotal(data.result));
+            $("#cart-total-spinner-container").hide();
           });
       }
 
@@ -89,6 +94,7 @@ if (localStorage.getItem("userId")) {
           .then((response) => response.json())
           .then((data) => {
             $("#total-container").html(cartTotal(data.result));
+            $("#cart-total-spinner-container").hide();
           });
       }
 
@@ -104,8 +110,10 @@ if (localStorage.getItem("userId")) {
             $(`#product-card-${productId}`).remove();
             if (data.result.products.length < 1) {
               $("#cards-container").append(cartIsEmpty());
+              $("#cart-spinner-container").hide();
             }
             $("#total-container").html(cartTotal(data.result));
+            $("#cart-total-spinner-container").hide();
           });
       }
     })
@@ -183,12 +191,14 @@ if (localStorage.getItem("userId")) {
   async function refreshCards() {
     const cards = await getProducts();
     $("#cards-container").html(cards);
+    $("#cart-spinner-container").hide();
   }
 
   $(document).ready(async function () {
     await refreshCards();
     const localCart = JSON.parse(localStorage.getItem("cart"));
     $("#total-container").html(cartTotal(localCart));
+    $("#cart-total-spinner-container").hide();
 
     $(`.addOne, .removeOne, .deleteButton`).on("click", async function () {
       const dataId = $(this).attr("data-button");
@@ -211,8 +221,10 @@ if (localStorage.getItem("userId")) {
 
         if (localCart.products.length <= 0) {
           $("#cards-container").html(cartIsEmpty());
+          $("#cart-spinner-container").hide();
         }
         $("#total-container").html(cartTotal(localCart));
+        $("#cart-total-spinner-container").hide();
       }
     });
   });

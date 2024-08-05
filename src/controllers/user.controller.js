@@ -100,6 +100,29 @@ class UserController {
       throw error;
     }
   }
+
+  async findByEmail(email) {
+    try {
+      const user = await userDao.findByEmail(email);
+      if (user.length === 0) {
+        return { status: "error", message: "No user found" };
+      }
+      return { status: "success", user: user };
+    } catch (error) {
+      logger.error("Error getting user:", error.message);
+      throw error;
+    }
+  }
+
+  async verifyEmail(user_id) {
+    try {
+      await userDao.verifyEmail(user_id);
+      return { status: "success", message: "Email verified successfully" };
+    } catch (error) {
+      logger.error("Error verifying user email:", error.message);
+      throw error;
+    }
+  }
 }
 
 export default UserController;

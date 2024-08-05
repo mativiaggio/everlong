@@ -1,6 +1,6 @@
 import { formatCurrency } from "../../functions.js";
 
-export function cartItem(product) {
+export async function cartItem(product) {
   return fetch(`/api/client/enterprise/enterprise-info`)
     .then((response) => response.json())
     .then((data) => {

@@ -5,78 +5,48 @@ import Handlebars from "handlebars";
 import { readFile } from "fs/promises";
 import { fileURLToPath } from "url";
 import path from "path";
+import EnterpriseController from "../../../controllers/enterprise.controller.js";
+import UserController from "../../../controllers/user.controller.js";
+
+const enterpriseController = new EnterpriseController();
+const userController = new UserController();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const clientMailerRouter = Router();
 
-clientMailerRouter.post("/test-email/:email", async (req, res) => {
-  const destination = req.params.email || "";
-  try {
-    const filePath = path.join(
-      __dirname,
-      "../../../views/client/emails/test-email.handlebars"
-    );
-    const templateSource = await readFile(filePath, "utf8");
-
-    const template = Handlebars.compile(templateSource);
-
-    const data = { email: destination, full_name: "Matías Viaggio" };
-
-    const html = template(data);
-
-    await mailerTransport.sendMail({
-      from: `Everlong <${mailing.auth.EMAIL_USER}>`,
-      to: destination,
-      subject: "Test email",
-      html: html,
-      attachments: [
-        {
-          filename: "email-body-logo.png",
-          path: path.join(
-            __dirname,
-            "../../../public/images/email-body-logo.png"
-          ),
-          cid: "logo",
-        },
-      ],
-    });
-    res.status(200).json(html);
-  } catch (err) {
-    console.error("Error leyendo el archivo HTML:", err);
-    res.status(500).json({ error: "Error al enviar el correo electrónico" });
-  }
-});
-
 clientMailerRouter.post("/register/:email", async (req, res) => {
-  const destination = req.body.data.user.email || "";
-  const data = req.body.data.user || "";
-  // console.log("data de email: " + JSON.stringify(req.body.data));
-
   try {
-    const filePath = path.join(
-      __dirname,
-      "../../../views/client/emails/register.handlebars"
-    );
+    const destination = req.body.data.email || "";
+    let data = req.body.data || "";
+    const filePath = path.join(__dirname, "../../../views/client/emails/register.handlebars");
     const templateSource = await readFile(filePath, "utf8");
     const template = Handlebars.compile(templateSource);
+
+    const raw_enterprise = await enterpriseController.getEnterpriseData();
+    let enterprise;
+    if (raw_enterprise && raw_enterprise.length > 0) {
+      enterprise = raw_enterprise[0].toJSON();
+      data.enterprise = enterprise;
+    } else {
+      enterprise = null;
+      data.enterprise = enterprise;
+    }
+
+    const user = await userController.findByEmail(destination);
+    if (user) {
+      data.user_id = user._id;
+    } else {
+      data.user_id = "";
+    }
+
     const html = template(data);
     await mailerTransport.sendMail({
-      from: `Everlong <${mailing.auth.EMAIL_USER}>`,
+      from: `${data.enterprise ? data.enterprise.name : ""} <${mailing.auth.EMAIL_USER}>`,
       to: destination,
       subject: "Solicitud de registro procesada con éxito",
       html: html,
-      attachments: [
-        {
-          filename: "email-body-logo.png",
-          path: path.join(
-            __dirname,
-            "../../../public/images/email-body-logo.png"
-          ),
-          cid: "logo",
-        },
-      ],
     });
     res.status(200).json(html);
   } catch (err) {
@@ -95,7 +65,15 @@ clientMailerRouter.post("/account/request-reset", async (req, res) => {
     resetUrl,
   };
 
-  console.log("data de email: " + JSON.stringify(data));
+  const raw_enterprise = await enterpriseController.getEnterpriseData();
+  let enterprise;
+  if (raw_enterprise && raw_enterprise.length > 0) {
+    enterprise = raw_enterprise[0].toJSON();
+    data.enterprise = enterprise;
+  } else {
+    enterprise = null;
+    data.enterprise = enterprise;
+  }
 
   if (!destination) {
     console.error("No recipients defined");
@@ -103,29 +81,16 @@ clientMailerRouter.post("/account/request-reset", async (req, res) => {
   }
 
   try {
-    const filePath = path.join(
-      __dirname,
-      "../../../views/client/emails/request-reset.handlebars"
-    );
+    const filePath = path.join(__dirname, "../../../views/client/emails/request-reset.handlebars");
     const templateSource = await readFile(filePath, "utf8");
     const template = Handlebars.compile(templateSource);
     const html = template(data);
 
     await mailerTransport.sendMail({
-      from: `Everlong <${mailing.auth.EMAIL_USER}>`,
+      from: `${data.enterprise ? data.enterprise.name : ""} <${mailing.auth.EMAIL_USER}>`,
       to: destination,
       subject: "Solicitud de cambio de contraseña",
       html: html,
-      attachments: [
-        {
-          filename: "email-body-logo.png",
-          path: path.join(
-            __dirname,
-            "../../../public/images/email-body-logo.png"
-          ),
-          cid: "logo",
-        },
-      ],
     });
 
     res.status(200).json(html);

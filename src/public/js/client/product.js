@@ -1,3 +1,5 @@
+import { addToCart } from "../functions.js";
+
 let totalSlides = document.querySelectorAll(".nav-for-slider .swiper-slide").length;
 
 let slidesPerView = totalSlides < 5 ? totalSlides : 5;
@@ -28,4 +30,15 @@ $("#removeOne").on("click", function () {
 $("#addOne").on("click", function () {
   let quantity = Number($("#quantity").val());
   $("#quantity").val(quantity + 1);
+});
+
+$("#addToCart").click(function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+  const productId = $(this).attr("data-product-id");
+  if (productId) {
+    addToCart(productId, Number($("#quantity").val()));
+
+    $("#quantity").val(1);
+  }
 });

@@ -178,7 +178,7 @@ function redirigirAWhatsApp(mensaje) {
         const numeroWhatsApp = data[0].phone.replace(/[\s-]/g, "");
 
         const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
-        window.location.href = url;
+        window.open(url, "_blank");
       }
     })
     .catch((error) => {

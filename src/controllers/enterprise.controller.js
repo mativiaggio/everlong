@@ -17,10 +17,9 @@ export default class EnterpriseController {
 
   async addEnterprise(req, res) {
     try {
-      const { _id, name, legalName, taxId, address, city, province, country, phone, email, website, logoUrl, foundedYear, businessType, industry, employees, revenue, isVATPayer, vatCategory, description } = req.body;
+      const { name, legalName, taxId, address, city, province, country, phone, email, website, logoUrl, foundedYear, businessType, industry, employees, revenue, isVATPayer, vatCategory, description, instagram } = req.body;
 
       const newEnterprise = new Enterprise({
-        _id,
         name,
         legalName,
         taxId,
@@ -40,6 +39,7 @@ export default class EnterpriseController {
         isVATPayer,
         vatCategory,
         description,
+        instagram,
       });
 
       // Guardar el nuevo registro en la base de datos
@@ -54,7 +54,7 @@ export default class EnterpriseController {
 
   async updateEnterprise(req, res) {
     try {
-      const { _id, name, legalName, taxId, address, city, province, country, phone, email, website, logoUrl, foundedYear, businessType, industry, employees, revenue, isVATPayer, vatCategory, description } = req.body;
+      const { _id, name, legalName, taxId, address, city, province, country, phone, email, website, logoUrl, foundedYear, businessType, industry, employees, revenue, isVATPayer, vatCategory, description, instagram } = req.body;
 
       const updatedEnterprise = await enterpriseDAO.updateEnterprise(_id, {
         name,
@@ -76,6 +76,7 @@ export default class EnterpriseController {
         isVATPayer,
         vatCategory,
         description,
+        instagram,
       });
 
       if (!updatedEnterprise) {

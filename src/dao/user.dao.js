@@ -62,6 +62,27 @@ class UserDAO {
       throw error;
     }
   }
+
+  async findByEmail(email) {
+    try {
+      const user = await User.findOne({ email: email }).lean();
+      return user;
+    } catch (error) {
+      logger.error("Error getting user: ", error.message);
+      throw error;
+    }
+  }
+
+  async verifyEmail(user_id) {
+    try {
+      const user = await User.findByIdAndUpdate(user_id, { verified: true }, { new: true }).lean();
+      return user;
+    } catch (error) {
+      logger.error("Error verifying email: ", error.message);
+      throw error;
+    }
+  }
+
   async countUsers(filter) {
     try {
       const count = await User.countDocuments(filter);

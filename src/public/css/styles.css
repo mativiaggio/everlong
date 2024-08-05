@@ -769,6 +769,9 @@ video {
 .mr-3 {
   margin-right: 0.75rem;
 }
+.mr-5 {
+  margin-right: 1.25rem;
+}
 .ms-3 {
   margin-inline-start: 0.75rem;
 }
@@ -2980,6 +2983,10 @@ video {
 .dark\:hover\:text-yellow-800:hover:is([data-mode="dark"] *) {
   --tw-text-opacity: 1;
   color: rgb(133 77 14 / var(--tw-text-opacity));
+}
+
+.hover\:dark\:text-\[var\(--main-text-dark\)\]:is([data-mode="dark"] *):hover {
+  color: var(--main-text-dark);
 }
 
 .dark\:hover\:underline:hover:is([data-mode="dark"] *) {

@@ -43,10 +43,15 @@ const privateAccess = async (req, res, next) => {
 
 adminRouter.get("/", privateAccess, async (req, res) => {
   const raw_enterprise = await enterpriseController.getEnterpriseData();
-  const enterprise = raw_enterprise[0].toJSON();
+  let enterprise;
+  if (raw_enterprise && raw_enterprise.length > 0) {
+    enterprise = raw_enterprise[0].toJSON();
+  } else {
+    enterprise = null;
+  }
 
   const title = "Inicio";
-  const description = `Este es el admin panel de ${enterprise.name}`;
+  const description = `Este es el admin panel de ${enterprise?.name ?? "Empresa"}`;
 
   res.render("admin/home", {
     isLoggedIn: true,
@@ -66,10 +71,23 @@ adminRouter.get("/register", publicAccess, async (req, res) => {
   }
 });
 
-adminRouter.get("/login", publicAccess, (req, res) => {
-  const title = "Login";
-  const description = "Inicia sesion en el panel administrador de Everlong para comenzar a manejar tu negocio";
-  res.render("admin/login", { isLoggedIn: false, title, description });
+adminRouter.get("/login", publicAccess, async (req, res) => {
+  try {
+    const raw_enterprise = await enterpriseController.getEnterpriseData();
+    let enterprise;
+    if (raw_enterprise && raw_enterprise.length > 0) {
+      enterprise = raw_enterprise[0].toJSON();
+    } else {
+      enterprise = null;
+    }
+
+    const title = "Login";
+    const description = `Inicia sesion en el panel administrador de ${enterprise?.name ?? "Empresa"} para comenzar a manejar tu negocio`;
+    res.render("admin/login", { isLoggedIn: false, title, description });
+  } catch (err) {
+    logger.error("Error al obtener datos de la empresa:", err);
+    res.status(500).send("Error al obtener datos de la empresa");
+  }
 });
 
 adminRouter.get("/login-fail", publicAccess, (req, res) => {
@@ -353,7 +371,15 @@ adminRouter.get("/empresa", privateAccess, async (req, res) => {
   const description = "Editar Información de la empresa";
 
   const data = await enterpriseController.getEnterpriseData();
-  const enterpriseData = data[0].toJSON();
+  // const enterpriseData = data[0].toJSON();
+
+  let enterpriseData;
+  if (data && data.length > 0) {
+    enterpriseData = data[0].toJSON();
+  } else {
+    enterpriseData = null;
+  }
+
   res.render("admin/enterprise", {
     isLoggedIn: true,
     adminSidebarItems,

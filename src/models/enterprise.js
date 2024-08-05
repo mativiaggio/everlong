@@ -22,6 +22,7 @@ const enterpriseSchema = new Schema(
     vatCategory: { type: String }, // Categoría de IVA de la empresa (si aplica)
     createdAt: { type: Date, default: Date.now }, // Fecha de creación del registro
     updatedAt: { type: Date, default: Date.now }, // Fecha de última actualización del registro
+    instagram: { type: String },
   },
   {
     timestamps: true, // Permite registrar automáticamente las fechas de creación y actualización

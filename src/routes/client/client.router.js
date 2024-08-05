@@ -45,26 +45,42 @@ const userMiddleware = (req, res, next) => {
 };
 
 clientRouter.get("/", userMiddleware, async (req, res) => {
-  const title = "Inicio";
-  const description = "Bienvenido a everlong, tu comercio de confianza";
-  const raw_enterprise = await enterpriseController.getEnterpriseData();
-  const enterprise = raw_enterprise[0].toJSON();
-  const products = await productsController.findByFeatured();
-  console.log(JSON.stringify(enterprise));
-  let user = null;
-  if (req.user) {
-    user = await userController.findById(req.user._id);
-  }
+  try {
+    const raw_enterprise = await enterpriseController.getEnterpriseData();
+    let enterprise;
+    if (raw_enterprise && raw_enterprise.length > 0) {
+      enterprise = raw_enterprise[0].toJSON();
+    } else {
+      enterprise = null;
+    }
 
-  console.log(JSON.stringify(user));
-  res.render("client/home", {
-    user: user ? user.user : null,
-    clientSidebarItems,
-    title,
-    description,
-    products,
-    enterprise,
-  });
+    const title = "Inicio";
+    const description = `Bienvenido a ${enterprise?.name ?? "Empresa"}, tu comercio de confianza`;
+    if (raw_enterprise && raw_enterprise.length > 0) {
+      enterprise = raw_enterprise[0].toJSON();
+    } else {
+      enterprise = null;
+    }
+    const products = await productsController.findByFeatured();
+    console.log(JSON.stringify(enterprise));
+    let user = null;
+    if (req.user) {
+      user = await userController.findById(req.user._id);
+    }
+
+    console.log(JSON.stringify(user));
+    res.render("client/home", {
+      user: user ? user.user : null,
+      clientSidebarItems,
+      title,
+      description,
+      products,
+      enterprise,
+    });
+  } catch (err) {
+    logger.error("Error al cargar la página de inicio:", err);
+    res.status(500).send("Error al cargar la página de inicio");
+  }
 });
 
 clientRouter.get("/productos", userMiddleware, async (req, res) => {
@@ -73,7 +89,7 @@ clientRouter.get("/productos", userMiddleware, async (req, res) => {
     const description = "Listado de todos nuestros productos.";
     const screen = "products";
     const query = req.query.query || "";
-    const limit = req.query.limit || 10;
+    const limit = req.query.limit || 9;
     const page = req.query.page || 1;
     const sort = req.query.sort || null;
     const response = await productsController.getProducts(req, res, query, limit, page, sort);
@@ -82,7 +98,7 @@ clientRouter.get("/productos", userMiddleware, async (req, res) => {
     const productsCategoriesComponent = productsCategories(categories);
     const categorySelectTitle = "Categoría";
     const totalProducts = await productsController.countProducts();
-    const productsPerPage = 10;
+    const productsPerPage = 9;
     const totalPages = Math.ceil(totalProducts / productsPerPage);
     const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
     let user = null;
@@ -98,6 +114,10 @@ clientRouter.get("/productos", userMiddleware, async (req, res) => {
       productsCategoriesComponent,
       categorySelectTitle,
       pages,
+      hasPrevPage: page > 1,
+      hasNextPage: page < totalPages,
+      prevLink: page > 1 ? `/productos?limit=${limit}&page=${page - 1}` : null,
+      nextLink: page < totalPages ? `/productos?limit=${limit}&page=${parseInt(page) + 1}` : null,
       sort,
     });
   } catch (error) {
@@ -253,26 +273,56 @@ clientRouter.get("/ingresar", (req, res) => {
   });
 });
 
-clientRouter.get("/recuperar-cuenta", (req, res) => {
-  const title = "Recuperar Cuenta";
-  const description = "Recibe un código de recuperación en tu correo electrónico.";
-  res.render("client/account-recovery", {
-    title,
-    description,
-    clientSidebarItems,
-  });
+clientRouter.get("/recuperar-cuenta", async (req, res) => {
+  try {
+    const title = "Recuperar Cuenta";
+    const description = "Recibe un código de recuperación en tu correo electrónico.";
+
+    const raw_enterprise = await enterpriseController.getEnterpriseData();
+    let enterprise;
+    if (raw_enterprise && raw_enterprise.length > 0) {
+      enterprise = raw_enterprise[0].toJSON();
+    } else {
+      enterprise = null;
+    }
+
+    res.render("client/account-recovery", {
+      title,
+      description,
+      clientSidebarItems,
+      enterprise,
+    });
+  } catch (err) {
+    console.error("Error al recuperar los datos de la empresa:", err);
+    res.status(500).send("Error al recuperar los datos de la empresa");
+  }
 });
 
-clientRouter.get("/recuperar-cuenta/:token", (req, res) => {
-  const title = "Recuperar Cuenta";
-  const description = "Recibe un código de recuperación en tu correo electrónico.";
-  const token = req.params.token;
-  res.render("client/new-password", {
-    title,
-    description,
-    clientSidebarItems,
-    token,
-  });
+clientRouter.get("/recuperar-cuenta/:token", async (req, res) => {
+  try {
+    const title = "Recuperar Cuenta";
+    const description = "Recibe un código de recuperación en tu correo electrónico.";
+    const token = req.params.token;
+
+    const raw_enterprise = await enterpriseController.getEnterpriseData();
+    let enterprise;
+    if (raw_enterprise && raw_enterprise.length > 0) {
+      enterprise = raw_enterprise[0].toJSON();
+    } else {
+      enterprise = null;
+    }
+
+    res.render("client/new-password", {
+      title,
+      description,
+      clientSidebarItems,
+      token,
+      enterprise,
+    });
+  } catch (err) {
+    console.error("Error al recuperar los datos de la empresa:", err);
+    res.status(500).send("Error al recuperar los datos de la empresa");
+  }
 });
 
 clientRouter.get("/carrito", async (req, res) => {
@@ -288,6 +338,16 @@ clientRouter.get("/carrito", async (req, res) => {
     title,
     description,
   });
+});
+
+clientRouter.get("/usuario/verificar-email/:uid", async (req, res) => {
+  try {
+    const user_id = req.params.uid;
+    await userController.verifyEmail(user_id);
+    res.render("client/emails/verified-email");
+  } catch (err) {
+    res.render("Ocurrió un error inesperado: " + err.message);
+  }
 });
 
 clientRouter.get("/checkout", async (req, res) => {

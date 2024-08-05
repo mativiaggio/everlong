@@ -1,3 +1,4 @@
+import { toast } from "../functions.js";
 isVATPayer_handler();
 $("#vatCategory").on("change", function () {
   isVATPayer_handler();
@@ -40,11 +41,11 @@ $("#update-enterprise-button").on("click", function (event) {
     data: JSON.stringify(enterpriseData),
     success: function (response) {
       console.log("Enterprise saved:", response);
-      alert("Enterprise saved");
+      toast({ status: "success", message: "Empresa guardada con éxito." });
     },
     error: function (xhr, status, error) {
       console.error("Error saving enterprise:", error);
-      alert("Error saving enterprise");
+      toast({ status: "error", message: "Error al guardar los datos de la empresa." });
     },
   });
 });

@@ -130,9 +130,9 @@ export function contextAction(screen, action, slug) {
       break;
   }
 }
-export function addToCart(productId) {
+export function addToCart(productId, productQuantity) {
   function addToLocalStorage(productData) {
-    const { _id, price } = productData;
+    const { _id, price, productQuantity } = productData;
 
     let cart = JSON.parse(localStorage.getItem("cart")) || {
       products: [],
@@ -141,18 +141,32 @@ export function addToCart(productId) {
 
     const existingProductIndex = cart.products.findIndex((product) => product.id === _id);
 
+    let totalQuantity;
     if (existingProductIndex !== -1) {
-      cart.products[existingProductIndex].quantity++;
+      cart.total = cart.total - price * cart.products[existingProductIndex].quantity;
+      if (productQuantity > 1) {
+        cart.products[existingProductIndex].quantity += productQuantity;
+      } else {
+        cart.products[existingProductIndex].quantity++;
+      }
+
+      totalQuantity = cart.products[existingProductIndex].quantity;
     } else {
       cart.products.push({
         id: _id,
-        quantity: 1,
+        quantity: productQuantity ? productQuantity : 1,
         price: price,
       });
+      totalQuantity = productQuantity ? productQuantity : 1;
     }
 
-    cart.total += price;
+    cart.total += price * totalQuantity;
     localStorage.setItem("cart", JSON.stringify(cart));
+  }
+
+  let quantity;
+  if (productQuantity) {
+    quantity = productQuantity;
   }
 
   fetch(`/api/client/carts/add-to-cart/${productId}`, {
@@ -160,6 +174,7 @@ export function addToCart(productId) {
     headers: {
       "Content-Type": "application/json",
     },
+    body: JSON.stringify({ quantity }),
   })
     .then(async (response) => {
       console.log("Response status:", response.status);
@@ -256,7 +271,6 @@ export function localCartHandler(productId, action) {
 }
 
 export function checkUserLoggedIn() {
-  debugger;
   let userId = localStorage.getItem("userId");
 
   fetch("/api/client/sessions/current")

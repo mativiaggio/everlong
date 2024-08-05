@@ -6,29 +6,26 @@ $("#submit-register").prop("disabled", true).css({
   cursor: "not-allowed",
 });
 
-$("#full_name, #email, #password, #password-repeated").on(
-  "input propertychanges",
-  function () {
-    const fullName = $("#full_name").val();
-    const email = $("#email").val();
-    const password = $("#password").val();
-    const passwordRepeated = $("#password-repeated").val();
+$("#full_name, #email, #password, #password-repeated").on("input propertychanges", function () {
+  const fullName = $("#full_name").val();
+  const email = $("#email").val();
+  const password = $("#password").val();
+  const passwordRepeated = $("#password-repeated").val();
 
-    const valid_email = isValidEmail(email);
+  const valid_email = isValidEmail(email);
 
-    if (password === passwordRepeated && fullName !== "" && valid_email) {
-      $("#submit-register").prop("disabled", false).css({
-        opacity: 1,
-        cursor: "pointer",
-      });
-    } else {
-      $("#submit-register").prop("disabled", true).css({
-        opacity: 0.5,
-        cursor: "not-allowed",
-      });
-    }
+  if (password === passwordRepeated && fullName !== "" && valid_email) {
+    $("#submit-register").prop("disabled", false).css({
+      opacity: 1,
+      cursor: "pointer",
+    });
+  } else {
+    $("#submit-register").prop("disabled", true).css({
+      opacity: 0.5,
+      cursor: "not-allowed",
+    });
   }
-);
+});
 
 registerForm.on("submit", function (event) {
   event.preventDefault();
@@ -60,6 +57,7 @@ registerForm.on("submit", function (event) {
     })
     .then(async (data) => {
       if (data) {
+        debugger;
         await fetch("/api/client/mailer/register/" + data.email, {
           method: "POST",
           body: JSON.stringify({ data: data }),
@@ -67,7 +65,7 @@ registerForm.on("submit", function (event) {
             "Content-Type": "application/json",
           },
         });
-        window.location.replace("/ingresar");
+        // window.location.replace("/ingresar");
       }
     })
     .catch((error) => console.error("Error:", error));
